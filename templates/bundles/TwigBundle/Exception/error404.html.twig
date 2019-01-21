@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Erreur 404{% endblock %}
+
+{% block body %}
+
+    <section class="d-flex flex-column align-items-center text-center">
+        <img src="{{ asset('/images/404error.gif') }}" alt="img-error-404">
+        <div class="error-msg">
+            <h1 class="mb-3">Oups... La page que vous recherchez est introuvable !</h1>
+            <p>La page que vous cherchez n'existe pas ou l'URL est incorrecte </p>
+        </div>
+        <a class="go-home mt-4" href="{{ path('home') }}">Retour à la page d'accueil</a>
+    </section>
+
+{% endblock %}

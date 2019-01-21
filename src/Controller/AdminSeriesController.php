@@ -1,0 +1,139 @@
+<?php
+
+namespace App\Controller;
+
+use App\Entity\Series;
+use App\Form\SerieType;
+use App\Repository\SeriesRepository;
+use Symfony\Component\HttpFoundation\Request;
+use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
+class AdminSeriesController extends AbstractController
+{
+    /**
+     * Permet d'afficher la page d'administration des articles de série
+     * 
+     * @Route("/admin/series", name="admin_series_index")
+     *
+     * @param SeriesRepository $repo
+     * @return void
+     */
+
+    public function index(SeriesRepository $repo)
+    {
+        return $this->render('admin/series/index.html.twig', [
+            'series' => $repo->findAll()
+        ]);
+    }
+
+    /**
+     * Permet de créer un article de série
+     * 
+     * @Route("/admin/series/createSerie", name="create_serie")
+     * 
+     * @param Request $request
+     * @param ObjectManager $manager
+     * 
+     * @return Response
+     */
+    public function createSerie(Request $request, ObjectManager $manager)
+    {
+        $serie = new Series();
+        
+        $form = $this->createForm(SerieType::class, $serie);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid())
+        {
+            if(!$serie->getId())
+            {
+                $serie->setUser($this->getUser());
+                $serie->setCreationDate(new \DateTime());
+            }
+
+            $manager->persist($serie);
+            $manager->flush();
+
+            $this->addFlash(
+                'success',
+                "L'article de la série <strong>{$serie->getTitle()}</strong> a bien été enregistrée !"
+            );
+
+            return $this->redirectToRoute('admin_series_index');
+        }
+        
+        return $this->render('admin/series/createSerie.html.twig', [
+            'formSerie' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * Permet de modifier un article de série
+     * 
+     * @Route("/admin/series/{id}/editSerie", name="edit_serie")
+     * 
+     * @param Series $serie
+     * @param Request $request
+     * @param ObjectManager $manager
+     * 
+     * @return Response
+     */
+    public function editSerie(Series $serie, Request $request, ObjectManager $manager)
+    {   
+        $form = $this->createForm(SerieType::class, $serie);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid())
+        {
+            if(!$serie->getId())
+            {
+                $serie->setCreationDate(new \DateTime());
+            }
+
+            $manager->persist($serie);
+            $manager->flush();
+
+            $this->addFlash(
+                'success',
+                "L'article de la série <strong>{$serie->getTitle()}</strong> a bien été enregistrée !"
+            );
+
+            return $this->redirectToRoute('admin_series_index');
+        }
+        
+        return $this->render('admin/series/editSerie.html.twig', [
+            'formSerie' => $form->createView(),
+            'serie' => $serie
+        ]);
+    }
+
+    /**
+     * Permet de supprimer un article de série
+     *
+     * @Route("/admin/series/{id}/deleteSerie", name="delete_serie")
+     * 
+     * @param Series $serie
+     * @param ObjectManager $manager
+     * 
+     * @return Response
+     */
+    public function deleteSerie(Series $serie, ObjectManager $manager)
+    {
+        $manager->remove($serie);
+        $manager->flush();
+
+        $this->addFlash(
+        'success',
+        "L'article de film <strong>{$serie->getTitle()}</strong> a bien été supprimé !"
+        );
+
+        return $this->redirectToRoute("admin_series_index");
+    }
+}

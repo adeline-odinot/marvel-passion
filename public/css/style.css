@@ -1,0 +1,424 @@
+/* --- GLOBAL --- */
+
+*
+{
+    font-family: 'Montserrat', sans-serif;
+}
+
+ul
+{
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px;
+}
+
+a 
+{
+    
+    text-decoration: none !important;
+}
+
+.title
+{
+    color: #ff5a5a;
+    font-size: 35px;
+    text-decoration: underline;
+}
+
+.subtitle
+{
+   
+    color: #7368ac;
+    text-decoration: underline;
+    font-size: 22px;
+    margin: 0px;
+}
+
+a  > .subtitle:hover
+{
+    color: #504eb3;
+}
+
+body
+{
+    background: url('../images/avengers.jpg') fixed no-repeat right top;
+}
+
+.content-admin, .content
+{
+    padding-top:20px !important;
+    margin-top: 50px !important;
+    margin-bottom: 50px !important;
+    padding: 0px;
+    background-color: white;
+}
+
+.content
+{
+    border: 5px solid #544d7c;
+}
+
+.content-body
+{
+    padding: 50px 0px;
+}
+
+.link
+{
+    color: #544d7c !important;
+    text-decoration: underline !important;
+}
+
+.link:hover
+{
+    color:#5e47e3 !important;
+}
+
+
+
+/* --- HEADER --- */
+
+.nav-header
+{
+    background-color: #544d7c !important;
+}
+
+.nav-design, .nav-design-admin
+{
+    color: white !important;
+    font-family: 'Kanit', sans-serif;
+    text-transform: uppercase;
+}
+
+.nav-design:hover
+{
+    color: #ff7c8d !important;
+}
+
+.nav-design-admin:hover
+{
+    color: #ffe0d0 !important;
+}
+
+.logo
+{
+    padding-bottom: 20px;
+}
+
+
+
+.flashes
+{
+    margin: 0px !important;
+    padding: 10px !important;
+}
+
+/* -- Content -- */
+
+.content-movies, .content-series
+{
+    margin: 30px 0px 30px 0px;
+}
+
+.date, .img-movies, .img-series
+{
+    margin-top: 20px;
+    font-style: italic;
+}
+
+.date
+{
+    color:#ad5164;
+}
+
+.more
+{
+    color: #fff !important;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: #7368ac;
+    border-color: #7368ac;
+}
+
+.more:hover
+{
+    background-color: #6855c9;
+    border-color: #6855c9;
+}
+
+.content-movies-show, .content-series-show
+{
+    margin-top: 20px;
+}
+
+.content-humor
+{
+    margin:10px;
+}
+
+.border-bottom
+{
+    width: 100% !important;
+}
+
+/* -- Home -- */
+
+.w-100
+{
+    height: 350px !important;
+    background-size: cover;
+}
+
+
+
+/* -- Form -- */
+
+.humor-title, .movie-title, .serie-title
+{
+    text-decoration: none !important;
+}
+
+.form-group
+{
+    color: #6a52eb;
+}
+
+.btn-form
+{
+    background-color: #7368ac;
+    border-color: #7368ac;
+    color: white !important;
+}
+
+.btn-form:hover
+{
+    background-color: #6a52eb;
+    border-color: #6a52eb;
+    color: white;
+}
+
+
+/* -- user profil -- */
+
+.user-profile
+{
+    font-weight: bold;
+    font-size: 35px;
+}
+
+.avatar
+{
+    border-radius: 50%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+}
+
+.avatar-medium
+{
+    width: 64px;
+    height: 64px;
+}
+
+.avatar-mini
+{
+    width: 48px;
+    height: 48px;
+}
+
+
+.avatar-micro
+{
+    width: 24px;
+    height: 24px;
+}
+
+
+/* --- Table --- */
+
+th
+{
+    background-color: #ff5a5a;
+    border-color: #ff5a5a;
+    color: white !important;
+}
+
+.table td, .table th
+{
+    vertical-align: middle;
+}
+
+/* --- Comment --- */
+
+.date-comment
+{
+    color: #937ed1;
+    font-size: 14px;
+}
+
+.user-comment
+{
+    color: #79319c;
+}
+
+.icon-comment
+{
+    color: #aaa5ca;
+}
+
+.user-comment:hover
+{
+    color: #c585e2;
+}
+
+.label-comment
+{
+    font-size:30px;
+}
+
+.nb-comment
+{
+    color:#6a52eb;
+}
+
+.connect-to-comment
+{
+    color: red;
+}
+
+
+/* ----- DEBUT ADMIN ----- */
+
+
+/* Content Admin */
+
+.content-admin
+{
+    border: 5px solid #dc3545;
+}
+
+/* Link Admin */
+
+.link-admin
+{
+    color: #ffe0d0 !important;
+    text-decoration: underline !important;
+}
+
+.link-admin:hover
+{
+    color:#f2b190 !important;
+}
+
+/* Form Admin */
+
+.admin-icon-trash, .admin-icon-edit
+{
+    color: #ffffff;
+    padding: 10px;
+    border-radius: 50%;
+}
+
+.admin-icon-trash
+{
+    background-color: #ff5a5a;
+}
+
+.admin-icon-trash:hover
+{
+    background-color: #ff4343;
+}
+
+.admin-icon-edit
+{
+    color: #ffffff;
+    padding: 10px;
+    border-radius: 50%;
+    background-color: #9bbbff;
+}
+
+.admin-icon-edit:hover
+{
+    background-color: #8eb1fd;
+}
+
+.btn-admin
+{
+    background-color: #ff5a5a;
+    border-color: #ff5a5a;
+    color: white !important;
+}
+
+.btn-admin:hover
+{
+    background-color: #f74848;
+    border-color: #f74848;
+    color: white;
+}
+
+/* Comment Admin */
+
+.strong-comment-admin
+{
+    color: #6a52eb;
+}
+
+/* Footer Admin */
+
+.copyright-admin
+{
+    background-color: #dc5050;
+    color: #ffffff;
+}
+
+.design-footer-admin
+{
+    color: #f2b190;
+}
+
+/* ----- FIN ADMIN ----- */
+
+
+
+/* --- Error --- */
+
+.go-home
+{
+    background-color: #ea5858;
+    border-radius: 15px;
+    padding: 15px;
+    font-size: 20px;
+    color: white;
+}
+
+.go-home:hover
+{
+    color: white;
+    background-color: #dd4040;
+}
+
+.error-msg
+{
+   color: #ff3d3d;
+}
+
+/* --- Footer --- */
+
+.copyright, .copyright-admin
+{
+    margin: 0px;
+    padding: 15px;
+}
+
+.copyright
+{
+    background-color: #aaa5ca;
+    color: #544d7c;
+}
+
+@media (max-width: 1000px) {
+    .navbar .navbar-nav {
+        display: flex;
+    }
+
+}

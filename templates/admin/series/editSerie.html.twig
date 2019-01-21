@@ -1,0 +1,32 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %} Administration - Modification de l'article de série : {{ serie.title }} | Marvel Passion {% endblock %}
+
+{% form_theme formSerie 'bootstrap_4_layout.html.twig' %}
+
+{% block body %}
+
+    <section class="d-flex flex-column align-items-center">
+
+        <h1 class="text-center title">Modification de l'article de série</h1>
+        <h2 class="serie-title mt-3 mb-3 subtitle">{{ serie.title }}</h2>
+
+        <p>
+            <a href="{{ path('admin') }}">Retour à l'administration</a>
+        </p>
+        <div class="col-md-8">
+            {{ form_start(formSerie) }}
+
+                {{ form_row(formSerie.title, {'attr': {'placeholder': 'Titre de la série'}}) }}
+                {{ form_row(formSerie.introduction, {'attr': {'placeholder': 'Introduction de la série'}}) }}
+                {{ form_row(formSerie.content, {'attr': {'placeholder': 'Contenu de la série'}}) }}
+                {{ form_row(formSerie.image, {'attr': {'placeholder': 'Url de l\'image de la série'}}) }}
+
+                <button type="submit" class="btn btn-form">Modifier</button>
+
+            {{ form_end(formSerie) }}
+            
+        </div>
+    </section>
+
+{% endblock %}

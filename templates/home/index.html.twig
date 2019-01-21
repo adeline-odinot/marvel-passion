@@ -1,0 +1,37 @@
+{% extends './base.html.twig' %}
+
+{% block title %} Accueil | Marvel-Passion {% endblock %}
+
+{% block body %}
+    <section class="d-flex flex-column align-items-center">
+        <h1 class="title">Bienvenue sur Marvel-Passion</h1>
+
+        <div id="carouselExampleIndicators" class="carousel slide col-md-9" data-ride="carousel">
+            <ol class="carousel-indicators">
+                {% for movie in movies %}
+                    <li data-target="#carouselExampleIndicators" data-slide-to="{{ loop.index0 }}" {% if loop.first %} class="active" {% endif %}></li>
+                {% endfor %}
+            </ol>
+            <div class="carousel-inner">
+                {% for movie in movies  %} 
+                <div class="carousel-item {% if loop.first %} active {% endif %}">
+                    <a href="{{ path('show_movies',{'id': movie.id}) }}">
+                        <img src="{{ movie.image }}" class="d-block w-100 img-slider" alt="{{ movie.title }}">
+                    </a>
+                    <div class="carousel-caption d-none d-md-block">
+                        <h3>{{ movie.title }}</h3>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %} Administration - Modification de l'article de film : {{ movie.title }} | Marvel Passion {% endblock %}
+
+{% form_theme formMovie 'bootstrap_4_layout.html.twig' %}
+
+{% block body %}
+
+    <section class="d-flex flex-column align-items-center">
+        
+        <h1 class="text-center title">Modification de l'article de film</h1>
+        <h2 class="movie-title mt-3 mb-3 subtitle">{{ movie.title }}</h2>
+        
+        <p>
+            <a href="{{ path('admin') }}">Retour à l'administration</a>
+        </p>
+        <div class="col-md-8">
+            {{ form_start(formMovie) }}
+
+                {{ form_row(formMovie.title, {'attr': {'placeholder': 'Titre du film'}}) }}
+                {{ form_row(formMovie.introduction, {'attr': {'placeholder': 'Introduction du film'}}) }}
+                {{ form_row(formMovie.content, {'attr': {'placeholder': 'Contenu du film'}}) }}
+                {{ form_row(formMovie.image, {'attr': {'placeholder': 'Url de l\'image du film'}}) }}
+
+                <button type="submit" class="btn btn-form">Modifier</button>
+
+            {{ form_end(formMovie) }}
+            
+        </div>    
+    </section>
+
+{% endblock %}

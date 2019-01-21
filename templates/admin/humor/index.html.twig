@@ -1,0 +1,57 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %} Administration - Humour {% endblock %}
+
+{% block body %}
+
+    <section>
+        <h1 class="text-center title mb-4">Gestion des articles d'humour</h1>
+
+        <div class="table-responsive">
+            <table class="table table-hover">
+
+                <thead class="text-center">
+                    <tr>
+                        <th>Id</th>
+                        <th>Titre</th>
+                        <th>Auteur</th>
+                        <th>Date de création</th>
+                        <th>Modifier</th>
+                        <th>Supprimer</th>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    {% for humour in humor %}
+                    <tr>
+                        <td>{{ humour.id }}</td>
+                        <td>{{ humour.title }}</td>
+                        <td>
+                            <img class="avatar avatar-mini" src="{{ humour.user.avatar }}" alt="Avatar de {{ humour.user.pseudo }}">
+                            {{ humour.user.pseudo }}
+                        </td>
+                        <td>{{ humour.creationDate | date('d/m/Y') }} à {{ humour.creationDate | date('H:i') }}</td>
+                        <td>
+                            <a href="{{ path('edit_humor',{'id': humour.id}) }}">
+                                <i class="admin-icon-edit far fa-edit"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="{{ path('delete_humor',{'id': humour.id}) }}">
+                                <i class="admin-icon-trash fas fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+        </div>
+            
+        <a class="btn btn-admin ml-2" href="{{ path('create_humor')}}"><i class="fas fa-plus-circle"></i> Ajouter un article d'humour</a>
+       
+        
+
+    </section>
+
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Série | Marvel-Passion {% endblock %}
+
+{% block body %}
+    <section class="series">
+    <h1 class="text-center title">Séries</h1>
+        {% for serie in series %}
+
+        {% set showSerie = path('show_series',{'id': serie.id}) %}
+
+        <article class="content-series d-flex justify-content-center row">
+            <div class="col-md-4 text-center">
+                <a href="{{ showSerie }}">
+                    <h2 class="subtitle">{{ serie.title }}</h2>
+                    <img class="img-series img-fluid mb-3" src="{{ serie.image }}" alt="{{ serie.title }}">
+                </a>
+                <small class="date">
+                    <em>Publié le {{ serie.creationDate | date('d/m/Y') }} à {{ serie.creationDate | date('H:i') }}</em>
+                </small>
+            </div>
+            <div class="col-md-6 d-flex flex-column align-items-center justify-content-center">
+                <p class="text-center">
+                    {{ serie.introduction | raw }}
+                </p>
+                <a class="more" href="{{ showSerie }}">Lire la suite</a>
+            </div>
+        </article>
+        <div class="border-bottom"></div>
+        {% endfor %}
+    </section>     
+{% endblock %}

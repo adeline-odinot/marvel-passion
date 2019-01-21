@@ -1,0 +1,54 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %} Administration - Modification d'un commentaire | Marvel Passion {% endblock %}
+
+{% form_theme formComment 'bootstrap_4_layout.html.twig' %}
+
+{% block body %}
+
+    <section class="d-flex flex-column align-items-center">
+
+        <h1 class="text-center title">Modification d'un commentaire</h1>
+        
+        <p>
+            <a href="{{ path('admin') }}">Retour à l'administration</a>
+        </p>
+
+        <div class="col-md-8 mt-3">
+            <p>
+                <strong class="strong-comment-admin">Titre : </strong>
+                {% if comments.movie == true %}
+                    {{ comments.movie.title }}
+                {% endif %}
+
+                {% if comments.series == true %}
+                    {{ comments.series.title }}
+                {% endif %}
+
+                {% if comments.humor == true %}
+                    {{ comments.humor.title }}
+                {% endif %}
+            </p>
+            <p>
+                <strong class="strong-comment-admin">Auteur : </strong>
+                {{ comments.user.pseudo }}
+            </p>
+            <p>
+                <strong class="strong-comment-admin">Date de création : </strong>
+                {{ comments.creationDate | date('d/m/Y') }}
+            </p>
+        </div>
+
+        <div class="col-md-8 mt-3">
+            {{ form_start(formComment) }}
+
+                {{ form_row(formComment.content, {'attr': {'placeholder': 'Modifier le contenu du commentaire'}}) }}
+
+                <button type="submit" class="btn btn-form">Modifier</button>
+
+            {{ form_end(formComment) }}
+            
+        </div>
+    </section>
+
+{% endblock %}

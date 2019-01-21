@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ humor.title }} | Marvel-Passion {% endblock %}
+
+{% block body %}
+
+    <article class="mr-4 ml-4">
+        <h1 class="title text-center">{{ humor.title }}</h1>
+        <div class="content-humor d-flex flex-column align-items-center">
+            <img class="img-fluid" src="{{ humor.image }}" alt=">{{ humor.title }}">
+            <div>
+                <p class="date">Publié le {{ humor.creationDate | date('d/m/Y')}} à {{ humor.creationDate | date('H:i') }}</p>
+            </div>
+            <p class="border-bottom"></p>            
+        </div>
+
+        {% set nbComment = humor.comments|length %}
+            {% if app.user %}
+            <div class="mb-4">
+                {{ form_start(formComment) }}
+
+                    {{ form_row(formComment.content, {'attr': {'placeholder': 'Votre commentaire'}}) }}
+
+                    <button type="submit" class="btn btn-form">Commenter</button>
+                
+                {{ form_end(formComment) }}
+            </div>  
+            {% else %}
+            <div class="mb-4">
+                <p class="connect-to-comment">Vous devez être connecté pour pouvoir commenter</p>
+            </div>
+            {% endif %}  
+
+
+            {% if nbComment > 0 %}
+                {% if humor.comments|length == 1 %}
+                    <h2 class="mb-4">
+                        <i class="fas fa-comment icon-comment"></i> 
+                        <span class=" nb-comment"> {{ nbComment }} commentaire : </span>
+                    </h2>
+                {% else %}
+                    <h2 class="mb-4">
+                        <i class="fas fa-comments icon-comment"></i> 
+                        <span class="nb-comment"> {{ nbComment }} commentaires : </span> 
+                    </h2>
+                {% endif %}
+            {% for comment in humor.comments %}
+                <div>
+                    <div class="mb-2">
+                        <a href="{{ path('show_user',{'pseudo': comment.user.pseudo}) }}">
+                            <img class="avatar avatar-mini" src=" {{ comment.user.avatar }}" alt="avatar de {{ comment.user.pseudo }}" />
+                        </a>
+                        <span>
+                            <a class="user-comment" href="{{ path('show_user',{'pseudo': comment.user.pseudo}) }}">
+                                {{ comment.user.pseudo }}
+                            </a>
+                            <em class="date-comment"> {{ comment.creationDate|date('d/m/Y') }}  à {{ comment.creationDate | date('H:i') }} </em>
+                        </span>
+                    </div>
+                    <blockquote>
+                        {{ comment.content }}
+                    </blockquote>
+                </div>
+                <p class="border-bottom"></p>  
+            {% endfor %}
+            {% endif %}
+    </article>
+
+{% endblock %}

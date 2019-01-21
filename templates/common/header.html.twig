@@ -1,0 +1,71 @@
+<header>
+    <!--Logo -->
+
+    <div class="text-center">
+        <a href="{{ path('home') }}"><img class="logo img-fluid" src="{{ asset('/images/logo.png') }}" alt="logo"></a>
+    </div>
+
+    <!--Navbar -->
+
+    <nav class="nav-header mb-1 navbar navbar-expand-lg navbar-dark ">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar"
+            aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link nav-design" href="{{ path('home') }}">Accueil </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-design" href="{{ path('movies') }}">Films</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-design" href="{{ path('series') }}">Séries </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-design" href="{{ path('humor') }}">Humour </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-design" href="/index.php/contact">Contact </a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto nav-flex-icons">
+                    {% if app.user %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link nav-design dropdown-toggle" data-toggle="dropdown" id="accountDropdown" href="#">
+                            <img src="{{ app.user.avatar }}" class="avatar avatar-micro" alt="Avatar de {{ app.user.pseudo }}">
+                            {{ app.user.pseudo }}
+                        </a>
+
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="accountDropdown">
+                            <a href="{{ path('account_index') }}" class="dropdown-item">Mon compte</a>
+                            <a href="{{ path('account_profile') }}" class="dropdown-item">Modifier mon profil</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="{{ path('account_logout') }}" class="dropdown-item">Se deconnecter</a>
+                        </div>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link nav-design" href="{{ path('account_register') }}">Inscription </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-design" href="{{ path('account_login') }}">Connexion </a>
+                    </li>
+                </ul>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Message flash -->
+
+    {% for label, messages in app.flashes %}
+        <div class="d-flex justify-content-center align-content-center alert alert-{{ label }}">
+            {% for message in messages %}
+                <p class="flashes">{{ message | raw }}</p>
+            {% endfor %}
+        </div>
+    {% endfor %}
+    
+</header>

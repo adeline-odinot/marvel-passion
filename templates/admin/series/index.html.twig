@@ -1,0 +1,57 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %} Administration - Séries {% endblock %}
+
+{% block body %}
+
+    <section>
+        <h1 class="text-center title mb-4">Gestion des articles de séries</h1>
+        
+        <div class="table-responsive">
+            <table class="table table-hover">
+
+                <thead class="text-center">
+                    <tr>
+                        <th>Id</th>
+                        <th>Titre</th>
+                        <th>Auteur</th>
+                        <th>Date de création</th>
+                        <th>Modifier</th>
+                        <th>Supprimer</th>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    {% for serie in series %}
+                    <tr>
+                        <td>{{ serie.id }}</td>
+                        <td>{{ serie.title }}</td>
+                        <td>
+                            <img class="avatar avatar-mini" src="{{ serie.user.avatar }}" alt="Avatar de {{ serie.user.pseudo }}">
+                            {{ serie.user.pseudo }}
+                        </td>
+                        <td>{{ serie.creationDate | date('d/m/Y') }} à {{ serie.creationDate | date('H:i') }}</td>
+                        <td>
+                            <a href="{{ path('edit_serie',{'id': serie.id}) }}">
+                                <i class="admin-icon-edit far fa-edit"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="{{ path('delete_serie',{'id': serie.id}) }}">
+                                <i class="admin-icon-trash fas fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+        </div>
+        
+        <a class="btn btn-admin ml-2" href="{{ path('create_serie')}}"><i class="fas fa-plus-circle"></i> Ajouter un article de série</a>
+        
+        
+
+    </section>
+
+{% endblock %}

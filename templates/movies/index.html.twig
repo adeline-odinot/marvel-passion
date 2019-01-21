@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Films | Marvel-Passion {% endblock %}
+
+{% block body %}
+    <section class="movies">
+        <h1 class="text-center title">Films</h1>
+        {% for movie in movies %}
+
+            {% set showMovie = path('show_movies',{'id': movie.id}) %}
+
+            <article class="content-movies d-flex justify-content-center row">
+                <div class="col-md-4 text-center">
+                    <a href="{{ showMovie }}">
+                        <h2 class="subtitle">{{ movie.title }}</h2>
+                        <img class="img-movies img-fluid mb-3" src="{{ movie.image }}" alt="{{ movie.title }}">
+                    </a>
+                    <small class="date">
+                        <em>Publié le {{ movie.creationDate | date('d/m/Y') }} à {{ movie.creationDate | date('H:i') }}</em>
+                    </small>
+                </div>
+                <div class="col-md-6 d-flex flex-column align-items-center justify-content-center">
+                    <p class="text-center">
+                        {{ movie.introduction | raw }}
+                    </p>
+                    <a class="more" href="{{ showMovie }}">Lire la suite</a>
+                </div>
+            </article>
+            <div class="border-bottom"></div>
+        {% endfor %}
+    </section>     
+{% endblock %}
