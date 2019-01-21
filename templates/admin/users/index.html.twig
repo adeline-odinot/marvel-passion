@@ -24,7 +24,7 @@
                 </thead>
                 <tbody class="text-center">
 
-                    {% for user in users %}
+                    {% for user in paginator.data %}
 
                         {% set isAdmin = false %}
                         {% set userRole = user.roles %}
@@ -68,9 +68,7 @@
             </table>
         </div>
         
-        <a class="btn btn-admin ml-2" href="#"><i class="fas fa-plus-circle"></i> Ajouter un utilisateur administrateur</a>
-        
-        
+        {{ paginator.display() }}
 
     </section>
 

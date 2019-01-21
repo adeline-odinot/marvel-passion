@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Role;
 use App\Entity\Users;
+use App\Service\Paginator;
 use App\Form\AdminUserType;
 use App\Repository\UsersRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,14 +22,19 @@ class AdminUsersController extends AbstractController
      * @Route("/admin/users", name="admin_users_index")
      *
      * @param UsersRepository $repo
+     * @var $page
+     * @param Paginator $paginator
      * 
      * @return void
      */
 
-    public function index(UsersRepository $repo)
+    public function index(UsersRepository $repo, $page = 1, Paginator $paginator)
     {
+        $paginator->setEntityClass(Users::class)
+                  ->setPage($page);
+
         return $this->render('admin/users/index.html.twig', [
-            'users' => $repo->findAll()
+            'paginator' => $paginator
         ]);
     }
 

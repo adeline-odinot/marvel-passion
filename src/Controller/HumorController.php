@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Humor;
 use App\Entity\Comments;
 use App\Form\CommentType;
+use App\Service\Paginator;
 use App\Repository\HumorRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -16,26 +18,28 @@ class HumorController extends AbstractController
     /**
      * Permet d'afficher la page d'humour
      * 
-     * @Route("/humor", name="humor")
+     * @Route("/humor/{page}", name="humor", requirements={"page": "\d+"})
+     * 
+     * @param HumorRepository $repo
+     * @var $page
+     * @param Paginator $paginator
      * 
      * @return Response
      */
-    public function index(HumorRepository $repo)
+    public function index(HumorRepository $repo, $page = 1, Paginator $paginator)
     {
+        $paginator->setEntityClass(Humor::class)
+                  ->setPage($page);
 
-        $humor = $repo->findAll();
-
-        return $this->render('humor/index.html.twig',
-            [
-                'humor' => $humor,
-            ]
-        );
+        return $this->render('humor/index.html.twig', [
+            'paginator' => $paginator
+        ]);
     }
 
     /**
      * Permet d'afficher l'article d'humour grâce à son id
      * 
-     * @Route("/humor/{id}", name="show_humor")
+     * @Route("/humor/show/{id}", name="show_humor")
      * 
      * @param HumorRepository $repo
      * @param Request $request

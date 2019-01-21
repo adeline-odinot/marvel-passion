@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Movies;
 use App\Entity\Comments;
 use App\Form\CommentType;
+use App\Service\Paginator;
 use App\Repository\MoviesRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -16,26 +18,29 @@ class MoviesController extends AbstractController
     /**
      * Permet d'afficher la page des films
      * 
-     * @Route("/movies", name="movies")
+     * @Route("/movies/{page}", name="movies", requirements={"page": "\d+"})
+     * 
+     * @param MoviesRepository $repo
+     * @var $page
+     * @param Paginator $paginator
      * 
      * @return Response
      */
-    public function index(MoviesRepository $repo)
+    public function index(MoviesRepository $repo, $page = 1, Paginator $paginator)
     {
+        $paginator->setEntityClass(Movies::class)
+                  ->setLimit(4)
+                  ->setPage($page);
 
-        $movies = $repo->findAll();
-
-        return $this->render('movies/index.html.twig',
-            [
-                'movies' => $movies,
-            ]
-        );
+        return $this->render('movies/index.html.twig', [
+            'paginator' => $paginator
+        ]);
     }
 
     /**
      * Permet d'afficher un article de film selon l'id
      * 
-     * @Route("/movies/{id}", name="show_movies")
+     * @Route("/movies/show/{id}", name="show_movies")
      * 
      * @param MoviesRepository $repo
      * @param Request $request

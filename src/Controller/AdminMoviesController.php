@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Movies;
 use App\Form\MovieType;
+use App\Service\Paginator;
 use App\Repository\MoviesRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -18,16 +19,21 @@ class AdminMoviesController extends AbstractController
     /**
      * Permet d'afficher la page d'administration des articles de film
      * 
-     * @Route("/admin/movies", name="admin_movies_index")
+     * @Route("/admin/movies/{page}", name="admin_movies_index", requirements={"page": "\d+"})
      *
      * @param MoviesRepository $repo
+     * @var $page
+     * @param Paginator $paginator
      * @return void
      */
 
-    public function index(MoviesRepository $repo)
+    public function index(MoviesRepository $repo, $page = 1, Paginator $paginator)
     {
+        $paginator->setEntityClass(Movies::class)
+                  ->setPage($page);
+
         return $this->render('admin/movies/index.html.twig', [
-            'movies' => $repo->findAll()
+        'paginator' => $paginator
         ]);
     }
 

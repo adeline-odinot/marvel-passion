@@ -21,7 +21,7 @@
                     </tr>
                 </thead>
                 <tbody class="text-center">
-                    {% for serie in series %}
+                    {% for serie in paginator.data %}
                     <tr>
                         <td>{{ serie.id }}</td>
                         <td>{{ serie.title }}</td>
@@ -50,7 +50,7 @@
         
         <a class="btn btn-admin ml-2" href="{{ path('create_serie')}}"><i class="fas fa-plus-circle"></i> Ajouter un article de série</a>
         
-        
+        {{ paginator.display() }}
 
     </section>
 

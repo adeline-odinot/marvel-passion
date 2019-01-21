@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Series;
 use App\Entity\Comments;
 use App\Form\CommentType;
+use App\Service\Paginator;
 use App\Repository\SeriesRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -16,25 +18,29 @@ class SeriesController extends AbstractController
     /**
      * Permet d'afficher la page des séries
      * 
-     * @Route("/series", name="series")
+     * @Route("/series/{page}", name="series", requirements={"page": "\d+"})
+     * 
+     * @param SeriesRepository $repo
+     * @var $page
+     * @param Paginator $paginator
      * 
      * @return Response
      */
-    public function index(SeriesRepository $repo)
+    public function index(SeriesRepository $repo, $page = 1, Paginator $paginator)
     {
-        $series = $repo->findAll();
+        $paginator->setEntityClass(Series::class)
+                  ->setLimit(4)
+                  ->setPage($page);
 
-        return $this->render('series/index.html.twig',
-            [
-                'series' => $series,
-            ]
-        );
+        return $this->render('series/index.html.twig', [
+            'paginator' => $paginator
+        ]);
     }
 
     /**
      * Permet de d'afficher un article de série selon l'id
      * 
-     * @Route("/series/{id}", name="show_series")
+     * @Route("/series/show/{id}", name="show_series")
      * 
      * @param SeriesRepository $repo
      * @param Request $request

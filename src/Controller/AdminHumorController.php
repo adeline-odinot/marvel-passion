@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Humor;
 use App\Form\HumorType;
+use App\Service\Paginator;
 use App\Repository\HumorRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -13,22 +14,26 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-
 class AdminHumorController extends AbstractController
 {
     /**
      * Affichage de la page d'administration des articles d'humour
      * 
-     * @Route("/admin/humor", name="admin_humor_index")
+     * @Route("/admin/humor/{page}", name="admin_humor_index", requirements={"page": "\d+"})
      *
      * @param HumorRepository $repo
+     * @var $page
+     * @param Paginator $paginator
      * @return void
      */
 
-    public function index(HumorRepository $repo)
+    public function index(HumorRepository $repo, $page = 1, Paginator $paginator)
     {
+        $paginator->setEntityClass(Humor::class)
+                  ->setPage($page);
+
         return $this->render('admin/humor/index.html.twig', [
-            'humor' => $repo->findAll()
+            'paginator' => $paginator
         ]);
     }
 

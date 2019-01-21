@@ -5,7 +5,7 @@
 {% block body %}
     <section class="series">
     <h1 class="text-center title">Séries</h1>
-        {% for serie in series %}
+        {% for serie in paginator.data %}
 
         {% set showSerie = path('show_series',{'id': serie.id}) %}
 
@@ -28,5 +28,7 @@
         </article>
         <div class="border-bottom"></div>
         {% endfor %}
+
+        {{ paginator.display() }}
     </section>     
 {% endblock %}

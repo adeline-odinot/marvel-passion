@@ -6,13 +6,16 @@
     <section>
         <h1 class="text-center title">Humour</h1>
         <div class="humor row  d-flex justify-content-center text-center">
-            {% for humour in humor %}
+            {% for humor in paginator.data %}
             <article class="col-lg-3 col-md-12 content-humor">
                 <div>
-                    <a class="humor" href="{{ path('show_humor',{'id': humour.id}) }}"><img class="img-humor img-fluid" src="{{ humour.image }}" alt=">{{ humour.title }}"></a>
+                    <a class="humor" href="{{ path('show_humor',{'id': humor.id}) }}"><img class="img-humor img-fluid" src="{{ humor.image }}" alt=">{{ humor.title }}"></a>
                 </div>
             </article>
             {% endfor %}
         </div>
+
+    {{ paginator.display() }}
+
     </section> 
 {% endblock %}

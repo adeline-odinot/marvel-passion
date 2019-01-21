@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Series;
 use App\Form\SerieType;
+use App\Service\Paginator;
 use App\Repository\SeriesRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -18,16 +19,22 @@ class AdminSeriesController extends AbstractController
     /**
      * Permet d'afficher la page d'administration des articles de série
      * 
-     * @Route("/admin/series", name="admin_series_index")
+     * @Route("/admin/series/{page}", name="admin_series_index", requirements={"page": "\d+"})
      *
      * @param SeriesRepository $repo
+     * @var $page
+     * @param Paginator $paginator
+     * 
      * @return void
      */
 
-    public function index(SeriesRepository $repo)
+    public function index(SeriesRepository $repo, $page = 1, Paginator $paginator)
     {
+        $paginator->setEntityClass(Series::class)
+                  ->setPage($page);
+
         return $this->render('admin/series/index.html.twig', [
-            'series' => $repo->findAll()
+            'paginator' => $paginator
         ]);
     }
 

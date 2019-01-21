@@ -378,7 +378,19 @@ th
 
 /* ----- FIN ADMIN ----- */
 
+/* -- Paginator -- */
 
+.page-item.active .page-link 
+{
+    color: white !important;
+    background-color: #aaa5ca !important;
+    border-color: #ca8bd5 !important;
+}
+
+.page-link {
+    color: #9758a2 !important;
+    border-color: #c3b0c6 !important;
+}
 
 /* --- Error --- */
 

@@ -21,22 +21,22 @@
                     </tr>
                 </thead>
                 <tbody class="text-center">
-                    {% for humour in humor %}
+                    {% for humor in paginator.data %}
                     <tr>
-                        <td>{{ humour.id }}</td>
-                        <td>{{ humour.title }}</td>
+                        <td>{{ humor.id }}</td>
+                        <td>{{ humor.title }}</td>
                         <td>
-                            <img class="avatar avatar-mini" src="{{ humour.user.avatar }}" alt="Avatar de {{ humour.user.pseudo }}">
-                            {{ humour.user.pseudo }}
+                            <img class="avatar avatar-mini" src="{{ humor.user.avatar }}" alt="Avatar de {{ humor.user.pseudo }}">
+                            {{ humor.user.pseudo }}
                         </td>
-                        <td>{{ humour.creationDate | date('d/m/Y') }} à {{ humour.creationDate | date('H:i') }}</td>
+                        <td>{{ humor.creationDate | date('d/m/Y') }} à {{ humor.creationDate | date('H:i') }}</td>
                         <td>
-                            <a href="{{ path('edit_humor',{'id': humour.id}) }}">
+                            <a href="{{ path('edit_humor',{'id': humor.id}) }}">
                                 <i class="admin-icon-edit far fa-edit"></i>
                             </a>
                         </td>
                         <td>
-                            <a href="{{ path('delete_humor',{'id': humour.id}) }}">
+                            <a href="{{ path('delete_humor',{'id': humor.id}) }}">
                                 <i class="admin-icon-trash fas fa-trash"></i>
                             </a>
                         </td>
@@ -46,11 +46,12 @@
                 </tbody>
 
             </table>
+
         </div>
             
         <a class="btn btn-admin ml-2" href="{{ path('create_humor')}}"><i class="fas fa-plus-circle"></i> Ajouter un article d'humour</a>
        
-        
+        {{ paginator.display() }}
 
     </section>
 
