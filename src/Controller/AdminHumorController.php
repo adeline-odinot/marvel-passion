@@ -28,12 +28,12 @@ class AdminHumorController extends AbstractController
      */
 
     public function index(HumorRepository $repo, $page = 1, Paginator $paginator)
-    {
+    {   
         $paginator->setEntityClass(Humor::class)
                   ->setPage($page);
 
         return $this->render('admin/humor/index.html.twig', [
-            'paginator' => $paginator
+            'paginator' => $paginator,
         ]);
     }
 

@@ -16,7 +16,7 @@
                     <img class="img-series img-fluid mb-3" src="{{ serie.image }}" alt="{{ serie.title }}">
                 </a>
                 <small class="date">
-                    <em>Publié le {{ serie.creationDate | date('d/m/Y') }} à {{ serie.creationDate | date('H:i') }}</em>
+                    <em>Publié le {{ serie.creationDate | date('d/m/Y') }} à {{ serie.creationDate | date('H:i') }} par {{ serie.user.pseudo }}</em>
                 </small>
             </div>
             <div class="col-md-6 d-flex flex-column align-items-center justify-content-center">
@@ -25,6 +25,27 @@
                 </p>
                 <a class="more" href="{{ showSerie }}">Lire la suite</a>
             </div>
+
+            {% set roleAdmin = serie.user.roles == 'ROLE_ADMIN' %}
+            
+            {% if roleAdmin %}
+                <div class="mt-5">                        
+                    <a href="{{ path('edit_serie',{'id': serie.id}) }}">
+                        <i class="admin-icon-edit far fa-edit"></i>
+                        Modifier
+                    </a>
+                
+                    <a class="ml-3" href="{{ path('delete_serie',{'id': serie.id}) }}">
+                        <i class="admin-icon-trash fas fa-trash"></i>
+                        Supprimer
+                    </a>
+                </div>
+            {% endif %}
+            
+                    
+            
+            
+
         </article>
         <div class="border-bottom"></div>
         {% endfor %}

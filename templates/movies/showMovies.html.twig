@@ -8,16 +8,29 @@
         <h1 class="title text-center">{{ movies.title }}</h1>
         <div class="content-movies d-flex flex-column align-items-center">
             <img class="img-fluid col-md-8" src="{{ movies.image }}" alt="{{ movies.title }}">
-            <div class="mr-4 ml-4 mt-5">
-                <h2 class="subtitle">Introduction</h2>
-                <p class="mt-4"> {{ movies.introduction | raw }} </p>
-            </div>
             
-            <div class="content-movies-show mt-2 mr-4 ml-4">
-                <h2 class="subtitle mb-4">Informations</h2>   
-                <p>{{ movies.content | raw }}</p>
-                <p class="date">Publié le {{ movies.creationDate | date('d/m/Y')}} à {{ movies.creationDate | date('H:i') }}</p>
+
+            <div class="container-fluid">
+
+                <div class="row">
+
+                    <div class="mr-4 ml-4 mt-5">
+                        <h2 class="subtitle">Introduction</h2>
+                        <p class="mt-4"> {{ movies.introduction | raw }} </p>
+                    </div>
+
+                </div>
+                
+                <div class="row">
+                    <div class="content-movies-show mt-2 mr-4 ml-4">
+                        <h2 class="subtitle mb-4">Informations</h2>   
+                        <p>{{ movies.content | raw }}</p>
+                        <p class="date">Publié le {{ movies.creationDate | date('d/m/Y')}} à {{ movies.creationDate | date('H:i') }} par {{ movies.user.pseudo }}</p>
+                    </div>
+                </div>
+
             </div>
+
             <p class="border-bottom"></p>            
         </div>
 

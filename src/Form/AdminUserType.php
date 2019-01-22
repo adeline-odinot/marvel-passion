@@ -19,6 +19,7 @@ class AdminUserType extends AbstractType
             ->add('role_id', ChoiceType::class, [
                 'choices' => $options['data'],
                 'mapped' =>false,
+                'label' => 'Rôle'
                 ]);
     }
 

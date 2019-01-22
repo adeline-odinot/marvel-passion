@@ -9,7 +9,7 @@
         <div class="content-humor d-flex flex-column align-items-center">
             <img class="img-fluid" src="{{ humor.image }}" alt=">{{ humor.title }}">
             <div>
-                <p class="date">Publié le {{ humor.creationDate | date('d/m/Y')}} à {{ humor.creationDate | date('H:i') }}</p>
+                <p class="date">Publié le {{ humor.creationDate | date('d/m/Y')}} à {{ humor.creationDate | date('H:i') }} par {{ humor.user.pseudo }}</p>
             </div>
             <p class="border-bottom"></p>            
         </div>

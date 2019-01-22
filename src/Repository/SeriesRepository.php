@@ -19,6 +19,25 @@ class SeriesRepository extends ServiceEntityRepository
         parent::__construct($registry, Series::class);
     }
 
+    public function findSeriesByLimit($limit)
+    {
+        return $this->createQueryBuilder('s')
+                    ->orderBy('s.id', 'DESC')
+                    ->setMaxResults($limit)
+                    ->getQuery()
+                    ->getResult();
+
+    }
+
+    public function findSeriesByDesc()
+    {
+        return $this->createQueryBuilder('s')
+                    ->orderBy('s.id', 'DESC')
+                    ->getQuery()
+                    ->getResult();
+
+    }
+
     // /**
     //  * @return Series[] Returns an array of Series objects
     //  */

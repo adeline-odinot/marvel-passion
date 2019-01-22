@@ -8,27 +8,19 @@
 
     <section class="d-flex flex-column align-items-center">
 
-        <h1 class="text-center title">Modification du role </h1>
+        <h1 class="text-center title mb-3">Modification du role </h1>
 
         <p>
             <a href="{{ path('admin') }}">Retour à l'administration</a>
         </p>
 
-        <div class="col-md-8">
-            {{ form_start(form) }}
+        <h2 class="subtitle mt-4 mb-5">Gestion des rôles</h2>
 
-                {{ form_row(form.role_id) }}
-
-                <button type="submit" class="btn btn-form">Modifier</button>
-
-            {{ form_end(form) }}
-            
-        </div>
-        <div class="table-responsive">
+        <div class="table-responsive container-fluid">
             <table class="table table-hover">
 
                 <thead class="text-center">
-                    <tr>
+                    <tr class="table-admin">
                         <th>Nom du rôle</th>
                         <th>Action</th>
                     </tr>
@@ -43,7 +35,7 @@
                         <td>{{ role }}</td>
                         <td>
                         {% if role == 'ROLE_USER' %}
-                            <i class="admin-icon-trash fas fa-check-circle"></i>
+                            <i class="admin-icon-valid fas fa-check-circle"></i>
                         {% else %}
                             <a href="{{ path('delete_role',{'id': user.id, 'idRole': tabRole[role] }) }}">
                                 <i class="admin-icon-trash fas fa-trash"></i>
@@ -56,6 +48,19 @@
                 </tbody>
 
             </table>
+        </div>
+
+        <h2 class="subtitle mt-4 mb-5">Ajouter un rôle</h2>
+
+        <div class="col-md-8 mb-5">
+            {{ form_start(form) }}
+
+                {{ form_row(form.role_id) }}
+
+                <button type="submit" class="btn btn-form">Ajouter</button>
+
+            {{ form_end(form) }}
+            
         </div>
     </section>
 

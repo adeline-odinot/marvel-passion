@@ -25,13 +25,16 @@ a
     text-decoration: underline;
 }
 
+.subtitle, .subtitle-admin
+{
+    text-decoration: underline;
+    margin: 0px;
+}
+
 .subtitle
 {
-   
-    color: #7368ac;
-    text-decoration: underline;
     font-size: 22px;
-    margin: 0px;
+    color: #7368ac;
 }
 
 a  > .subtitle:hover
@@ -198,50 +201,9 @@ body
 }
 
 
-/* -- user profil -- */
-
-.user-profile
-{
-    font-weight: bold;
-    font-size: 35px;
-}
-
-.avatar
-{
-    border-radius: 50%;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-}
-
-.avatar-medium
-{
-    width: 64px;
-    height: 64px;
-}
-
-.avatar-mini
-{
-    width: 48px;
-    height: 48px;
-}
-
-
-.avatar-micro
-{
-    width: 24px;
-    height: 24px;
-}
 
 
 /* --- Table --- */
-
-th
-{
-    background-color: #ff5a5a;
-    border-color: #ff5a5a;
-    color: white !important;
-}
 
 .table td, .table th
 {
@@ -289,8 +251,25 @@ th
 
 /* ----- DEBUT ADMIN ----- */
 
+/* Dashboard Admin */
+
+.subtitle-dashboard
+{
+    font-size: 1.5rem;
+}
+
+.card-body
+{
+    color: white !important;
+}
 
 /* Content Admin */
+
+.subtitle-admin
+{
+    font-size: 2rem;
+    color:#84566f;
+}
 
 .content-admin
 {
@@ -308,6 +287,42 @@ th
 .link-admin:hover
 {
     color:#f2b190 !important;
+}
+
+/* Table Admin */
+
+.table-admin
+{
+    background-color: #ff5a5a;
+    border-color: #ff5a5a;
+    color: white !important;
+}
+
+.table thead .best th, .table thead .worst th 
+{
+    vertical-align: middle;
+}
+
+.table thead .best th 
+{
+    border-top: 2px solid #688b6a !important;
+    border-bottom: 2px solid #688b6a !important;
+}
+
+.table thead .worst th 
+{
+    border-top: 2px solid #a45555 !important;
+    border-bottom: 2px solid #a45555 !important;
+}
+
+.table-best
+{
+    border-color: #155724 !important;
+}
+
+.table-worst
+{
+    border-color: #721c24 !important;
 }
 
 /* Form Admin */
@@ -342,6 +357,14 @@ th
     background-color: #8eb1fd;
 }
 
+.admin-icon-valid
+{
+    color: #ffffff;
+    padding: 10px;
+    border-radius: 50%;
+    background-color: #4b984f;
+}
+
 .btn-admin
 {
     background-color: #ff5a5a;
@@ -354,6 +377,11 @@ th
     background-color: #f74848;
     border-color: #f74848;
     color: white;
+}
+
+.tox .tox-notification 
+{
+    display: none !important;
 }
 
 /* Comment Admin */
@@ -413,6 +441,55 @@ th
 {
    color: #ff3d3d;
 }
+
+/* -- user profil -- */
+
+
+.img-size
+{
+    max-width: 325px;
+    max-height: 250px;
+}
+
+
+.text-intro
+{
+    color: black !important;
+}
+
+.user-profile
+{
+    font-weight: bold;
+    font-size: 35px;
+}
+
+.avatar
+{
+    border-radius: 50%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+}
+
+.avatar-medium
+{
+    width: 64px;
+    height: 64px;
+}
+
+.avatar-mini
+{
+    width: 48px;
+    height: 48px;
+}
+
+
+.avatar-micro
+{
+    width: 24px;
+    height: 24px;
+}
+
 
 /* --- Footer --- */
 

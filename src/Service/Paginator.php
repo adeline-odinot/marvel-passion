@@ -102,7 +102,8 @@ class Paginator
      *
      * @return array
      */
-    public function getData() {
+    public function getData() 
+    {
         if(empty($this->entityClass)) 
         {
             ("Vous n'avez pas spécifié l'entité sur laquelle vous voulez paginer. La méthode setEntityClass() de l'objet Paginator doit être utiliser.");
@@ -112,7 +113,7 @@ class Paginator
 
         return $this->manager
                         ->getRepository($this->entityClass)
-                        ->findBy([], [], $this->limit, $offset);
+                        ->findBy([], array('id' => 'DESC'), $this->limit, $offset);
     }
 
     /**

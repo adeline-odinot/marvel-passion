@@ -3,23 +3,24 @@
 {% block title %} Accueil | Marvel-Passion {% endblock %}
 
 {% block body %}
-    <section class="d-flex flex-column align-items-center">
-        <h1 class="title">Bienvenue sur Marvel-Passion</h1>
 
-        <div id="carouselExampleIndicators" class="carousel slide col-md-9" data-ride="carousel">
+    <section class="d-flex flex-column align-items-center">
+        <h1 class="title mb-5">Bienvenue sur Marvel-Passion</h1>
+
+        <div id="carouselExampleIndicators" class="carousel slide col-md-9 mb-5" data-ride="carousel">
             <ol class="carousel-indicators">
-                {% for movie in movies %}
+                {% for element in slide %}
                     <li data-target="#carouselExampleIndicators" data-slide-to="{{ loop.index0 }}" {% if loop.first %} class="active" {% endif %}></li>
                 {% endfor %}
             </ol>
             <div class="carousel-inner">
-                {% for movie in movies  %} 
+                {% for element in slide  %} 
                 <div class="carousel-item {% if loop.first %} active {% endif %}">
-                    <a href="{{ path('show_movies',{'id': movie.id}) }}">
-                        <img src="{{ movie.image }}" class="d-block w-100 img-slider" alt="{{ movie.title }}">
+                    <a href="{{ path('show_movies',{'id': element.id}) }}">
+                        <img src="{{ element.image }}" class="d-block w-100 img-slider" alt="{{ element.title }}">
                     </a>
                     <div class="carousel-caption d-none d-md-block">
-                        <h3>{{ movie.title }}</h3>
+                        <h3>{{ element.title }}</h3>
                     </div>
                 </div>
                 {% endfor %}
@@ -32,6 +33,27 @@
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="sr-only">Next</span>
             </a>
+        </div>
+
+
+        <div class="row">
+            {% for lastHumor in humor %}
+                <article class="col content-humor">
+                    <h2 class="subtitle mb-4">Dernière actualité</h2>
+                    <div>
+                        <a class="humor" href="{{ path('show_humor',{'id': lastHumor.id}) }}"><img class="img-humor img-fluid" src="{{ lastHumor.image }}" alt=">{{ lastHumor.title }}"></a>
+                    </div>
+                </article>
+            {% endfor %}
+
+            {% for lastHumor in humor %}
+                <article class="col content-humor">
+                    <h2 class="subtitle mb-4">Dernier article d'humour</h2>
+                    <div>
+                        <a class="humor" href="{{ path('show_humor',{'id': lastHumor.id}) }}"><img class="img-humor img-fluid" src="{{ lastHumor.image }}" alt=">{{ lastHumor.title }}"></a>
+                    </div>
+                </article>
+            {% endfor %}
         </div>
     </section>
 {% endblock %}

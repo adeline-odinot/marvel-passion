@@ -34,6 +34,44 @@
         
         {% endif %}
 
+       
+
+        {% if user.movies | length > 0 %}
+
+            <h2 class="subtitle mb-4"> Les articles films de {{ user.pseudo }} </h2>
+            
+            <div class="row">
+               {% for movie in user.movies %}
+                    <div class="col">
+                        <div class="card bg-light mb-3">
+                            <a href="{{ path('show_movies',{'id': movie.id}) }}">
+                                <div class="card-hearder mt-3 mb-3 text-center">
+                                    {{ movie.title }}
+                                </div>
+                            </a>
+                            
+                            <a class="text-center" href="{{ path('show_movies',{'id': movie.id}) }}">
+                                <img class="img-size img-fluid" src="{{ movie.image }}" alt="{{ movie.title }}">
+                            </a>
+
+                            <div class="card-body text-intro">
+                                <p class="card-text text-justify">
+                                    {{ movie.introduction | raw}}
+                                </p>
+                                <p>
+                                <p>
+                                    <a href="{{ path('show_movies',{'id': movie.id}) }}" class="btn btn-form">En savoir plus</a>
+                                </p>
+                            </div>
+                            
+                        </div>
+                    </div>
+
+               {% endfor %}
+            </div>
+
+        {% endif %}
+
         
     </section>
 

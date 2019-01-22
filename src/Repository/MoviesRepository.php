@@ -19,6 +19,25 @@ class MoviesRepository extends ServiceEntityRepository
         parent::__construct($registry, Movies::class);
     }
 
+    public function findMoviesByLimit($limit)
+    {
+        return $this->createQueryBuilder('m')
+                    ->orderBy('m.id', 'DESC')
+                    ->setMaxResults($limit)
+                    ->getQuery()
+                    ->getResult();
+
+    }
+
+    public function findMoviesByDesc()
+    {
+        return $this->createQueryBuilder('m')
+                    ->orderBy('m.id', 'DESC')
+                    ->getQuery()
+                    ->getResult();
+
+    }
+
     // /**
     //  * @return Movies[] Returns an array of Movies objects
     //  */
