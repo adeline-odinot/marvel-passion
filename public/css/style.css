@@ -1,3 +1,95 @@
+/* --- Animation --- */
+
+
+@keyframes animationHumorBack {
+	0% {
+		opacity: 1;
+		text-shadow: 0px 0px 40px #fff;
+		transform: scale(1.3);
+    }
+    
+	100% {
+		opacity: 0;
+		text-shadow: 0px 0px 50px #fff;
+		transform: scale(0);
+	}
+}
+@keyframes animationHumor {
+	0% {
+		opacity: 0;
+		text-shadow: 0px 0px 40px #fff;
+		transform: scale(1.3);
+	}
+	50% {
+		opacity: 0.5;
+		text-shadow: 0px 0px 10px #fff;
+		transform: scale(1.1);
+	}
+	100% {
+		opacity: 1;
+		text-shadow: 0px 0px 1px #fff;
+		transform: scale(1);
+	}
+}
+
+.bg-primary-hover:hover
+{
+    background-color: #0469d5 !important;
+}
+
+.bg-info-hover:hover
+{ 
+    background-color: #1599ae!important;
+}
+
+.bg-secondary-hover:hover
+{ 
+    background-color: #62696f!important;
+}
+.bg-success:hover
+{ 
+    background-color: #23923c!important;
+}
+.bg-danger:hover
+{ 
+    background-color: #cd2e3d!important;
+}
+
+ /* Humour */
+
+ .content-humor figure 
+ {
+    width: 20%;
+    margin: 10px;
+    overflow: hidden;
+}
+
+.content-humor figcaption 
+{
+    background-color: rgba(0,0,0,0.4);
+    width: 100%;
+    bottom: 3px;
+    visibility: hidden;
+    cursor: pointer;
+    color: white;
+}
+
+.content-humor figcaption p 
+{
+    color: white;
+}
+
+figure:hover figcaption {
+    visibility: visible;
+    animation: animationHumor 0.5s ease-out;
+}
+
+figure figcaption {
+    animation: animationHumorBack 0.5s ease-out;
+    transition-duration: 0.5s;
+}
+
+
 /* --- GLOBAL --- */
 
 *
@@ -7,7 +99,6 @@
 
 ul
 {
-    list-style-type: none;
     padding: 0px;
     margin: 0px;
 }
@@ -77,7 +168,10 @@ body
     color:#5e47e3 !important;
 }
 
-
+img, iframe[src*=youtube]
+{
+    max-width: 100%;
+}
 
 /* --- HEADER --- */
 
@@ -132,6 +226,7 @@ body
 .date
 {
     color:#ad5164;
+    display: block;
 }
 
 .more
@@ -198,16 +293,6 @@ body
     background-color: #6a52eb;
     border-color: #6a52eb;
     color: white;
-}
-
-
-
-
-/* --- Table --- */
-
-.table td, .table th
-{
-    vertical-align: middle;
 }
 
 /* --- Comment --- */
@@ -298,29 +383,18 @@ body
     color: white !important;
 }
 
-.table thead .best th, .table thead .worst th 
+.table thead .design-table-dasboard th 
 {
     vertical-align: middle;
 }
 
-.table thead .best th 
-{
-    border-top: 2px solid #688b6a !important;
-    border-bottom: 2px solid #688b6a !important;
-}
-
-.table thead .worst th 
+.table thead .design-table-dasboard th 
 {
     border-top: 2px solid #a45555 !important;
     border-bottom: 2px solid #a45555 !important;
 }
 
-.table-best
-{
-    border-color: #155724 !important;
-}
-
-.table-worst
+.table-design-dasboard
 {
     border-color: #721c24 !important;
 }
@@ -382,6 +456,11 @@ body
 .tox .tox-notification 
 {
     display: none !important;
+}
+
+.mce-container, .mce-container *, .mce-widget, .mce-widget *, .mce-reset
+{
+    white-space: pre-wrap !important;
 }
 
 /* Comment Admin */
@@ -490,6 +569,31 @@ body
     height: 24px;
 }
 
+.profil-title
+{
+    color: #484893;
+    font-size: 30px;
+    text-decoration: underline;
+}
+
+
+.profil-title-card
+{
+    background-color: #d7d7d7;
+    color:#7a38a0;
+}
+
+/* --- Table --- */
+
+.table thead th {
+    vertical-align: middle !important;
+}
+
+.table td, .table th
+{
+    vertical-align: middle;
+}
+
 
 /* --- Footer --- */
 
@@ -504,6 +608,8 @@ body
     background-color: #aaa5ca;
     color: #544d7c;
 }
+
+/* --- Media Queries --- */
 
 @media (max-width: 1000px) {
     .navbar .navbar-nav {

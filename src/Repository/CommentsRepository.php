@@ -19,6 +19,15 @@ class CommentsRepository extends ServiceEntityRepository
         parent::__construct($registry, Comments::class);
     }
 
+    public function findCommentsByLimit($limit)
+    {
+        return $this->createQueryBuilder('c')
+                    ->orderBy('c.id', 'DESC')
+                    ->setMaxResults($limit)
+                    ->getQuery()
+                    ->getResult();
+    }
+
     // /**
     //  * @return Comments[] Returns an array of Comments objects
     //  */

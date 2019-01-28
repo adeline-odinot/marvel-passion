@@ -4,7 +4,7 @@
 
 {% block body %}
     <section class="movies">
-        <h1 class="text-center title">Films</h1>
+        <h1 class="text-center title mb-5">Films</h1>
         {% for movie in paginator.data %}
 
             {% set showMovie = path('show_movies',{'id': movie.id}) %}

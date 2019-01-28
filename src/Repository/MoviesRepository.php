@@ -29,15 +29,6 @@ class MoviesRepository extends ServiceEntityRepository
 
     }
 
-    public function findMoviesByDesc()
-    {
-        return $this->createQueryBuilder('m')
-                    ->orderBy('m.id', 'DESC')
-                    ->getQuery()
-                    ->getResult();
-
-    }
-
     // /**
     //  * @return Movies[] Returns an array of Movies objects
     //  */

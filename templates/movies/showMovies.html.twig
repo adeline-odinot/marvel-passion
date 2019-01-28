@@ -5,7 +5,7 @@
 {% block body %}
 
     <article class="mr-4 ml-4">
-        <h1 class="title text-center">{{ movies.title }}</h1>
+        <h1 class="title text-center mb-5">{{ movies.title }}</h1>
         <div class="content-movies d-flex flex-column align-items-center">
             <img class="img-fluid col-md-8" src="{{ movies.image }}" alt="{{ movies.title }}">
             
@@ -28,11 +28,10 @@
                         <p class="date">Publié le {{ movies.creationDate | date('d/m/Y')}} à {{ movies.creationDate | date('H:i') }} par {{ movies.user.pseudo }}</p>
                     </div>
                 </div>
-
-            </div>
-
-            <p class="border-bottom"></p>            
+            </div>         
         </div>
+                
+        <p class="border-bottom mt-3"></p>   
 
         {% set nbComment = movies.comments|length %}
 
@@ -69,7 +68,7 @@
                 <div>
                     <div class="mb-2">
                         <a href="{{ path('show_user',{'pseudo': comment.user.pseudo}) }}">
-                            <img class="avatar avatar-mini" src=" {{ comment.user.avatar }}" alt="avatar de {{ comment.user.pseudo }}" />
+                            <img class="avatar avatar-mini" src=" {{  asset('uploads/avatar/') ~ comment.user.avatar }}" alt="avatar de {{ comment.user.pseudo }}" />
                         </a>
                         <span>
                             <a class="user-comment" href="{{ path('show_user',{'pseudo': comment.user.pseudo}) }}">
@@ -85,8 +84,6 @@
                 <p class="border-bottom"></p>  
             {% endfor %}
             {% endif %}
-
-
     </article>
-
 {% endblock %}
+

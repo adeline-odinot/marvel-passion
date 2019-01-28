@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} Série | Marvel-Passion {% endblock %}
+{% block title %} Séries | Marvel-Passion {% endblock %}
 
 {% block body %}
     <section class="series">
-    <h1 class="text-center title">Séries</h1>
+    <h1 class="text-center title mb-5">Séries</h1>
         {% for serie in paginator.data %}
 
         {% set showSerie = path('show_series',{'id': serie.id}) %}

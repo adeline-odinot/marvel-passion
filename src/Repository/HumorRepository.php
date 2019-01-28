@@ -28,16 +28,6 @@ class HumorRepository extends ServiceEntityRepository
                     ->getResult();
     }
 
-    public function findHumorByDesc()
-    {
-        return $this->createQueryBuilder('h')
-                    ->orderBy('h.id', 'DESC')
-                    ->getQuery()
-                    ->getResult();
-
-    }
-
-
     // /**
     //  * @return Humor[] Returns an array of Humor objects
     //  */

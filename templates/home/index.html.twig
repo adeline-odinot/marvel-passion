@@ -36,24 +36,21 @@
         </div>
 
 
-        <div class="row">
-            {% for lastHumor in humor %}
-                <article class="col content-humor">
-                    <h2 class="subtitle mb-4">Dernière actualité</h2>
-                    <div>
-                        <a class="humor" href="{{ path('show_humor',{'id': lastHumor.id}) }}"><img class="img-humor img-fluid" src="{{ lastHumor.image }}" alt=">{{ lastHumor.title }}"></a>
-                    </div>
-                </article>
-            {% endfor %}
+        {% if humor | length > 0 %}
+            <div class="container-fluid">
+                <h2 class="subtitle mb-4">Derniers articles d'humour :</h2>
+                
+                <div class="row">
 
-            {% for lastHumor in humor %}
-                <article class="col content-humor">
-                    <h2 class="subtitle mb-4">Dernier article d'humour</h2>
-                    <div>
-                        <a class="humor" href="{{ path('show_humor',{'id': lastHumor.id}) }}"><img class="img-humor img-fluid" src="{{ lastHumor.image }}" alt=">{{ lastHumor.title }}"></a>
-                    </div>
-                </article>
-            {% endfor %}
-        </div>
+                        {% for lastHumor in humor %}
+                            <article class="col content-humor">
+                                <div>
+                                    <a class="humor" href="{{ path('show_humor',{'id': lastHumor.id}) }}"><img class="img-humor img-fluid" src="{{ lastHumor.image }}" alt=">{{ lastHumor.title }}"></a>
+                                </div>
+                            </article>
+                        {% endfor %}
+                </div>
+            </div>
+        {% endif %}
     </section>
 {% endblock %}

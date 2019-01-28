@@ -5,7 +5,7 @@
 {% block body %}
 
     <article class="mr-4 ml-4">
-        <h1 class="title text-center">{{ humor.title }}</h1>
+        <h1 class="title text-center mb-5">{{ humor.title }}</h1>
         <div class="content-humor d-flex flex-column align-items-center">
             <img class="img-fluid" src="{{ humor.image }}" alt=">{{ humor.title }}">
             <div>
@@ -48,7 +48,7 @@
                 <div>
                     <div class="mb-2">
                         <a href="{{ path('show_user',{'pseudo': comment.user.pseudo}) }}">
-                            <img class="avatar avatar-mini" src=" {{ comment.user.avatar }}" alt="avatar de {{ comment.user.pseudo }}" />
+                            <img class="avatar avatar-mini" src=" {{  asset('uploads/avatar/') ~ comment.user.avatar }}" alt="avatar de {{ comment.user.pseudo }}" />
                         </a>
                         <span>
                             <a class="user-comment" href="{{ path('show_user',{'pseudo': comment.user.pseudo}) }}">

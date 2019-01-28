@@ -1,6 +1,6 @@
 {% extends 'admin/base.html.twig' %}
 
-{% block title %} Administration - Séries {% endblock %}
+{% block title %} Administration - Séries | Marvel-Passion{% endblock %}
 
 {% block body %}
 
@@ -26,7 +26,7 @@
                         <td>{{ serie.id }}</td>
                         <td>{{ serie.title }}</td>
                         <td>
-                            <img class="avatar avatar-mini" src="{{ serie.user.avatar }}" alt="Avatar de {{ serie.user.pseudo }}">
+                            <img class="avatar avatar-mini" src="{{  asset('uploads/avatar/') ~ serie.user.avatar }}" alt="Avatar de {{ serie.user.pseudo }}">
                             {{ serie.user.pseudo }}
                         </td>
                         <td>{{ serie.creationDate | date('d/m/Y') }} à {{ serie.creationDate | date('H:i') }}</td>

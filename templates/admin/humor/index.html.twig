@@ -1,6 +1,6 @@
 {% extends 'admin/base.html.twig' %}
 
-{% block title %} Administration - Humour {% endblock %}
+{% block title %} Administration - Humour | Marvel-Passion{% endblock %}
 
 {% block body %}
 
@@ -26,7 +26,7 @@
                         <td>{{ humor.id }}</td>
                         <td>{{ humor.title }}</td>
                         <td>
-                            <img class="avatar avatar-mini" src="{{ humor.user.avatar }}" alt="Avatar de {{ humor.user.pseudo }}">
+                            <img class="avatar avatar-mini" src="{{  asset('uploads/avatar/') ~ humor.user.avatar }}" alt="Avatar de {{ humor.user.pseudo }}">
                             {{ humor.user.pseudo }}
                         </td>
                         <td>{{ humor.creationDate | date('d/m/Y') }} à {{ humor.creationDate | date('H:i') }}</td>

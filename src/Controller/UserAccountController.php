@@ -102,6 +102,19 @@ class UserAccountController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid())
         {
+            $file = $request->files->get('account')['avatar'];
+
+            $avatar_directory = $this->getParameter('avatar_directory');
+
+            $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+
+            $file->move(
+                $avatar_directory,
+                $fileName
+            );
+
+            $user->setAvatar($fileName);
+
             $manager->persist($user);
             $manager->flush();
 

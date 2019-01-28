@@ -2,11 +2,11 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
@@ -61,7 +61,6 @@ class Users implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\Url(message="Vous devez utiliser une url valide.")
      */
     private $avatar;
 
@@ -107,6 +106,7 @@ class Users implements UserInterface
         $this->humors = new ArrayCollection();
         $this->movies = new ArrayCollection();
         $this->series = new ArrayCollection();
+        $this->likables = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -174,12 +174,12 @@ class Users implements UserInterface
         return $this;
     }
 
-    public function getAvatar(): ?string
+    public function getAvatar()
     {
         return $this->avatar;
     }
 
-    public function setAvatar(?string $avatar): self
+    public function setAvatar($avatar): self
     {
         $this->avatar = $avatar;
 

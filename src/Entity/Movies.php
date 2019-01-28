@@ -2,9 +2,10 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\OrderBy;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -30,6 +31,7 @@ class Movies
     /**
      * @ORM\Column(type="text")
      * @Assert\Length(min=10, minMessage="Le contenu doit avoir au minimum 10 caractères.")
+     * @Assert\NotBlank(message="Le contenu de l'article doit être présent et avoir au minimum 10 caractères.")
      */
     private $content;
 
@@ -46,6 +48,7 @@ class Movies
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Comments", mappedBy="movie")
+     * @ORM\OrderBy({"creationDate" = "DESC"})
      */
     private $comments;
 
@@ -57,13 +60,15 @@ class Movies
 
     /**
      * @ORM\Column(type="text")
-     * @Assert\Length(min=20, minMessage="Le contenu doit avoir au minimum 20 caractères.")
+     * @Assert\NotBlank(message="L'introduction de l'article doit être présent et avoir au minimum 20 caractères.")
+     * @Assert\Length(min=20, max=350, minMessage="Le contenu de l'introduction doit avoir au minimum 20 caractères.", maxMessage="Le contenu de l'introduction doit avoir au maximum 350 caractères.")
      */
     private $introduction;
 
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+        $this->likables = new ArrayCollection();
     }
 
     public function getId(): ?int

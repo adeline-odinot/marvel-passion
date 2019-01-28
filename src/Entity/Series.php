@@ -30,6 +30,7 @@ class Series
     /**
      * @ORM\Column(type="text")
      * @Assert\Length(min=10, minMessage="Le contenu doit avoir au minimum 10 caractères.")
+     * @Assert\NotBlank(message="Le contenu de l'article doit être présent et avoir au minimum 10 caractères.")
      */
     private $content;
 
@@ -46,6 +47,7 @@ class Series
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Comments", mappedBy="series")
+     * @ORM\OrderBy({"creationDate" = "DESC"})
      */
     private $comments;
 
@@ -58,12 +60,15 @@ class Series
     /**
      * @ORM\Column(type="text")
      * @Assert\Length(min=20, minMessage="Le contenu doit avoir au minimum 20 caractères.")
+     * @Assert\Length(max=300, maxMessage="Le contenu doit avoir au maximum 300 caractères.")
+     * @Assert\NotBlank(message="L'introduction de l'article doit être présent et avoir au minimum 20 caractères.")
      */
     private $introduction;
 
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+        $this->likables = new ArrayCollection();
     }
 
     public function getId(): ?int

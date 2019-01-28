@@ -1,370 +1,225 @@
 {% extends 'admin/base.html.twig' %}
 
-{% block title %} Administration - Création d'un article d'humour | Marvel Passion {% endblock %}
+{% block title %} Administration - Tableau de bord | Marvel Passion {% endblock %}
 
 {% block body %}
 
     <section class="d-flex flex-column align-items-center">
 
         <h1 class="text-center title mb-5">Tableau de bord</h1>
-        
-        <div class="row">
-            <div class="col">
-                <div class="card bg-primary mb-3 text-center">
-                    <a class="card-body" href="{{ path('admin_users_index') }}" alt="administration des utilisateurs">
-                        <div class="row">
-                            <div class="col-4">
-                                <i class="fas fa-users fa-2x"></i>
+        <div class="container-fluid">
+            <div class="row ml-2 mr-2">
+                <div class="col-md-6">
+                    <div class="card bg-primary bg-primary-hover mb-3 text-center">
+                        <a class="card-body" href="{{ path('admin_users_index') }}" alt="administration des utilisateurs">
+                            <div class="row">
+                                <div class="col-4">
+                                    <i class="fas fa-users fa-2x"></i>
+                                </div>
+                                <div class="col-8">
+                                    <h4 class="card-title">{{ stats.users }} utilisateurs inscrits</h4>
+                                </div>
                             </div>
-                            <div class="col-8">
-                                <h4 class="card-title">{{ stats.users }} utilisateurs inscrits</h4>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card bg-info bg-info-hover mb-3 text-center">
+                        <a class="card-body" href="{{ path('admin_comments_index') }}" alt="administration des commentaires">
+                            <div class="row">
+                                <div class="col-4">
+                                    <i class="fas fa-comments fa-2x"></i>
+                                </div>
+                                <div class="col-8">
+                                    <h4 class="card-title">{{ stats.comments }} commentaires</h4>
+                                </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
                 </div>
             </div>
-            <div class="col">
-                <div class="card bg-info mb-3 text-center">
-                    <a class="card-body" href="{{ path('admin_comments_index') }}" alt="administration des commentaires">
-                        <div class="row">
-                            <div class="col-4">
-                                <i class="fas fa-comments fa-2x"></i>
+            <div class="row ml-2 mr-2">
+                <div class="col-md-4">
+                    <div class="card bg-secondary bg-secondary-hover text-white mb-3 text-center">
+                        <a class="card-body" href="{{ path('admin_movies_index') }}" alt="administration des films">
+                            <div class="row">
+                                <div class="col-4">
+                                    <i class="fas fa-film fa-2x"></i>
+                                </div>
+                                <div class="col-8">
+                                    <h4 class="card-title">{{ stats.movies }} articles de film postés</h4>
+                                </div>
                             </div>
-                            <div class="col-8">
-                                <h4 class="card-title">{{ stats.comments }} commentaires</h4>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card bg-success bg-success-hover text-white mb-3 text-center">
+                        <a class="card-body" href="{{ path('admin_series_index') }}" alt="administration des séries">
+                            <div class="row">
+
+                                <div class="col-4">
+                                    <i class="fas fa-film fa-2x"></i>
+                                </div>
+                                <div class="col-8">
+                                    <h4 class="card-title">{{ stats.series }} articles de série postés</h4>
+                                </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card bg-danger bg-danger-hover text-white mb-3 text-center">
+                        <a class="card-body" href="{{ path('admin_humor_index') }}" alt="administration des humours">
+                            <div class="row">
+
+                                <div class="col-4">
+                                    <i class="fas fa-grin-squint-tears fa-2x"></i>
+                                </div>
+                                <div class="col-8">
+                                    <h4 class="card-title">{{ stats.humor }} articles d'humour postés</h4>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <h2 class="text-center mb-5 mt-5">
+                        <i class="title fas fa-film fa-1x"> Les films</i>
+                    </h2>
+                    <div class="table-responsive alert alert-danger table-design-dasboard">
+                        <h3 class="text-center subtitle-dashboard mt-3 mb-3">
+                            <i class="fas fa-film fa-1x"></i>
+                            Les derniers articles de film
+                        </h3>
+                        <table class="table table-hover">
+
+                            <thead class="text-center">
+                                <tr class="design-table-dasboard">
+                                    <th>Titre du film</th>
+                                    <th>Auteur</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-center">
+                                {% for movie in movies %}
+                                <tr>
+                                    <td>{{ movie.title }}</td>
+                                    <td>
+                                        <img class="avatar avatar-mini" src="{{ asset('uploads/avatar/') ~ movie.user.avatar }}" alt="Avatar de {{ movie.user.pseudo }}">
+                                        {{ movie.user.pseudo }}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <h2 class="text-center mb-5 mt-5">
+                        <i class="title fas fa-film fa-1x"> Les séries</i>
+                    </h2>
+
+                    <div class="table-responsive alert alert-danger table-design-dasboard">
+                        <h3 class="text-center subtitle-dashboard mt-3 mb-3">
+                            <i class="fas fa-film fa-1x"></i>
+                            Les derniers articles de série
+                        </h3>
+                        <table class="table table-hover">
+
+                            <thead class="text-center">
+                                <tr class="design-table-dasboard">
+                                    <th>Titre de la série</th>
+                                    <th>Auteur</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-center">
+                                {% for serie in series %}
+                                <tr>
+                                    <td>{{ serie.title }}</td>
+                                    <td>
+                                        <img class="avatar avatar-mini" src="{{ asset('uploads/avatar/') ~ serie.user.avatar }}" alt="Avatar de {{ serie.user.pseudo }}">
+                                        {{ serie.user.pseudo }}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+                <div class="col-md-6">
+                    <h2 class="text-center mb-5 mt-5">
+                        <i class="title fas fa-grin-squint-tears fa-1x"> Les humours</i>
+                    </h2>
+                    <div class="table-responsive alert alert-danger table-design-dasboard">
+                        <h3 class="text-center subtitle-dashboard mt-3 mb-3">
+                            <i class="fas fa-grin-squint-tears"></i>
+                            Les derniers articles d'humour
+                        </h3>
+                        <table class="table table-hover">
+
+                            <thead class="text-center">
+                                <tr class="design-table-dasboard">
+                                    <th>Titre de l'humour</th>
+                                    <th>Auteur</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-center">
+                                
+                                {% for humour in humor %}
+                                <tr>
+                                    <td>{{ humour.title }}</td>
+                                    <td>
+                                        <img class="avatar avatar-mini" src="{{ asset('uploads/avatar/') ~ humour.user.avatar }}" alt="Avatar de {{ humour.user.pseudo }}">
+                                        {{ humour.user.pseudo }}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <h2 class="text-center mb-5 mt-5">
+                        <i class="title fas fa-comments fa-1x"> Les commentaires</i>
+                    </h2>
+                    <div class="table-responsive alert alert-danger table-design-dasboard">
+                        <h3 class="text-center subtitle-dashboard mt-3 mb-3">
+                            <i class="fas fa-comments"></i>
+                            Les derniers commentaires
+                        </h3>
+                        <table class="table table-hover">
+
+                            <thead class="text-center">
+                                <tr class="design-table-dasboard">
+                                    <th>Auteur</th>
+                                    <th>Contenu</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-center">
+                                
+                                {% for comment in comments %}
+                                <tr>
+                                    <td>
+                                        <img class="avatar avatar-mini" src="{{ asset('uploads/avatar/') ~ comment.user.avatar }}" alt="Avatar de {{ comment.user.pseudo }}">
+                                        {{ comment.user.pseudo }}
+                                    </td>
+                                    <td>{{ comment.content }}</td>
+                                </tr>
+                                {% endfor %}
+
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col">
-                <div class="card bg-secondary text-white mb-3 text-center">
-                    <a class="card-body" href="{{ path('admin_movies_index') }}" alt="administration des films">
-                        <div class="row">
-                            <div class="col-4">
-                                <i class="fas fa-film fa-2x"></i>
-                            </div>
-                            <div class="col-8">
-                                <h4 class="card-title">{{ stats.movies }} Films postés</h4>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card bg-success text-white mb-3 text-center">
-                    <a class="card-body" href="{{ path('admin_series_index') }}" alt="administration des séries">
-                        <div class="row">
-
-                            <div class="col-4">
-                                <i class="fas fa-film fa-2x"></i>
-                            </div>
-                            <div class="col-8">
-                                <h4 class="card-title">{{ stats.series }} séries postés</h4>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card bg-danger text-white mb-3 text-center">
-                    <a class="card-body" href="{{ path('admin_humor_index') }}" alt="administration des humours">
-                        <div class="row">
-
-                            <div class="col-4">
-                                <i class="fas fa-grin-squint-tears fa-2x"></i>
-                            </div>
-                            <div class="col-8">
-                                <h4 class="card-title">{{ stats.humor }} humour postés</h4>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <h2 class="text-center mb-5 mt-5">
-            <i class="title fas fa-film fa-1x"> Les films</i>
-        </h2>
-
-        <div class="row">
-            <div class="col">
-                <div class="table-responsive alert alert-success table-best">
-                    <h3 class="text-center subtitle-dashboard mt-3 mb-3">
-                        <i class="fas fa-thumbs-up"></i>
-                        Les meilleurs articles de film
-                    </h3>
-                    <table class="table table-hover">
-
-                        <thead class="text-center">
-                            <tr class="best">
-                                <th>Titre du film</th>
-                                <th>Auteur</th>
-                                <th>J'aime</th>
-                            </tr>
-                        </thead>
-                        <tbody class="text-center">
-                            
-                            {% for i in 0..5 %}
-                            <tr>
-                                <td>Titre</td>
-                                <td>
-                                    <img class="avatar avatar-mini" src="http://placehold.it/75x75" alt="Avatar de ">
-                                    pseudo
-                                </td>
-                                <td>{{i}}</td>
-                            </tr>
-                            {% endfor %}
-
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="col">
-                <div class="table-responsive alert alert-danger table-worst">
-                    <h3 class="text-center subtitle-dashboard mt-3 mb-3">
-                        <i class="fas fa-thumbs-down"></i>
-                        Les pires articles de film
-                    </h3>
-                    <table class="table table-hover">
-
-                        <thead class="text-center">
-                            <tr class="worst">
-                                <th>Titre du film</th>
-                                <th>Auteur</th>
-                                <th>J'aime pas</th>
-                            </tr>
-                        </thead>
-                        <tbody class="text-center">
-                            
-                            {% for i in 0..5 %}
-                            <tr>
-                                <td>Titre</td>
-                                <td>
-                                    <img class="avatar avatar-mini" src="http://placehold.it/75x75" alt="Avatar de ">
-                                    pseudo
-                                </td>
-                                <td>{{i}}</td>
-                            </tr>
-                            {% endfor %}
-
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <h2 class="text-center mb-5 mt-5">
-            <i class="title fas fa-film fa-1x"> Les séries</i>
-        </h2>
-
-        <div class="row">
-            <div class="col">
-                <div class="table-responsive alert alert-success table-best">
-                    <h3 class="text-center subtitle-dashboard mt-3 mb-3">
-                        <i class="fas fa-thumbs-up"></i>
-                        Les meilleurs articles de série
-                    </h3>
-                    <table class="table table-hover">
-
-                        <thead class="text-center">
-                            <tr class="best">
-                                <th>Titre de la série</th>
-                                <th>Auteur</th>
-                                <th>J'aime</th>
-                            </tr>
-                        </thead>
-                        <tbody class="text-center">
-                            
-                            {% for i in 0..5 %}
-                            <tr>
-                                <td>Titre</td>
-                                <td>
-                                    <img class="avatar avatar-mini" src="http://placehold.it/75x75" alt="Avatar de ">
-                                    pseudo
-                                </td>
-                                <td>{{i}}</td>
-                            </tr>
-                            {% endfor %}
-
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="col">
-                <div class="table-responsive alert alert-danger table-worst">
-                    <h3 class="text-center subtitle-dashboard mt-3 mb-3">
-                        <i class="fas fa-thumbs-down"></i>
-                        Les pires articles de série
-                    </h3>
-                    <table class="table table-hover">
-
-                        <thead class="text-center">
-                            <tr class="worst">
-                                <th>Titre de la série</th>
-                                <th>Auteur</th>
-                                <th>J'aime pas</th>
-                            </tr>
-                        </thead>
-                        <tbody class="text-center">
-                            
-                            {% for i in 0..5 %}
-                            <tr>
-                                <td>Titre</td>
-                                <td>
-                                    <img class="avatar avatar-mini" src="http://placehold.it/75x75" alt="Avatar de ">
-                                    pseudo
-                                </td>
-                                <td>{{i}}</td>
-                            </tr>
-                            {% endfor %}
-
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <h2 class="text-center mb-5 mt-5">
-            <i class="title fas fa-grin-squint-tears fa-1x"> Les humours</i>
-        </h2>
-
-        <div class="row">
-            <div class="col">
-                <div class="table-responsive alert alert-success table-best">
-                    <h3 class="text-center subtitle-dashboard mt-3 mb-3">
-                        <i class="fas fa-thumbs-up"></i>
-                        Les meilleurs articles d'humour
-                    </h3>
-                    <table class="table table-hover">
-
-                        <thead class="text-center">
-                            <tr class="best">
-                                <th>Titre de l'humour</th>
-                                <th>Auteur</th>
-                                <th>J'aime</th>
-                            </tr>
-                        </thead>
-                        <tbody class="text-center">
-                            
-                            {% for i in 0..5 %}
-                            <tr>
-                                <td>Titre</td>
-                                <td>
-                                    <img class="avatar avatar-mini" src="http://placehold.it/75x75" alt="Avatar de ">
-                                    pseudo
-                                </td>
-                                <td>{{i}}</td>
-                            </tr>
-                            {% endfor %}
-
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="col">
-                <div class="table-responsive alert alert-danger table-worst">
-                    <h3 class="text-center subtitle-dashboard mt-3 mb-3">
-                        <i class="fas fa-thumbs-down"></i>
-                        Les pires articles d'humour
-                    </h3>
-                    <table class="table table-hover">
-
-                        <thead class="text-center">
-                            <tr class="worst">
-                                <th>Titre de l'humour</th>
-                                <th>Auteur</th>
-                                <th>J'aime pas</th>
-                            </tr>
-                        </thead>
-                        <tbody class="text-center">
-                            
-                            {% for i in 0..5 %}
-                            <tr>
-                                <td>Titre</td>
-                                <td>
-                                    <img class="avatar avatar-mini" src="http://placehold.it/75x75" alt="Avatar de ">
-                                    pseudo
-                                </td>
-                                <td>{{i}}</td>
-                            </tr>
-                            {% endfor %}
-
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <h2 class="text-center mb-5 mt-5">
-            <i class="title fas fa-comments fa-1x"> Les commentaires</i>
-        </h2>
-
-        <div class="row">
-            <div class="col">
-                <div class="table-responsive alert alert-success table-best">
-                    <h3 class="text-center subtitle-dashboard mt-3 mb-3">
-                        <i class="fas fa-thumbs-up"></i>
-                        Les meilleurs commentaires
-                    </h3>
-                    <table class="table table-hover">
-
-                        <thead class="text-center">
-                            <tr class="best">
-                                <th>Auteur</th>
-                                <th>J'aime</th>
-                            </tr>
-                        </thead>
-                        <tbody class="text-center">
-                            
-                            {% for i in 0..5 %}
-                            <tr>
-                                <td>
-                                    <img class="avatar avatar-mini" src="http://placehold.it/75x75" alt="Avatar de ">
-                                    pseudo
-                                </td>
-                                <td>{{i}}</td>
-                            </tr>
-                            {% endfor %}
-
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="col">
-                <div class="table-responsive alert alert-danger table-worst">
-                    <h3 class="text-center subtitle-dashboard mt-3 mb-3">
-                        <i class="fas fa-thumbs-down"></i>
-                        Les pires commentaire
-                    </h3>
-                    <table class="table table-hover">
-
-                        <thead class="text-center">
-                            <tr class="worst">
-                                <th>Auteur</th>
-                                <th>J'aime pas</th>
-                            </tr>
-                        </thead>
-                        <tbody class="text-center">
-                            
-                            {% for i in 0..5 %}
-                            <tr>
-                                <td>
-                                    <img class="avatar avatar-mini" src="http://placehold.it/75x75" alt="Avatar de ">
-                                    pseudo
-                                </td>
-                                <td>{{i}}</td>
-                            </tr>
-                            {% endfor %}
-
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-            
     </section>
 
 {% endblock %}

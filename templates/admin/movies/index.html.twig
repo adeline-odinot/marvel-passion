@@ -1,6 +1,6 @@
 {% extends 'admin/base.html.twig' %}
 
-{% block title %} Administration - Films {% endblock %}
+{% block title %} Administration - Films | Marvel-Passion{% endblock %}
 
 {% block body %}
 
@@ -26,7 +26,7 @@
                         <td>{{ movie.id }}</td>
                         <td>{{ movie.title }}</td>
                         <td>
-                            <img class="avatar avatar-mini" src="{{ movie.user.avatar }}" alt="Avatar de {{ movie.user.pseudo }}">
+                            <img class="avatar avatar-mini" src="{{ asset('uploads/avatar/') ~ movie.user.avatar }}" alt="Avatar de {{ movie.user.pseudo }}">
                             {{ movie.user.pseudo }}
                         </td>
                         <td>{{ movie.creationDate | date('d/m/Y') }} à {{ movie.creationDate | date('H:i') }}</td>

@@ -29,15 +29,6 @@ class SeriesRepository extends ServiceEntityRepository
 
     }
 
-    public function findSeriesByDesc()
-    {
-        return $this->createQueryBuilder('s')
-                    ->orderBy('s.id', 'DESC')
-                    ->getQuery()
-                    ->getResult();
-
-    }
-
     // /**
     //  * @return Series[] Returns an array of Series objects
     //  */

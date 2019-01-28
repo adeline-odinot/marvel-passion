@@ -22,7 +22,7 @@ class HomeController extends AbstractController
     {
         $movies = $moviesRepo->findMoviesByLimit(2);
         $series = $seriesRepo->findSeriesByLimit(2);
-        $humor = $humorRepo->findHumorByLimit(1);
+        $humor = $humorRepo->findHumorByLimit(2);
 
         $slide = array_merge($movies, $series);
 

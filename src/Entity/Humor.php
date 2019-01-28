@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\OrderBy;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -36,6 +37,7 @@ class Humor
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Comments", mappedBy="humor")
+     * @ORM\OrderBy({"creationDate" = "DESC"})
      */
     private $comments;
 
@@ -50,9 +52,11 @@ class Humor
      */
     private $creationDate;
 
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+        $this->likables = new ArrayCollection();
     }
 
     public function getId(): ?int
