@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>E-mail</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    </head>
+    <body class="bg-dark">
+        <div class="container mt-5 mb-5">
+            <div class="row bg-light pt-5 pb-5">
+                <div class="col-lg-12">
+
+                    <div class="text-center mb-5">
+                        <img class="logo img-fluid" src=" {{ absolute_url(asset('images/logo.png')) }}" alt="logo">
+                    </div>
+                    
+                    <table class="d-flex justify-content-center table-responsive">
+
+                        <tr>
+                            <td class="font-weight-bold">Nom</td>
+                            <td class="pl-2"> {{ contact.lastname }}</td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold">Prénom</td>
+                            <td class="pl-2"> {{ contact.firstname }}</td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold">E-mail</td>
+                            <td class="pl-2"> {{ contact.email }}</td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold">Sujet</td>
+                            <td class="pl-2"> {{ contact.subject }}</td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold">Message</td>
+                            <td class="pl-2"> {{ contact.message }}</td>
+                        </tr>
+                        
+                    </table>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -32,28 +32,6 @@
 	}
 }
 
-.bg-primary-hover:hover
-{
-    background-color: #0469d5 !important;
-}
-
-.bg-info-hover:hover
-{ 
-    background-color: #1599ae!important;
-}
-
-.bg-secondary-hover:hover
-{ 
-    background-color: #62696f!important;
-}
-.bg-success:hover
-{ 
-    background-color: #23923c!important;
-}
-.bg-danger:hover
-{ 
-    background-color: #cd2e3d!important;
-}
 
  /* Humour */
 
@@ -341,6 +319,29 @@ img, iframe[src*=youtube]
 .subtitle-dashboard
 {
     font-size: 1.5rem;
+}
+
+.bg-primary-hover:hover
+{
+    background-color: #0469d5 !important;
+}
+
+.bg-info-hover:hover
+{ 
+    background-color: #1599ae!important;
+}
+
+.bg-secondary-hover:hover
+{ 
+    background-color: #62696f!important;
+}
+.bg-success-hover:hover
+{ 
+    background-color: #23923c!important;
+}
+.bg-danger-hover:hover
+{ 
+    background-color: #cd2e3d!important;
 }
 
 .card-body

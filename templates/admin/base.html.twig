@@ -13,9 +13,11 @@
         tinymce.init({
             selector: "textarea",
             plugins: "media textcolor colorpicker preview emoticons fullscreen image link lists",
-            menubar: "insert view format",
-            toolbar: "undo redo forecolor backcolor bold italic underline align numlist bullist link emoticons image media preview fullscreen",
-            language : "fr_FR"
+            menubar: "insert edit format view",
+            toolbar1: "undo redo | bold italic underline | alignleft aligncenter alignright alignjustify | numlist bullist outdent indent |  link unlink | emoticons |  image media | preview fullscreen",
+            toolbar2: " forecolor backcolor | formatselect fontselect fontsizeselect",
+            language : "fr_FR",
+            
         });
         </script>
         <link rel="stylesheet" type="text/css" href="{{ asset('/css/style.css') }}">

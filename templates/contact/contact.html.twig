@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Contact | Marvel Passion {% endblock %}
+
+{% form_theme formContact 'bootstrap_4_layout.html.twig' %}
+
+{% block body %}
+
+    <section class="d-flex flex-column align-items-center">
+
+        <h1 class="text-center title">Contact</h1>
+        
+        <div class="col-md-8">
+            {{ form_start(formContact) }}
+
+                {{ form_row(formContact.lastname, {'attr': {'placeholder': 'Votre nom'}}) }}
+                {{ form_row(formContact.firstname, {'attr': {'placeholder': 'Votre prenom'}}) }}
+                {{ form_row(formContact.email, {'attr': {'placeholder': 'Votre adresse e-mail'}}) }}
+                {{ form_row(formContact.subject, {'attr': {'placeholder': 'Sujet du message'}}) }}
+                {{ form_row(formContact.message, {'attr': {'placeholder': 'Votre message'}}) }}
+
+                <button type="submit" class="btn btn-form mt-2">Envoyer</button>
+
+            {{ form_end(formContact) }}
+            
+        </div>
+    </section>
+
+{% endblock %}
