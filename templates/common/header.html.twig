@@ -39,6 +39,21 @@
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="accountDropdown">
+
+                        {% set isAdmin = false %}
+                        {% set userRole = app.user.roles %}
+
+                            {% for role in userRole %}
+                                    {% if role == "ROLE_ADMIN" %}
+                                        {% set isAdmin = true %}
+                                    {% endif %}
+                            {% endfor %}
+
+
+                            {% if isAdmin == true %}
+                                <a href="{{ path('admin') }}" class="dropdown-item">Accéder à l'administration</a>
+                                <div class="dropdown-divider"></div>
+                            {% endif %}
                             <a href="{{ path('account_index') }}" class="dropdown-item">Mon compte</a>
                             <a href="{{ path('account_profile') }}" class="dropdown-item">Modifier mon profil</a>
                             <a href="{{ path('account_password') }}" class="dropdown-item">Modifier mon mot de passe</a>
