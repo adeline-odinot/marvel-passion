@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -162,11 +163,6 @@ class AdminHumorController extends AbstractController
         $manager->remove($humor);
         $manager->flush();
 
-        $this->addFlash(
-        'success',
-        "L'article de l'image d'humour <strong>{$humor->getTitle()}</strong> a bien été supprimé !"
-        );
-
-        return $this->redirectToRoute("admin_humor_index");
+        return new JsonResponse('Suppression réussi');
     }
 }

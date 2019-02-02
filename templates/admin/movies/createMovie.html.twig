@@ -30,13 +30,7 @@
 {% block javascript %}
 
     <script src="{{ asset('js/cutCaract.js') }}"></script>
-    <script>
-        $('#movie_image').on('change',function(){
-            var fileName = $(this).val();
-            $(this).next('.custom-file-label').html( '...' + cutCaract(fileName));
-            
-        })
-    </script>
-
+    <script>changeTextImg('#movie_image')</script>
+    
 {% endblock %}
 

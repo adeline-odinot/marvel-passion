@@ -22,7 +22,7 @@
                 </thead>
                 <tbody class="text-center">
                     {% for serie in paginator.data %}
-                    <tr>
+                    <tr id="{{ serie.id }}">
                         <td>{{ serie.id }}</td>
                         <td>{{ serie.title }}</td>
                         <td>
@@ -36,9 +36,7 @@
                             </a>
                         </td>
                         <td>
-                            <a href="{{ path('delete_serie',{'id': serie.id}) }}">
-                                <i class="admin-icon-trash fas fa-trash"></i>
-                            </a>
+                            <i onclick="deleteSerie({{ serie.id }})" class="admin-icon-trash fas fa-trash"></i>
                         </td>
                     </tr>
                     {% endfor %}
@@ -58,13 +56,27 @@
 
 {% block javascript %}
 
-    <script src="{{ asset('js/cutCaract.js') }}"></script>
     <script>
-        $('#movie_image').on('change',function(){
-            var fileName = $(this).val();
-            $(this).next('.custom-file-label').html( '...' + cutCaract(fileName));
-            
-        })
+        function deleteSerie(id)
+        {
+            if (confirm("Êtes-vous sûre de vouloir supprimer l'article de série ?")) 
+            {
+                url = '{{ path('delete_serie', { 'id': 0}) }}';
+                url = url.replace("0", id);
+                $.ajax({ 
+                    url: url,
+                    type: 'delete', 
+                    success: function(result) 
+                    {
+                        $('#' + id).remove();
+                    },
+                    error: function(e){
+                        console.log(e.responseText);
+                    }
+                });
+            }
+        }
     </script>
 
 {% endblock %}
+

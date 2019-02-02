@@ -22,7 +22,7 @@
                 </thead>
                 <tbody class="text-center">
                     {% for movie in paginator.data %}
-                    <tr>
+                    <tr id="{{ movie.id }}">
                         <td>{{ movie.id }}</td>
                         <td>{{ movie.title }}</td>
                         <td>
@@ -36,9 +36,7 @@
                             </a>
                         </td>
                         <td>
-                            <a href="{{ path('delete_movie',{'id': movie.id}) }}">
-                                <i class="admin-icon-trash fas fa-trash"></i>
-                            </a>
+                            <i onclick="deleteMovie({{ movie.id }})" class="admin-icon-trash fas fa-trash"></i>
                         </td>
                     </tr>
                     {% endfor %}
@@ -52,5 +50,32 @@
         {{ paginator.display() }}
 
     </section>
+
+{% endblock %}
+
+{% block javascript %}
+
+<script>
+    function deleteMovie(id)
+    {
+        if (confirm("Êtes-vous sûre de vouloir supprimer l'article de film ?")) 
+        {
+            url = '{{ path('delete_movie', { 'id': 0}) }}';
+            url = url.replace("0", id);
+            $.ajax({ 
+                url: url,
+                type: 'delete', 
+                success: function(result) 
+                {
+                    $('#' + id).remove();
+                },
+                error: function(e){
+                    console.log(e.responseText);
+                }
+            });
+        }
+    }
+</script>
+
 
 {% endblock %}
