@@ -14,15 +14,23 @@
                 {% endfor %}
             </ol>
             <div class="carousel-inner">
-                {% for element in slide  %} 
+                {% set i = 0 %}
+                {% for element in slide %} 
                 <div class="carousel-item {% if loop.first %} active {% endif %}">
+                    {% if i < 2 %}
                     <a href="{{ path('show_movies',{'id': element.id}) }}">
-                        <img src="{{ element.image }}" class="d-block w-100 img-slider" alt="{{ element.title }}">
+                        <img src="{{ asset('uploads/movies/') ~ element.image }}" class="d-block w-100 img-slider" alt="{{ element.title }}">
                     </a>
+                    {% else %}
+                    <a href="{{ path('show_series',{'id': element.id}) }}">
+                        <img src="{{ asset('uploads/series/') ~ element.image }}" class="d-block w-100 img-slider" alt="{{ element.title }}">
+                    </a>
+                    {% endif %}
                     <div class="carousel-caption d-none d-md-block">
                         <h3>{{ element.title }}</h3>
                     </div>
                 </div>
+                {% set i = i + 1 %}
                 {% endfor %}
             </div>
             <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -45,7 +53,9 @@
                         {% for lastHumor in humor %}
                             <article class="col content-humor">
                                 <div>
-                                    <a class="humor" href="{{ path('show_humor',{'id': lastHumor.id}) }}"><img class="img-humor img-fluid" src="{{ lastHumor.image }}" alt=">{{ lastHumor.title }}"></a>
+                                    <a class="humor" href="{{ path('show_humor',{'id': lastHumor.id}) }}">
+                                        <img class="img-humor img-fluid" src="{{ asset('uploads/humor/' ~ lastHumor.image) }}" alt="{{ lastHumor.title }}">
+                                    </a>
                                 </div>
                             </article>
                         {% endfor %}

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Series;
 use App\Form\SerieType;
+use App\Service\Upload;
 use App\Service\Paginator;
 use App\Repository\SeriesRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -48,7 +49,7 @@ class AdminSeriesController extends AbstractController
      * 
      * @return Response
      */
-    public function createSerie(Request $request, ObjectManager $manager)
+    public function createSerie(Request $request, ObjectManager $manager, Upload $upload)
     {
         $serie = new Series();
         
@@ -62,6 +63,10 @@ class AdminSeriesController extends AbstractController
             {
                 $serie->setUser($this->getUser());
                 $serie->setCreationDate(new \DateTime());
+
+                $fileName = $upload->upload($this->getParameter('series_directory'), $request->files->get('serie')['image']);
+
+                $serie->setImage($fileName);
             }
 
             $manager->persist($serie);
@@ -91,7 +96,7 @@ class AdminSeriesController extends AbstractController
      * 
      * @return Response
      */
-    public function editSerie(Series $serie, Request $request, ObjectManager $manager)
+    public function editSerie(Series $serie, Request $request, ObjectManager $manager,  Upload $upload)
     {   
         $form = $this->createForm(SerieType::class, $serie);
 
@@ -103,6 +108,10 @@ class AdminSeriesController extends AbstractController
             {
                 $serie->setCreationDate(new \DateTime());
             }
+
+            $fileName = $upload->upload($this->getParameter('series_directory'), $request->files->get('serie')['image']);
+
+            $serie->setImage($fileName);
 
             $manager->persist($serie);
             $manager->flush();

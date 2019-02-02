@@ -6,6 +6,9 @@
 parameters:
     locale: 'en'
     avatar_directory: '%kernel.project_dir%/public/uploads/avatar'
+    humor_directory: '%kernel.project_dir%/public/uploads/humor'
+    movies_directory: '%kernel.project_dir%/public/uploads/movies'
+    series_directory: '%kernel.project_dir%/public/uploads/series'
 
 services:
     # default configuration for services in *this* file

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Movies;
 use App\Form\MovieType;
+use App\Service\Upload;
 use App\Service\Paginator;
 use App\Repository\MoviesRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -47,7 +48,7 @@ class AdminMoviesController extends AbstractController
      * 
      * @return Response
      */
-    public function createMovie(Request $request, ObjectManager $manager)
+    public function createMovie(Request $request, ObjectManager $manager, Upload $upload)
     {
         $movie = new Movies();
         
@@ -61,6 +62,10 @@ class AdminMoviesController extends AbstractController
             {
                 $movie->setUser($this->getUser());
                 $movie->setCreationDate(new \DateTime());
+
+                $fileName = $upload->upload($this->getParameter('movies_directory'), $request->files->get('movie')['image']);
+
+                $movie->setImage($fileName);
             }
 
             $manager->persist($movie);
@@ -90,7 +95,7 @@ class AdminMoviesController extends AbstractController
      * 
      * @return Response
      */
-    public function editMovie(Movies $movie, Request $request, ObjectManager $manager)
+    public function editMovie(Movies $movie, Request $request, ObjectManager $manager, Upload $upload)
     {
         $form = $this->createForm(MovieType::class, $movie);
 
@@ -102,6 +107,10 @@ class AdminMoviesController extends AbstractController
             {
                 $movie->setCreationDate(new \DateTime());
             }
+
+            $fileName = $upload->upload($this->getParameter('movies_directory'), $request->files->get('movie')['image']);
+
+            $movie->setImage($fileName);
 
             $manager->persist($movie);
             $manager->flush();

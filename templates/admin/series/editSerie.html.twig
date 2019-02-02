@@ -11,19 +11,32 @@
         <h1 class="text-center title">Modification de l'article de série</h1>
         <h2 class="serie-title mt-3 mb-3 subtitle">{{ serie.title }}</h2>
 
-        <div class="col-md-8">
+        <div class="col-md-8 mt-4">
             {{ form_start(formSerie) }}
 
                 {{ form_row(formSerie.title, {'attr': {'placeholder': 'Titre de la série'}}) }}
                 {{ form_row(formSerie.introduction, {'attr': {'placeholder': 'Introduction de la série'}}) }}
                 {{ form_row(formSerie.content, {'attr': {'placeholder': 'Contenu de la série'}}) }}
-                {{ form_row(formSerie.image, {'attr': {'placeholder': 'Url de l\'image de la série'}}) }}
+                {{ form_row(formSerie.image, {'attr': {'placeholder': 'Choisissez l\'image à la une de la série'}}) }}
 
-                <button type="submit" class="btn btn-form">Modifier</button>
+                <button type="submit" class="mt-2 btn btn-form btn-form-design">Modifier</button>
 
             {{ form_end(formSerie) }}
             
         </div>
     </section>
+
+{% endblock %}
+
+{% block javascript %}
+
+    <script src="{{ asset('js/cutCaract.js') }}"></script>
+    <script>
+        $('#serie_image').on('change',function(){
+            var fileName = $(this).val();
+            $(this).next('.custom-file-label').html( '...' + cutCaract(fileName));
+            
+        })
+    </script>
 
 {% endblock %}

@@ -10,7 +10,7 @@
 
         <h1 class="text-center title">Modification d'un commentaire</h1>
 
-        <div class="col-md-8 mt-3">
+        <div class="col-md-8 mt-5">
             <p>
                 <strong class="strong-comment-admin">Titre : </strong>
                 {% if comments.movie == true %}
@@ -40,7 +40,7 @@
 
                 {{ form_row(formComment.content, {'attr': {'placeholder': 'Modifier le contenu du commentaire'}}) }}
 
-                <button type="submit" class="btn btn-form">Modifier</button>
+                <button type="submit" class="mt-2 btn btn-form btn-form-design">Modifier</button>
 
             {{ form_end(formComment) }}
             

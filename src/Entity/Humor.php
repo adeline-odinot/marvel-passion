@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\OrderBy;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -31,7 +32,18 @@ class Humor
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\Url()
+     * @Assert\File(
+     * 
+     *     mimeTypes = 
+     *     {
+     *         "image/jpeg",
+     *         "image/jpg",
+     *         "image/pjpeg",
+     *         "image/png",
+     *         "mimeTypesMessage" = "Vous devez entrer une image (jpeg, jpg ou png)."
+     *     },
+     *     notFoundMessage="Fichier non trouvé."
+     * )
      */
     private $image;
 

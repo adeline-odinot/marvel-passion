@@ -5,17 +5,13 @@
 {% block body %}
 
     <section>
-
         <div class="d-flex flex-column align-items-center">
-            <div class="row align-items-center">
-                <div class="col-3">
-                    <img src="{{  asset('uploads/avatar/') ~ user.avatar }}" class="avatar avatar-medium" alt="Avatar de {{ user.pseudo }}">
-                    <br/>
-                </div>
-                <div class="col-9">
-                    <h1 class="text-center user-profile">Profil de {{ user.pseudo }}</h1>
-                </div>
-            </div>
+
+            <h1>
+                <img src="{{  asset('uploads/avatar/') ~ user.avatar }}" class="avatar avatar-profil avatar-medium" alt="Avatar de {{ user.pseudo }}">
+                <span class="ml-2 text-center title">Profil de {{ user.pseudo }}</span>
+            </h1>
+        
 
             {% if user is same as(app.user) %}
                 <div class="row">
@@ -36,117 +32,12 @@
         
         {% endif %}
 
-       
+        {% include 'common/displayArticles.html.twig' with {'articles': user.movies, 'show': 'show_movies', 'image': 'uploads/movies/', 'title': 'de film', 'pseudo': user.pseudo} %}
 
-        {% if user.movies | length > 0 %}
-
-            <h2 class="profil-title mt-5 ml-4 mr-4 mb-5"> Les articles de films postés par {{ user.pseudo }} </h2>
-            <div class="container-fluid">
-                <div class="row">
-                {% for movie in user.movies %}
-                        <div class="col">
-                            <div class="card bg-light mb-4">
-                                <a href="{{ path('show_movies',{'id': movie.id}) }}">
-                                    <div class="profil-title-card card-hearder pt-3 pb-3 mb-3 text-center">
-                                        {{ movie.title }}
-                                    </div>
-                                </a>
-                                
-                                <a class="text-center" href="{{ path('show_movies',{'id': movie.id}) }}">
-                                    <img class="img-size img-fluid" src="{{ movie.image }}" alt="{{ movie.title }}">
-                                </a>
-
-                                <div class="card-body text-intro">
-                                    <p class="card-text text-justify">
-                                        {{ movie.introduction | raw}}
-                                    </p>
-                                    <p>
-                                        <a href="{{ path('show_movies',{'id': movie.id}) }}" class="btn btn-form">En savoir plus</a>
-                                    </p>
-                                </div>
-                                
-                            </div>
-                        </div>
-
-                {% endfor %}
-                </div>
-            </div>
-
-        {% endif %}
-
-        {% if user.series | length > 0 %}
-
-            <h2 class="profil-title mt-5 ml-4 mr-4 mb-5"> Les articles de série postés par {{ user.pseudo }} </h2>
-
-            <div class="container-fluid">
-                <div class="row">
-                {% for serie in user.series %}
-                        <div class="col">
-                            <div class="card bg-light mb-4">
-                                <a href="{{ path('show_movies',{'id': serie.id}) }}">
-                                    <div class="profil-title-card card-hearder pt-3 pb-3 mb-3 text-center">
-                                        {{ serie.title }}
-                                    </div>
-                                </a>
-                                
-                                <a class="text-center" href="{{ path('show_series',{'id': serie.id}) }}">
-                                    <img class="img-size img-fluid" src="{{ serie.image }}" alt="{{ serie.title }}">
-                                </a>
-
-                                <div class="card-body text-intro">
-                                    <p class="card-text text-justify">
-                                        {{ serie.introduction | raw}}
-                                    </p>
-                                    <p>
-                                        <a href="{{ path('show_movies',{'id': serie.id}) }}" class="btn btn-form">En savoir plus</a>
-                                    </p>
-                                </div>
-                                
-                            </div>
-                        </div>
-
-                {% endfor %}
-                </div>
-            </div>
-
-        {% endif %}
-
-        {% if user.humors | length > 0 %}
-
-            <h2 class="profil-title mt-5 ml-4 mr-4 mb-5"> Les articles d'humour postés par {{ user.pseudo }} </h2>
-
-            <div class="container-fluid">
-                <div class="row">
-                {% for humor in user.humors %}
-                        <div class="col">
-                            <div class="card bg-light mb-4">
-                                <a href="{{ path('show_movies',{'id': humor.id}) }}">
-                                    <div class="profil-title-card card-hearder pt-3 pb-3 mb-3 text-center">
-                                        {{ humor.title }}
-                                    </div>
-                                </a>
-                                
-                                <a class="text-center" href="{{ path('show_series',{'id': humor.id}) }}">
-                                    <img class="img-size img-fluid" src="{{ humor.image }}" alt="{{ humor.title }}">
-                                </a>
-
-                                <div class="card-body text-intro">
-                                    <p>
-                                        <a href="{{ path('show_movies',{'id': humor.id}) }}" class="btn btn-form">En savoir plus</a>
-                                    </p>
-                                </div>
-                                
-                            </div>
-                        </div>
-
-                {% endfor %}
-                </div>
-            </div>
-
-        {% endif %}
-
-
+        {% include 'common/displayArticles.html.twig' with {'articles': user.series, 'show': 'show_series', 'image': 'uploads/series/', 'title': 'de serie', 'pseudo': user.pseudo} %}
         
+        {% include 'common/displayArticles.html.twig' with {'articles': user.humors, 'show': 'show_humor', 'image': 'uploads/humor/', 'title': 'd\'humour', 'pseudo': user.pseudo} %}
+
     </section>
 
 {% endblock %}

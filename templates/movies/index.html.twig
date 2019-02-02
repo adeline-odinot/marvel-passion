@@ -14,7 +14,7 @@
                 <div class="col-md-4 text-center">
                     <a href="{{ showMovie }}">
                         <h2 class="subtitle">{{ movie.title }}</h2>
-                        <img class="img-movies img-fluid mb-3" src="{{ movie.image }}" alt="{{ movie.title }}">
+                        <img class="img-movies img-fluid mb-3" src="{{ asset('uploads/movies/' ~ movie.image) }}" alt="{{ movie.title }}">
                     </a>
                     <small class="date">
                         <em>Publié le {{ movie.creationDate | date('d/m/Y') }} à {{ movie.creationDate | date('H:i') }} par {{ movie.user.pseudo }}</em>

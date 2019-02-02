@@ -10,15 +10,15 @@
 
         <h1 class="text-center title">Création d'un article de film</h1>
 
-        <div class="col-md-8">
+        <div class="col-md-8 mt-4">
             {{ form_start(formMovie) }}
 
                 {{ form_row(formMovie.title, {'attr': {'placeholder': 'Titre du film'}}) }}
                 {{ form_row(formMovie.introduction, {'attr': {'placeholder': 'Introduction du film'}}) }}
                 {{ form_row(formMovie.content, {'attr': {'placeholder': 'Contenu du film'}}) }}
-                {{ form_row(formMovie.image, {'attr': {'placeholder': 'Url de l\'image du film'}}) }}
+                {{ form_row(formMovie.image, {'attr': {'placeholder': 'Choisissez l\'image à la une du film'}}) }}
 
-                <button type="submit" class="btn btn-form">Ajouter</button>
+                <button type="submit" class="mt-2 btn btn-form btn-form-design">Ajouter</button>
 
             {{ form_end(formMovie) }}
             
@@ -26,3 +26,17 @@
     </section>
 
 {% endblock %}
+
+{% block javascript %}
+
+    <script src="{{ asset('js/cutCaract.js') }}"></script>
+    <script>
+        $('#movie_image').on('change',function(){
+            var fileName = $(this).val();
+            $(this).next('.custom-file-label').html( '...' + cutCaract(fileName));
+            
+        })
+    </script>
+
+{% endblock %}
+

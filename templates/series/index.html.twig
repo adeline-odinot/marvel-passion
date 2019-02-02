@@ -13,7 +13,7 @@
             <div class="col-md-4 text-center">
                 <a href="{{ showSerie }}">
                     <h2 class="subtitle">{{ serie.title }}</h2>
-                    <img class="img-series img-fluid mb-3" src="{{ serie.image }}" alt="{{ serie.title }}">
+                    <img class="img-series img-fluid mb-3" src="{{ asset('uploads/series/' ~ serie.image) }}" alt="{{ serie.title }}">
                 </a>
                 <small class="date">
                     <em>Publié le {{ serie.creationDate | date('d/m/Y') }} à {{ serie.creationDate | date('H:i') }} par {{ serie.user.pseudo }}</em>

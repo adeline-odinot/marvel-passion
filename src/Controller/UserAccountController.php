@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Users;
+use App\Service\Upload;
 use App\Form\AccountType;
 use App\Entity\PasswordUpdate;
 use App\Form\RegistrationType;
@@ -55,7 +56,7 @@ class UserAccountController extends AbstractController
      * 
      * @return Response
      */
-    public function register(Request $request, ObjectManager $manager, UserPasswordEncoderInterface $encoder)
+    public function register(Request $request, ObjectManager $manager, UserPasswordEncoderInterface $encoder, Upload $upload)
     {
         $user = new Users();
 
@@ -65,6 +66,10 @@ class UserAccountController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid())
         {
+            $fileName = $upload->upload($this->getParameter('avatar_directory'), $request->files->get('registration')['avatar']);
+
+            $user->setAvatar($fileName);
+
             $hash = $encoder->encodePassword($user, $user->getHash());
             $user->setHash($hash);
 
@@ -92,7 +97,7 @@ class UserAccountController extends AbstractController
      * 
      * @return Response
      */
-    public function updateProfile(Request $request, ObjectManager $manager)
+    public function updateProfile(Request $request, ObjectManager $manager, Upload $upload)
     {
         $user = $this->getUser();
 
@@ -102,16 +107,7 @@ class UserAccountController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid())
         {
-            $file = $request->files->get('account')['avatar'];
-
-            $avatar_directory = $this->getParameter('avatar_directory');
-
-            $fileName = md5(uniqid()) . '.' . $file->guessExtension();
-
-            $file->move(
-                $avatar_directory,
-                $fileName
-            );
+            $fileName = $upload->upload($this->getParameter('avatar_directory'), $request->files->get('account')['avatar']);
 
             $user->setAvatar($fileName);
 

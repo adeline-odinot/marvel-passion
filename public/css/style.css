@@ -32,7 +32,6 @@
 	}
 }
 
-
  /* Humour */
 
  .content-humor figure 
@@ -70,9 +69,26 @@ figure figcaption {
 
 /* --- GLOBAL --- */
 
+::selection, .dropdown-item:active
+{
+    color: white;
+    background-color: #ff5a5a !important;
+}
+
+.nav-design::selection, .copyright span::selection, .copyright a::selection, .avatar-header::selection
+{
+    background-color: #b0ade9 !important;
+}
+
 *
 {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
+}
+
+.title, .subtitle, .nav-design, .nav-design-admin, .profil-title, .user-profile
+{
+    font-family: 'Patrick Hand', cursive;
 }
 
 ul
@@ -90,8 +106,9 @@ a
 .title
 {
     color: #ff5a5a;
-    font-size: 35px;
+    font-size: 40px;
     text-decoration: underline;
+
 }
 
 .subtitle, .subtitle-admin
@@ -102,7 +119,7 @@ a
 
 .subtitle
 {
-    font-size: 22px;
+    font-size: 30px;
     color: #7368ac;
 }
 
@@ -158,11 +175,10 @@ img, iframe[src*=youtube]
     background-color: #544d7c !important;
 }
 
-.nav-design, .nav-design-admin
+.nav-design
 {
-    color: white !important;
-    font-family: 'Kanit', sans-serif;
-    text-transform: uppercase;
+    color: white !important;    
+    font-size:25px;
 }
 
 .nav-design:hover
@@ -210,10 +226,11 @@ img, iframe[src*=youtube]
 .more
 {
     color: #fff !important;
-    padding: 5px 10px;
+    padding: 5px 15px;
     border-radius: 5px;
     background-color: #7368ac;
     border-color: #7368ac;
+    border-radius: 20px 0 20px 0;
 }
 
 .more:hover
@@ -245,9 +262,64 @@ img, iframe[src*=youtube]
     background-size: cover;
 }
 
-
-
 /* -- Form -- */
+
+.custom-file-label::after
+{
+    content: "Ajouter" !important;
+    background-color: #7368ac;
+    border-left: 1px solid #ccb0ff;
+    color: white;
+    height: auto;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 0 0 1px #d3bbff !important;
+}
+
+.custom-file-label
+{
+    height: auto;
+    border: none;
+    border: 2px solid #ccb0ff !important;
+}
+
+input, textarea
+{
+    border: 2px solid #ccb0ff !important;
+}
+
+.mce-panel, .mce-menubar
+{
+    border: 1px solid #ccb0ff !important;
+}
+
+.mce-txt
+{
+    font-weight: bold !important;
+}
+
+.mce-caret 
+{
+    border-top-color: #585858 !important;
+}
+
+textarea
+{
+    border-radius: 20px 0 20px 0 !important;
+}
+
+input:focus, textarea:focus, .custom-file-input:focus~.custom-file-label
+{
+    border-color: #a06bff !important;
+    box-shadow: 0 0 0 1px #d3bbff !important;
+}
+
+.custom-file-input:focus~.custom-file-label::after
+{
+    border-left: 1px solid #a06bff;
+    box-shadow: 0 0 0 1px #a06bff !important;
+}
+
 
 .humor-title, .movie-title, .serie-title
 {
@@ -264,6 +336,7 @@ img, iframe[src*=youtube]
     background-color: #7368ac;
     border-color: #7368ac;
     color: white !important;
+    border-radius: 20px 0 20px 0;
 }
 
 .btn-form:hover
@@ -271,6 +344,18 @@ img, iframe[src*=youtube]
     background-color: #6a52eb;
     border-color: #6a52eb;
     color: white;
+}
+
+.btn-form-design
+{
+    width: 100%;
+    padding: 10px;
+    box-shadow: 0px 2px 3px 0px rgba(81,72,150,1);
+}
+
+.btn-form-design:hover
+{
+    box-shadow: 0px 2px 3px 0px rgb(53, 44, 123);
 }
 
 /* --- Comment --- */
@@ -303,6 +388,7 @@ img, iframe[src*=youtube]
 
 .nb-comment
 {
+    font-size: 25px;
     color:#6a52eb;
 }
 
@@ -313,6 +399,14 @@ img, iframe[src*=youtube]
 
 
 /* ----- DEBUT ADMIN ----- */
+
+/* Header */
+
+.nav-design-admin
+{
+    color: white !important;    
+    font-size:22px;
+}
 
 /* Dashboard Admin */
 
@@ -350,6 +444,14 @@ img, iframe[src*=youtube]
 }
 
 /* Content Admin */
+
+.title-admin
+{
+    color: #ff5a5a;
+    font-size: 33px;
+    text-decoration: underline;
+
+}
 
 .subtitle-admin
 {
@@ -437,7 +539,7 @@ img, iframe[src*=youtube]
     color: #ffffff;
     padding: 10px;
     border-radius: 50%;
-    background-color: #4b984f;
+    background-color: #6aab6d;
 }
 
 .btn-admin
@@ -475,7 +577,7 @@ img, iframe[src*=youtube]
 
 .copyright-admin
 {
-    background-color: #dc5050;
+    background-color: #ea5454;
     color: #ffffff;
 }
 
@@ -492,7 +594,7 @@ img, iframe[src*=youtube]
 {
     color: white !important;
     background-color: #aaa5ca !important;
-    border-color: #ca8bd5 !important;
+    border-color: #a07db8 !important;
 }
 
 .page-link {
@@ -524,7 +626,6 @@ img, iframe[src*=youtube]
 
 /* -- user profil -- */
 
-
 .img-size
 {
     max-width: 325px;
@@ -539,8 +640,14 @@ img, iframe[src*=youtube]
 
 .user-profile
 {
-    font-weight: bold;
-    font-size: 35px;
+
+    font-size: 30px;
+    color: white;
+}
+
+.avatar-profil
+{
+    box-shadow: 0px 0px 4px 3px #bcbcbc;
 }
 
 .avatar
@@ -563,11 +670,10 @@ img, iframe[src*=youtube]
     height: 48px;
 }
 
-
 .avatar-micro
 {
-    width: 24px;
-    height: 24px;
+    width: 35px;
+    height: 35px;
 }
 
 .profil-title
@@ -576,7 +682,6 @@ img, iframe[src*=youtube]
     font-size: 30px;
     text-decoration: underline;
 }
-
 
 .profil-title-card
 {

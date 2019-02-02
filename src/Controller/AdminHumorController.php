@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Humor;
 use App\Form\HumorType;
+use App\Service\Upload;
 use App\Service\Paginator;
 use App\Repository\HumorRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -48,7 +49,7 @@ class AdminHumorController extends AbstractController
      * @return Response
      */
 
-    public function createHumor(Request $request, ObjectManager $manager)
+    public function createHumor(Request $request, ObjectManager $manager, Upload $upload)
     {
         $humor = new Humor();
 
@@ -58,6 +59,10 @@ class AdminHumorController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid())
         {
+            $fileName = $upload->upload($this->getParameter('humor_directory'), $request->files->get('humor')['image']);
+
+            $humor->setImage($fileName);
+
             $humor->setUser($this->getUser());
             $humor->setCreationDate(new \DateTime());
 
@@ -88,7 +93,7 @@ class AdminHumorController extends AbstractController
      * 
      * @return Response
      */
-    public function editHumor(Humor $humor, Request $request, ObjectManager $manager)
+    public function editHumor(Humor $humor, Request $request, ObjectManager $manager, Upload $upload)
     {
         $form = $this->createForm(HumorType::class, $humor);
 
@@ -96,6 +101,10 @@ class AdminHumorController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid())
         {
+            $fileName = $upload->upload($this->getParameter('humor_directory'), $request->files->get('humor')['image']);
+
+            $humor->setImage($fileName);
+
             $manager->persist($humor);
             $manager->flush();
 
