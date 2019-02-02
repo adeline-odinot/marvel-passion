@@ -151,6 +151,14 @@ class AdminHumorController extends AbstractController
     */
     public function deleteHumor(Humor $humor, ObjectManager $manager)
     {
+        $comments = $humor->getComments();
+        
+        foreach($comments as $comment)
+        {
+            $manager->remove($comment);
+            $manager->flush();
+        }
+
         $manager->remove($humor);
         $manager->flush();
 

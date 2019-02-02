@@ -158,6 +158,14 @@ class AdminMoviesController extends AbstractController
      */
     public function deleteMovie(Movies $movie, ObjectManager $manager)
     {
+        $comments = $movie->getComments();
+        
+        foreach($comments as $comment)
+        {
+            $manager->remove($comment);
+            $manager->flush();
+        }
+
         $manager->remove($movie);
         $manager->flush();
 

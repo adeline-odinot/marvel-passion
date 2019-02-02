@@ -159,6 +159,14 @@ class AdminSeriesController extends AbstractController
      */
     public function deleteSerie(Series $serie, ObjectManager $manager)
     {
+        $comments = $serie->getComments();
+        
+        foreach($comments as $comment)
+        {
+            $manager->remove($comment);
+            $manager->flush();
+        }
+
         $manager->remove($serie);
         $manager->flush();
 
