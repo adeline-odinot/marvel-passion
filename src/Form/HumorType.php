@@ -14,7 +14,7 @@ class HumorType extends AbstractType
     {
         $builder
             ->add('title', null, array('label' => 'Titre'))
-            ->add('image', FileType::class, array('label' => 'Image', 'data_class' => null, 'mapped'=> false))
+            ->add('image', FileType::class, array('label' => 'Image', 'required' => false, 'data_class' => null, 'mapped'=> false))
         ;
     }
 

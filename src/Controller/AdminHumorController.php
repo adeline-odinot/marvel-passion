@@ -99,21 +99,39 @@ class AdminHumorController extends AbstractController
 
         $form->handleRequest($request);
 
+        $valid = true;
+
         if($form->isSubmitted() && $form->isValid())
         {
-            $fileName = $upload->upload($this->getParameter('humor_directory'), $request->files->get('humor')['image']);
+            if(isset($request->files->get('humor')['image']))
+            {
+                $fileName = $upload->upload($this->getParameter('humor_directory'), $request->files->get('humor')['image'], $humor->getImage());
 
-            $humor->setImage($fileName);
+                if(!$fileName)
+                {
+                    $valid = false;
+                    $this->addFlash(
+                        'danger',
+                        "Le format d'image n'est pas accepté (jpg, jpeg, png)."
+                    );
+                }
+                else
+                {
+                    $humor->setImage($fileName);
+                }
+            }
+            if($valid)
+            {
+                $manager->persist($humor);
+                $manager->flush();
 
-            $manager->persist($humor);
-            $manager->flush();
+                $this->addFlash(
+                    'success',
+                    "Les modifications de l'article de l'image d'humour <strong>{$humor->getTitle()}</strong> ont bien été enregistrées !"
+                );
 
-            $this->addFlash(
-                'success',
-                "Les modifications de l'article de l'image d'humour <strong>{$humor->getTitle()}</strong> ont bien été enregistrées !"
-            );
-
-            return $this->redirectToRoute('admin_humor_index');
+                return $this->redirectToRoute('admin_humor_index');
+            }
         }
 
         return $this->render('admin/humor/editHumor.html.twig', [

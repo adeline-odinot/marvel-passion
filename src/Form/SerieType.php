@@ -16,7 +16,7 @@ class SerieType extends AbstractType
             ->add('title', null, array('label' => 'Titre'))
             ->add('introduction', null, array('label' => 'Introduction', 'required' => false))
             ->add('content', null, array('label' => 'Contenu', 'required' => false))
-            ->add('image', FileType::class, array('label' => 'Image', 'data_class' => null, 'mapped'=> false))
+            ->add('image', FileType::class, array('label' => 'Image', 'required' => false, 'data_class' => null, 'mapped'=> false))
         ;
     }
 

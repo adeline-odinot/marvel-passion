@@ -101,26 +101,44 @@ class AdminMoviesController extends AbstractController
 
         $form->handleRequest($request);
 
+        $valid = true;
+
         if($form->isSubmitted() && $form->isValid())
         {
             if(!$movie->getId())
             {
                 $movie->setCreationDate(new \DateTime());
             }
+            if (isset($request->files->get('movie')['image']))
+            {
+                $fileName = $upload->upload($this->getParameter('movies_directory'), $request->files->get('movie')['image'], $movie->getImage());
 
-            $fileName = $upload->upload($this->getParameter('movies_directory'), $request->files->get('movie')['image']);
+                if(!$fileName)
+                {
+                    $valid = false;
+                    $this->addFlash(
+                        'danger',
+                        "Le format d'image n'est pas accepté (jpg, jpeg, png)."
+                    );
+                }
+                else
+                {
+                    $movie->setImage($fileName);
+                }
+            }
+            if($valid)
+            {
+                $manager->persist($movie);
+                $manager->flush();
+    
+                $this->addFlash(
+                    'success',
+                    "Les modifications de l'article de film <strong>{$movie->getTitle()}</strong> ont bien été enregistrées !"
+                );
+    
+                return $this->redirectToRoute('admin_movies_index');
+            }
 
-            $movie->setImage($fileName);
-
-            $manager->persist($movie);
-            $manager->flush();
-
-            $this->addFlash(
-                'success',
-                "Les modifications de l'article de film <strong>{$movie->getTitle()}</strong> ont bien été enregistrées !"
-            );
-
-            return $this->redirectToRoute('admin_movies_index');
         }
         
         return $this->render('admin/movies/editMovie.html.twig', [

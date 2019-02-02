@@ -102,26 +102,43 @@ class AdminSeriesController extends AbstractController
 
         $form->handleRequest($request);
 
+        $valid = true;
+
         if($form->isSubmitted() && $form->isValid())
         {
             if(!$serie->getId())
             {
                 $serie->setCreationDate(new \DateTime());
             }
-
-            $fileName = $upload->upload($this->getParameter('series_directory'), $request->files->get('serie')['image']);
-
-            $serie->setImage($fileName);
-
-            $manager->persist($serie);
-            $manager->flush();
-
-            $this->addFlash(
-                'success',
-                "L'article de la série <strong>{$serie->getTitle()}</strong> a bien été enregistrée !"
-            );
-
-            return $this->redirectToRoute('admin_series_index');
+            if(isset($request->files->get('serie')['image']))
+            {
+                $fileName = $upload->upload($this->getParameter('series_directory'), $request->files->get('serie')['image'], $serie->getImage());
+                
+                if(!$fileName)
+                {
+                    $valid = false;
+                    $this->addFlash(
+                        'danger',
+                        "Le format d'image n'est pas accepté (jpg, jpeg, png)."
+                    );
+                }
+                else
+                {
+                    $serie->setImage($fileName);
+                }
+            }       
+            if($valid)
+            {
+                $manager->persist($serie);
+                $manager->flush();
+    
+                $this->addFlash(
+                    'success',
+                    "L'article de la série <strong>{$serie->getTitle()}</strong> a bien été enregistrée !"
+                );
+                
+                return $this->redirectToRoute('admin_series_index');
+            }
         }
         
         return $this->render('admin/series/editSerie.html.twig', [

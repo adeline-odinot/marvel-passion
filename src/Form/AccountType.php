@@ -20,7 +20,7 @@ class AccountType extends AbstractType
             ->add('lastName', TextType::class, array('label' => 'Nom'))
             ->add('pseudo', TextType::class, array('label' => 'Pseudo'))
             ->add('email', EmailType::class, array('label' => 'E-mail'))
-            ->add('avatar', FileType::class, array('label' => 'Image de profil', 'data_class' => null, 'mapped'=>false))
+            ->add('avatar', FileType::class, array('label' => 'Image de profil', 'required' => false, 'data_class' => null, 'mapped'=>false))
             ->add('description', TextareaType::class, array('label' => 'Description', 'required' => false))
         ;
     }

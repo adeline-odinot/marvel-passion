@@ -626,6 +626,11 @@ input:focus, textarea:focus, .custom-file-input:focus~.custom-file-label
 
 /* -- user profil -- */
 
+.title-update-profil-avatar
+{
+    color: #6a52eb;
+}
+
 .img-size
 {
     max-width: 325px;
@@ -656,6 +661,12 @@ input:focus, textarea:focus, .custom-file-input:focus~.custom-file-label
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
+}
+
+.avatar-large
+{
+    width: 80px;
+    height: 80px;
 }
 
 .avatar-medium

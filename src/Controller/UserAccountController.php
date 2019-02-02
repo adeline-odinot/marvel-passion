@@ -105,19 +105,37 @@ class UserAccountController extends AbstractController
 
         $form->handleRequest($request);
 
+        $valid = true;
+
         if($form->isSubmitted() && $form->isValid())
         {
-            $fileName = $upload->upload($this->getParameter('avatar_directory'), $request->files->get('account')['avatar']);
+            if(isset($request->files->get('account')['avatar']))
+            {
+                $fileName = $upload->upload($this->getParameter('avatar_directory'), $request->files->get('account')['avatar'], $user->getAvatar());
 
-            $user->setAvatar($fileName);
-
-            $manager->persist($user);
-            $manager->flush();
-
-            $this->addFlash(
-                'success',
-                "Votre profil a été modifié avec succès !"
-            );
+                if(!$fileName)
+                {
+                    $valid = false;
+                    $this->addFlash(
+                        'danger',
+                        "Le format d'image n'est pas accepté (jpg, jpeg, png)."
+                    );
+                }
+                else
+                {
+                    $user->setAvatar($fileName);
+                }
+            }
+            if($valid)
+            {
+                $manager->persist($user);
+                $manager->flush();
+    
+                $this->addFlash(
+                    'success',
+                    "Votre profil a été modifié avec succès !"
+                );
+            }
         }
 
         return $this->render('user_account/userProfile.html.twig', [

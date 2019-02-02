@@ -32,18 +32,6 @@ class Humor
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\File(
-     * 
-     *     mimeTypes = 
-     *     {
-     *         "image/jpeg",
-     *         "image/jpg",
-     *         "image/pjpeg",
-     *         "image/png",
-     *         "mimeTypesMessage" = "Vous devez entrer une image (jpeg, jpg ou png)."
-     *     },
-     *     notFoundMessage="Fichier non trouvé."
-     * )
      */
     private $image;
 

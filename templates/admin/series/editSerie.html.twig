@@ -11,6 +11,10 @@
         <h1 class="text-center title">Modification de l'article de série</h1>
         <h2 class="serie-title mt-3 mb-3 subtitle">{{ serie.title }}</h2>
 
+        <div class="col-md-8">
+            <img src="{{ asset('uploads/series/')  ~ serie.image }}" alt="{{ serie.title }}">
+        </div>
+
         <div class="col-md-8 mt-4">
             {{ form_start(formSerie) }}
 
