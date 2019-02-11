@@ -64,10 +64,16 @@ class Series
      */
     private $introduction;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Shootings", mappedBy="serie")
+     */
+    private $shootings;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
         $this->likables = new ArrayCollection();
+        $this->shootings = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -174,6 +180,37 @@ class Series
     public function setIntroduction(string $introduction): self
     {
         $this->introduction = $introduction;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Shootings[]
+     */
+    public function getShootings(): Collection
+    {
+        return $this->shootings;
+    }
+
+    public function addShooting(Shootings $shooting): self
+    {
+        if (!$this->shootings->contains($shooting)) {
+            $this->shootings[] = $shooting;
+            $shooting->setSerie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeShooting(Shootings $shooting): self
+    {
+        if ($this->shootings->contains($shooting)) {
+            $this->shootings->removeElement($shooting);
+            // set the owning side to null (unless already changed)
+            if ($shooting->getSerie() === $this) {
+                $shooting->setSerie(null);
+            }
+        }
 
         return $this;
     }
