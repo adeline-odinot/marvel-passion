@@ -7,6 +7,7 @@ use App\Repository\HumorRepository;
 use App\Repository\MoviesRepository;
 use App\Repository\SeriesRepository;
 use App\Repository\CommentsRepository;
+use App\Repository\ShootingsRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,6 +21,7 @@ class AdminDashboardController extends AbstractController
      * 
      * @param ObjectManager $manager
      * @param Stats $stats
+     * @param ShootingsRepository $shootingsRepo
      * @param MoviesRepository $moviesRepo
      * @param SeriesRepository $seriesRepo
      * @param HumorRepository $humorRepo
@@ -27,10 +29,11 @@ class AdminDashboardController extends AbstractController
      * 
      * @return Response
      */
-    public function index(ObjectManager $manager, Stats $stats, MoviesRepository $moviesRepo, SeriesRepository $seriesRepo, HumorRepository $humorRepo, CommentsRepository $commentsRepo)
+    public function index(ObjectManager $manager, Stats $stats, ShootingsRepository $shootingsRepo, MoviesRepository $moviesRepo, SeriesRepository $seriesRepo, HumorRepository $humorRepo, CommentsRepository $commentsRepo)
     {
         $getStats = $stats->getStats();
 
+        $shootings = $shootingsRepo->findShootingsByLimit(5);
         $movies = $moviesRepo->findMoviesByLimit(5);
         $series = $seriesRepo->findSeriesByLimit(5);
         $humor = $humorRepo->findHumorByLimit(5);
@@ -38,6 +41,7 @@ class AdminDashboardController extends AbstractController
 
         return $this->render('admin/dashboard/index.html.twig',
         [
+            'shootings' => $shootings,
             'movies' => $movies,
             'series' => $series,
             'humor' => $humor,

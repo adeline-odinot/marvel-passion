@@ -19,6 +19,15 @@ class ShootingsRepository extends ServiceEntityRepository
         parent::__construct($registry, Shootings::class);
     }
 
+    public function findShootingsByLimit($limit)
+    {
+        return $this->createQueryBuilder('s')
+                    ->orderBy('s.id', 'DESC')
+                    ->setMaxResults($limit)
+                    ->getQuery()
+                    ->getResult();
+    }
+
     // /**
     //  * @return Shootings[] Returns an array of Shootings objects
     //  */

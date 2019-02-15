@@ -54,7 +54,7 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="card bg-success bg-success-hover text-white mb-3 text-center">
+                    <div class="card bg-purple bg-purple-hover text-white mb-3 text-center">
                         <a class="card-body" href="{{ path('admin_series_index') }}" alt="administration des séries">
                             <div class="row">
 
@@ -78,6 +78,21 @@
                                 </div>
                                 <div class="col-8">
                                     <h4 class="card-title">{{ stats.humor }} articles d'humour postés</h4>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card bg-orange bg-orange-hover text-white mb-3 text-center">
+                        <a class="card-body" href="{{ path('admin_shootings_index') }}" alt="administration des tournages">
+                            <div class="row">
+
+                                <div class="col-4">
+                                    <i class="fas fa-video fa-2x"></i>
+                                </div>
+                                <div class="col-8">
+                                    <h4 class="card-title">{{ stats.shootings }} lieux de tournage postés</h4>
                                 </div>
                             </div>
                         </a>
@@ -180,6 +195,37 @@
                                 </tr>
                                 {% endfor %}
 
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <h2 class="text-center mb-5 mt-5">
+                        <i class="title-admin fas fa-video fa-1x"> Les tournages</i>
+                    </h2>
+                    <div class="table-responsive alert alert-danger table-design-dasboard">
+                        <h3 class="text-center subtitle-dashboard mt-3 mb-3">
+                            <i class="fas fa-video fa-1x"></i>
+                            Les derniers lieux de tournage
+                        </h3>
+                        <table class="table table-hover">
+
+                            <thead class="text-center">
+                                <tr class="design-table-dasboard">
+                                    <th>Titre</th>
+                                    <th>Adresse</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-center">
+                                {% for shooting in shootings %}
+                                <tr>
+                                    <td>{{ shooting.title }}</td>
+                                    <td>
+                                        {{ shooting.address }}
+                                    </td>
+                                </tr>
+                                {% endfor %}
                             </tbody>
                         </table>
                     </div>

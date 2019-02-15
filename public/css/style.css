@@ -419,6 +419,16 @@ input:focus, textarea:focus, .custom-file-input:focus~.custom-file-label
     font-size: 1.5rem;
 }
 
+.bg-purple
+{
+    background-color: #9271fd!important;
+}
+
+.bg-orange
+{
+    background-color: #f16438!important;
+}
+
 .bg-primary-hover:hover
 {
     background-color: #0469d5 !important;
@@ -440,6 +450,16 @@ input:focus, textarea:focus, .custom-file-input:focus~.custom-file-label
 .bg-danger-hover:hover
 { 
     background-color: #cd2e3d!important;
+}
+
+.bg-purple-hover:hover
+{
+    background-color: #886be7!important;
+}
+
+.bg-orange-hover:hover
+{
+    background-color: #df5b33!important;
 }
 
 .card-body

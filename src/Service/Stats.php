@@ -15,13 +15,19 @@ class Stats
 
     public function getStats()
     {
+        $shootings = $this->getShootingsCount();
         $movies = $this->getMoviesCount();
         $series = $this->getSeriesCount();
         $humor = $this->getHumorCount();
         $comments = $this->getCommentsCount();
         $users = $this->getUsersCount();
 
-        return compact('movies','series','humor','comments','users');
+        return compact('shootings','movies','series','humor','comments','users');
+    }
+
+    public function getShootingsCount()
+    {
+        return $this->manager->createQuery('SELECT COUNT(s) FROM App\Entity\Shootings s')->getSingleScalarResult();
     }
 
     public function getMoviesCount()
