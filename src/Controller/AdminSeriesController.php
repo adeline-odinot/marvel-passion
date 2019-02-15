@@ -7,13 +7,12 @@ use App\Form\SerieType;
 use App\Service\Upload;
 use App\Service\Paginator;
 use App\Repository\SeriesRepository;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AdminSeriesController extends AbstractController
@@ -29,7 +28,6 @@ class AdminSeriesController extends AbstractController
      * 
      * @return void
      */
-
     public function index(SeriesRepository $repo, $page = 1, Paginator $paginator)
     {
         $paginator->setEntityClass(Series::class)
@@ -47,6 +45,7 @@ class AdminSeriesController extends AbstractController
      * 
      * @param Request $request
      * @param ObjectManager $manager
+     * @param Upload $upload
      * 
      * @return Response
      */
@@ -58,27 +57,48 @@ class AdminSeriesController extends AbstractController
 
         $form->handleRequest($request);
 
+        $valid = true;
+
         if($form->isSubmitted() && $form->isValid())
         {
-            if(!$serie->getId())
+            if (isset($request->files->get('serie')['image']))
             {
-                $serie->setUser($this->getUser());
-                $serie->setCreationDate(new \DateTime());
-
                 $fileName = $upload->upload($this->getParameter('series_directory'), $request->files->get('serie')['image']);
-
-                $serie->setImage($fileName);
+            
+                if (!$fileName)
+                {
+                    $valid = false;
+                    $form->get('image')->addError(new FormError("Le format d'image n'est pas accepté (jpg, jpeg, png)."));
+                }
+                else
+                {
+                    $serie->setImage($fileName);
+                }
             }
+            else
+            {
+                $valid = false;
+                $form->get('image')->addError(new FormError("Veuillez séléctionner une image."));
+            }
+            
+            if ($valid)
+            {
+                if(!$serie->getId())
+                {
+                    $serie->setUser($this->getUser());
+                    $serie->setCreationDate(new \DateTime());
+                }
+    
+                $manager->persist($serie);
+                $manager->flush();
 
-            $manager->persist($serie);
-            $manager->flush();
+                $this->addFlash(
+                    'success',
+                    "L'article de la série <strong>{$serie->getTitle()}</strong> a bien été enregistrée !"
+                );
 
-            $this->addFlash(
-                'success',
-                "L'article de la série <strong>{$serie->getTitle()}</strong> a bien été enregistrée !"
-            );
-
-            return $this->redirectToRoute('admin_series_index');
+                return $this->redirectToRoute('admin_series_index');
+            }
         }
         
         return $this->render('admin/series/createSerie.html.twig', [
@@ -94,6 +114,7 @@ class AdminSeriesController extends AbstractController
      * @param Series $serie
      * @param Request $request
      * @param ObjectManager $manager
+     * @param Upload $upload
      * 
      * @return Response
      */
@@ -118,16 +139,14 @@ class AdminSeriesController extends AbstractController
                 if(!$fileName)
                 {
                     $valid = false;
-                    $this->addFlash(
-                        'danger',
-                        "Le format d'image n'est pas accepté (jpg, jpeg, png)."
-                    );
+                    $form->get('image')->addError(new FormError("Le format d'image n'est pas accepté (jpg, jpeg, png)."));
                 }
                 else
                 {
                     $serie->setImage($fileName);
                 }
-            }       
+            }
+
             if($valid)
             {
                 $manager->persist($serie);
@@ -135,7 +154,7 @@ class AdminSeriesController extends AbstractController
     
                 $this->addFlash(
                     'success',
-                    "L'article de la série <strong>{$serie->getTitle()}</strong> a bien été enregistrée !"
+                    "Les modifications de l'article de la série <strong>{$serie->getTitle()}</strong> ont bien été enregistrée !"
                 );
                 
                 return $this->redirectToRoute('admin_series_index');

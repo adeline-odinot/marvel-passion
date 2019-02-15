@@ -43,6 +43,7 @@ class SeriesController extends AbstractController
      * @Route("/series/show/{id}", name="show_series")
      * 
      * @param SeriesRepository $repo
+     * @var $id
      * @param Request $request
      * @param ObjectManager $manager
      * 

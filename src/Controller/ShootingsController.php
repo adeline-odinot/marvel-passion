@@ -10,7 +10,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ShootingsController extends AbstractController
 {
     /**
+     * Permet d'afficher la page des tournages
+     * 
      * @Route("/shootings", name="shootings")
+     * 
+     * @param ShootingsRepository $repo
      */
     public function index(ShootingsRepository $repo)
     {
@@ -22,7 +26,12 @@ class ShootingsController extends AbstractController
     }
 
     /**
+     * Permet de récupérer les données d'un tournage
+     * 
      * @Route("/shootings/{id}", name="show_shootings")
+     * 
+     * @param ShootingsRepository $repo
+     * @var $id
      */
     public function show(ShootingsRepository $repo, $id)
     {
@@ -46,5 +55,4 @@ class ShootingsController extends AbstractController
 
         return new JsonResponse($json);
     }
-
 }

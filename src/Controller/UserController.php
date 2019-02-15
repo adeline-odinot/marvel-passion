@@ -14,6 +14,8 @@ class UserController extends AbstractController
      * 
      * @Route("/user/{pseudo}", name="show_user")
      * 
+     * @param Users $user
+     * 
      * @return Response
      */
     public function index(Users $user)

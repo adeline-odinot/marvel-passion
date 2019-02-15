@@ -25,6 +25,8 @@ class UserAccountController extends AbstractController
      * 
      * @Route("/login", name="account_login")
      * 
+     * @param AuthenticationUtils $utils
+     * 
      * @return Response
      */
     public function login(AuthenticationUtils $utils)
@@ -54,6 +56,11 @@ class UserAccountController extends AbstractController
      *
      * @Route("/register", name="account_register")
      * 
+     * @param Request $request
+     * @param ObjectManager $manager
+     * @param UserPasswordEncoderInterface $encoder
+     * @param Upload $upload
+     * 
      * @return Response
      */
     public function register(Request $request, ObjectManager $manager, UserPasswordEncoderInterface $encoder, Upload $upload)
@@ -64,24 +71,45 @@ class UserAccountController extends AbstractController
 
         $form->handleRequest($request);
 
+        $valid = true;
+
         if($form->isSubmitted() && $form->isValid())
         {
-            $fileName = $upload->upload($this->getParameter('avatar_directory'), $request->files->get('registration')['avatar']);
+            if(isset($request->files->get('registration')['avatar']))
+            {
+                $fileName = $upload->upload($this->getParameter('avatar_directory'), $request->files->get('registration')['avatar'], $user->getAvatar());
 
-            $user->setAvatar($fileName);
+                if(!$fileName)
+                {
+                    $valid = false;
+                    $form->get('avatar')->addError(new FormError("Le format d'image n'est pas accepté (jpg, jpeg, png)."));
+                }
+                else
+                {
+                    $user->setAvatar($fileName);
+                }
+            }
+            else
+            {
+                $valid = false;
+                $form->get('avatar')->addError(new FormError("Veuillez séléctionner une image."));
+            }
 
-            $hash = $encoder->encodePassword($user, $user->getHash());
-            $user->setHash($hash);
+            if($valid)
+            {
+                $hash = $encoder->encodePassword($user, $user->getHash());
+                $user->setHash($hash);
 
-            $manager->persist($user);
-            $manager->flush();
+                $manager->persist($user);
+                $manager->flush();
 
-            $this->addFlash(
-                'success',
-                "Bienvenue sur Marvel-Passion <strong>{$user->getPseudo()}</strong> votre compte à bien été crée. Vous pouvez désormais vous connecter !"
-            );
+                $this->addFlash(
+                    'success',
+                    "Bienvenue sur Marvel-Passion <strong>{$user->getPseudo()}</strong> votre compte à bien été crée. Vous pouvez désormais vous connecter !"
+                );
 
-            return $this->redirectToRoute('account_login');
+                return $this->redirectToRoute('account_login');
+            }
         }
         
         return $this->render('user_account/registration.html.twig', [
@@ -94,6 +122,10 @@ class UserAccountController extends AbstractController
      *
      * @Route("account/profile", name="account_profile")
      * @IsGranted("ROLE_USER")
+     * 
+     * @param Request $request
+     * @param ObjectManager $manager
+     * @param Upload $upload
      * 
      * @return Response
      */
@@ -116,10 +148,7 @@ class UserAccountController extends AbstractController
                 if(!$fileName)
                 {
                     $valid = false;
-                    $this->addFlash(
-                        'danger',
-                        "Le format d'image n'est pas accepté (jpg, jpeg, png)."
-                    );
+                    $form->get('avatar')->addError(new FormError("Le format d'image n'est pas accepté (jpg, jpeg, png)."));
                 }
                 else
                 {
@@ -148,6 +177,10 @@ class UserAccountController extends AbstractController
      * 
      * @Route("account/password-update", name="account_password")
      * @IsGranted("ROLE_USER")
+     * 
+     * @param Request $request
+     * @param UserPasswordEncoderInterface $encoder
+     * @param ObjectManager $manager
      *
      * @return Response
      */
@@ -165,7 +198,7 @@ class UserAccountController extends AbstractController
         {
             if (!password_verify($passwordUpdate->getOldPassword(), $user->getHash()))
             {
-                $form->get('oldPassword')->addError(new FormError('Le mot de passe que vous avez entré n\'est pas votre mot de passe actuel'));
+                $form->get('oldPassword')->addError(new FormError('Le mot de passe que vous avez entré n\'est pas votre mot de passe actuel.'));
             }
             else
             {

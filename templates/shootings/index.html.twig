@@ -17,7 +17,6 @@
     <div id="map" class="mb-3"></div>
     
     <p class="informations-shooting subtitle-shooting text-center mt-5 p-2">
-        <img class="img-marker-shooting" src="{{ asset('images/mapbox-icon.png') }}" alt="Marker mapbox">
         Veuillez sélectionner un lieu de tournage sur la carte pour afficher ses informations correspondante.
     </p>
 
@@ -55,7 +54,6 @@
 
 {% block javascript %}
 
-<script src="{{ asset('js/shooting.js') }}"></script>
 <script>
 
     mapboxgl.accessToken = 'pk.eyJ1IjoibmFtaXN3YW4iLCJhIjoiY2pyejMxaHRhMGQ5cTQzbDl0amtlb2M3aCJ9.m70wpc1DNfHE2FeddLU9lQ';
@@ -110,6 +108,123 @@
             }
         );
     });
+
+
+    map.on('load', function() 
+    {
+        map.addSource("geojson", 
+        {
+            type: "geojson",
+            data: geojson,
+            cluster: true,
+            clusterMaxZoom: 14,
+            clusterRadius: 50
+        });
+        
+        map.addLayer({
+            id: "clusters",
+            type: "circle",
+            source: "geojson",
+            filter: ["has", "point_count"],
+            paint: 
+            {
+                "circle-color": 
+                [
+                    "step",
+                    ["get", "point_count"],
+                    "#ff5a5a",
+                    100,
+                    "#f1f075",
+                    750,
+                    "#f28cb1"
+                ],
+                "circle-radius": 
+                [
+                    "step",
+                    ["get", "point_count"],
+                    20,
+                    100,
+                    30,
+                    750,
+                    40
+                ]
+            }
+        });
+        
+        map.addLayer({
+            id: "cluster-count",
+            type: "symbol",
+            source: "geojson",
+            filter: ["has", "point_count"],
+            layout: 
+            {
+                "text-field": "{point_count_abbreviated}",
+                "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
+                "text-size": 18,
+            },
+            paint:
+            {
+                "text-color": "#fff"
+            }
+
+        });
+    
+        map.addLayer({
+            id: "unclustered-point",
+            type: "circle",
+            source: "geojson",
+            filter: ["!", ["has", "point_count"]],
+            paint: 
+            {
+                "circle-color": "#ff5a5a",
+                "circle-radius": 10,
+                "circle-stroke-width": 1,
+                "circle-stroke-color": "#fff"
+            }
+        });
+        
+        map.on('click', 'clusters', function (e) 
+        {
+            var features = map.queryRenderedFeatures(e.point, { layers: ['clusters'] });
+            var clusterId = features[0].properties.cluster_id;
+            map.getSource('geojson').getClusterExpansionZoom(clusterId, function (err, zoom)
+            {
+                if (err)
+                return;
+            
+                map.easeTo({
+                    center: features[0].geometry.coordinates,
+                    zoom: zoom
+                });
+            });
+        });
+        
+        map.on('mouseenter', 'clusters', function () 
+        {
+            map.getCanvas().style.cursor = 'pointer';
+        });
+
+        map.on('mouseleave', 'clusters', function () 
+        {
+            map.getCanvas().style.cursor = '';
+        });
+    });
+
+    function getShooting(id)
+    {
+        $.ajax({
+            method: "GET",
+            url: "shootings/" + id,
+        }).done(function(data) 
+        {
+            $('#img-shooting').html('<img class="mb-3" src="{{ asset('uploads/shootings/') }}' +  data.image + '" alt="img">');
+            $('#type').text(data.type);
+            $('#title-shooting').text(data.title);
+            $('#description-shooting').html(data.description);
+            $('#address-shooting').text(data.address);
+            $('.hide').removeClass('hide');
+        });
+    }
 
 </script>
 

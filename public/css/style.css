@@ -32,41 +32,6 @@
 	}
 }
 
- /* Humour */
-
- .content-humor figure 
- {
-    width: 20%;
-    margin: 10px;
-    overflow: hidden;
-}
-
-.content-humor figcaption 
-{
-    background-color: rgba(0,0,0,0.4);
-    width: 100%;
-    bottom: 3px;
-    visibility: hidden;
-    cursor: pointer;
-    color: white;
-}
-
-.content-humor figcaption p 
-{
-    color: white;
-}
-
-figure:hover figcaption {
-    visibility: visible;
-    animation: animationHumor 0.5s ease-out;
-}
-
-figure figcaption {
-    animation: animationHumorBack 0.5s ease-out;
-    transition-duration: 0.5s;
-}
-
-
 /* --- GLOBAL --- */
 
 ::selection, .dropdown-item:active
@@ -262,6 +227,40 @@ img, iframe[src*=youtube]
     background-size: cover;
 }
 
+/* Humor */
+
+ .content-humor figure 
+ {
+    width: 20%;
+    margin: 10px;
+    overflow: hidden;
+}
+
+.content-humor figcaption 
+{
+    background-color: rgba(0,0,0,0.4);
+    width: 100%;
+    bottom: 3px;
+    visibility: hidden;
+    cursor: pointer;
+    color: white;
+}
+
+.content-humor figcaption p 
+{
+    color: white;
+}
+
+figure:hover figcaption {
+    visibility: visible;
+    animation: animationHumor 0.5s ease-out;
+}
+
+figure figcaption {
+    animation: animationHumorBack 0.5s ease-out;
+    transition-duration: 0.5s;
+}
+
 /* -- Form -- */
 
 .custom-file-label::after
@@ -405,7 +404,12 @@ input:focus, textarea:focus, .custom-file-input:focus~.custom-file-label
 .nav-design-admin
 {
     color: white !important;    
-    font-size:22px;
+    font-size:20px;
+}
+
+.clap-shooting
+{
+    font-size: 20px;
 }
 
 /* Dashboard Admin */
@@ -556,6 +560,11 @@ input:focus, textarea:focus, .custom-file-input:focus~.custom-file-label
     color: white;
 }
 
+.btn-admin:focus 
+{
+    box-shadow: 0 0 0 0.2rem rgba(255, 0, 0, 0.25);
+}
+
 .tox .tox-notification 
 {
     display: none !important;
@@ -565,6 +574,8 @@ input:focus, textarea:focus, .custom-file-input:focus~.custom-file-label
 {
     white-space: pre-wrap !important;
 }
+
+
 
 /* Comment Admin */
 
@@ -633,7 +644,7 @@ input:focus, textarea:focus, .custom-file-input:focus~.custom-file-label
 
 .img-size
 {
-    max-width: 325px;
+    max-width: 100%;
     max-height: 250px;
 }
 
@@ -723,11 +734,8 @@ input:focus, textarea:focus, .custom-file-input:focus~.custom-file-label
 
 .marker
 {
-    background-image: url('../images/mapbox-icon.png');
-    background-size: cover;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
+    width: 20px;
+    height: 20px;
     cursor: pointer;
 }
 
@@ -739,7 +747,6 @@ input:focus, textarea:focus, .custom-file-input:focus~.custom-file-label
 .mapboxgl-popup-content 
 {
     text-align: center;
-    font-family: 'Open Sans', sans-serif;
 }
 
 .hide
@@ -787,4 +794,26 @@ input:focus, textarea:focus, .custom-file-input:focus~.custom-file-label
         display: flex;
     }
 
+}
+
+@media (max-width: 520px)
+{
+    .row-blog
+    {
+       width: 100% !important;
+       margin: 0px !important;
+    }
+
+    .content-blog
+    {
+        padding: 0px !important;
+    }
+}
+
+@media (max-width: 380px)
+{
+    .custom-file-input 
+    {
+        margin: 40px !important;
+    }
 }

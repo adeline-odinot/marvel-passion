@@ -42,6 +42,7 @@ class HumorController extends AbstractController
      * @Route("/humor/show/{id}", name="show_humor")
      * 
      * @param HumorRepository $repo
+     * @var $id
      * @param Request $request
      * @param ObjectManager $manager
      * 

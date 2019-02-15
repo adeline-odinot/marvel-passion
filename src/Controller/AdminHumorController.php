@@ -7,13 +7,12 @@ use App\Form\HumorType;
 use App\Service\Upload;
 use App\Service\Paginator;
 use App\Repository\HumorRepository;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AdminHumorController extends AbstractController
@@ -26,9 +25,9 @@ class AdminHumorController extends AbstractController
      * @param HumorRepository $repo
      * @var $page
      * @param Paginator $paginator
+     * 
      * @return void
      */
-
     public function index(HumorRepository $repo, $page = 1, Paginator $paginator)
     {   
         $paginator->setEntityClass(Humor::class)
@@ -46,10 +45,10 @@ class AdminHumorController extends AbstractController
      * 
      * @param Request $request
      * @param ObjectManager $manager
+     * @param Upload $upload
      * 
      * @return Response
      */
-
     public function createHumor(Request $request, ObjectManager $manager, Upload $upload)
     {
         $humor = new Humor();
@@ -58,24 +57,45 @@ class AdminHumorController extends AbstractController
 
         $form->handleRequest($request);
 
+        $valid = true;
+
         if($form->isSubmitted() && $form->isValid())
         {
-            $fileName = $upload->upload($this->getParameter('humor_directory'), $request->files->get('humor')['image']);
+            if (isset($request->files->get('humor')['image']))
+            {
+                $fileName = $upload->upload($this->getParameter('humor_directory'), $request->files->get('humor')['image']);
+            
+                if (!$fileName)
+                {
+                    $valid = false;
+                    $form->get('image')->addError(new FormError("Le format d'image n'est pas accepté (jpg, jpeg, png)."));
+                }
+                else
+                {
+                    $humor->setImage($fileName);
+                }
+            }
+            else
+            {
+                $valid = false;
+                $form->get('image')->addError(new FormError("Veuillez séléctionner une image."));
+            }
 
-            $humor->setImage($fileName);
-
-            $humor->setUser($this->getUser());
-            $humor->setCreationDate(new \DateTime());
-
-            $manager->persist($humor);
-            $manager->flush();
-
-            $this->addFlash(
-                'success',
-                "L'article de l'image d'humour <strong>{$humor->getTitle()}</strong> a bien été enregistré !"
-            );
-
-            return $this->redirectToRoute('admin_humor_index');
+            if($valid)
+            {
+                $humor->setUser($this->getUser());
+                $humor->setCreationDate(new \DateTime());
+    
+                $manager->persist($humor);
+                $manager->flush();
+    
+                $this->addFlash(
+                    'success',
+                    "L'article d'humour <strong>{$humor->getTitle()}</strong> a bien été enregistré !"
+                );
+    
+                return $this->redirectToRoute('admin_humor_index');
+            }
         }
         
         return $this->render('admin/humor/createHumor.html.twig', [
@@ -91,6 +111,7 @@ class AdminHumorController extends AbstractController
      * @param Humor $humor
      * @param Request $request
      * @param ObjectManager $manager
+     * @param Upload $upload
      * 
      * @return Response
      */
@@ -111,10 +132,7 @@ class AdminHumorController extends AbstractController
                 if(!$fileName)
                 {
                     $valid = false;
-                    $this->addFlash(
-                        'danger',
-                        "Le format d'image n'est pas accepté (jpg, jpeg, png)."
-                    );
+                    $form->get('image')->addError(new FormError("Le format d'image n'est pas accepté (jpg, jpeg, png)."));
                 }
                 else
                 {
@@ -128,7 +146,7 @@ class AdminHumorController extends AbstractController
 
                 $this->addFlash(
                     'success',
-                    "Les modifications de l'article de l'image d'humour <strong>{$humor->getTitle()}</strong> ont bien été enregistrées !"
+                    "Les modifications de l'article d'humour <strong>{$humor->getTitle()}</strong> ont bien été enregistrées !"
                 );
 
                 return $this->redirectToRoute('admin_humor_index');
@@ -143,13 +161,14 @@ class AdminHumorController extends AbstractController
 
     /**
      * Permet de supprimer un article d'humour
-    *
-    * @Route("/admin/humor/{id}/deleteHumor", name="delete_humor")
-    *
-    * @return Response
-    * @param Humor $humor
-    * @param ObjectManager $manager
-    */
+     *
+     * @Route("/admin/humor/{id}/deleteHumor", name="delete_humor")
+     *
+     * @param Humor $humor
+     * @param ObjectManager $manager
+     * 
+     * @return Response
+     */
     public function deleteHumor(Humor $humor, ObjectManager $manager)
     {
         $comments = $humor->getComments();

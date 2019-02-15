@@ -7,7 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\OrderBy;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -26,7 +25,8 @@ class Humor
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\Length(min=10, max=255, minMessage="Votre titre doit être supérieur à 10 caractères.", maxMessage="Votre titre doit être inférieur à 255 caractères.")
+     * @Assert\NotBlank(message="Vous devez entrer le titre de l'article.")
+     * @Assert\Length(min=10, max=255, minMessage="Le titre doit avoir au minimum 10 caractères.", maxMessage="Le titre doit avoir au maximum 255 caractères.")
      */
     private $title;
 

@@ -21,9 +21,9 @@ class AdminCommentController extends AbstractController
      * @param CommentsRepository $repo
      * @var $page
      * @param Paginator $paginator
+     * 
      * @return void
      */
-
     public function index(CommentsRepository $repo, $page = 1, Paginator $paginator)
     {
         $paginator->setEntityClass(Comments::class)
@@ -72,21 +72,22 @@ class AdminCommentController extends AbstractController
 
     /**
      * Permet de supprimer un commentaire
-    *
-    * @Route("/admin/comments/{id}/deleteComment", name="delete_comments")
-    *
-    * @return Response
-    * @param Comments $comments
-    * @param ObjectManager $manager
-    */
+     *
+     * @Route("/admin/comments/{id}/deleteComment", name="delete_comments")
+     *
+     * @param Comments $comments
+     * @param ObjectManager $manager
+     * 
+     * @return Response
+     */
     public function deleteComment(Comments $comments, ObjectManager $manager)
     {
         $manager->remove($comments);
         $manager->flush();
 
         $this->addFlash(
-        'success',
-        "Le commentaire a bien été supprimé !"
+            'success',
+            "Le commentaire a bien été supprimé !"
         );
 
         return $this->redirectToRoute("admin_comments_index");

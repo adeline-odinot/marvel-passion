@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ShootingsRepository")
@@ -18,11 +19,15 @@ class Shootings
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Vous devez entrer le titre.")
+     * @Assert\Length(min=8, max=255, minMessage="Le titre doit avoir au minimum 8 caractères.", maxMessage="Le titre doit avoir au maximum 255 caractères.")
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\Length(min=40, minMessage="La description doit avoir au minimum 40 caractères.")
+     * @Assert\NotBlank(message="Vous devez entrer la description du lieu de tournage.")
      */
     private $description;
 
@@ -33,11 +38,20 @@ class Shootings
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(min=5, minMessage="L'adresse doit contenir au minimum 5 caractères.")
+     * @Assert\NotBlank(message="Vous devez entrer l'adresse du lieu de tournage.")
+     */
+    private $address;
+
+    /**
+     * @ORM\Column(type="float")
+     * @Assert\NotBlank(message="Vous devez entrer la latitude du lieu de tournage.")
      */
     private $lat;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="float")
+     * @Assert\NotBlank(message="Vous devez entrer la longitude du lieu de tournage.")
      */
     private $lng;
 
@@ -50,11 +64,6 @@ class Shootings
      * @ORM\ManyToOne(targetEntity="App\Entity\Series", inversedBy="shootings")
      */
     private $serie;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $address;
 
     public function getId(): ?int
     {
@@ -97,24 +106,36 @@ class Shootings
         return $this;
     }
 
-    public function getLat(): ?string
+    public function getAddress(): ?string
+    {
+        return $this->address;
+    }
+
+    public function setAddress(string $address): self
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    public function getLat(): ?float
     {
         return $this->lat;
     }
 
-    public function setLat(string $lat): self
+    public function setLat(float $lat): self
     {
         $this->lat = $lat;
 
         return $this;
     }
 
-    public function getLng(): ?string
+    public function getLng(): ?float
     {
         return $this->lng;
     }
 
-    public function setLng(string $lng): self
+    public function setLng(float $lng): self
     {
         $this->lng = $lng;
 
@@ -141,18 +162,6 @@ class Shootings
     public function setSerie(?Series $serie): self
     {
         $this->serie = $serie;
-
-        return $this;
-    }
-
-    public function getAddress(): ?string
-    {
-        return $this->address;
-    }
-
-    public function setAddress(string $address): self
-    {
-        $this->address = $address;
 
         return $this;
     }

@@ -14,9 +14,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class AdminDashboardController extends AbstractController
 {
     /**
-     * Permet d'afficher l'administration
+     * Permet d'afficher le tableau de bord de l'administration
      * 
      * @Route("/admin", name="admin")
+     * 
+     * @param ObjectManager $manager
+     * @param Stats $stats
+     * @param MoviesRepository $moviesRepo
+     * @param SeriesRepository $seriesRepo
+     * @param HumorRepository $humorRepo
+     * @param CommentsRepository $commentsRepo
      * 
      * @return Response
      */
@@ -36,7 +43,6 @@ class AdminDashboardController extends AbstractController
             'humor' => $humor,
             'comments' => $comments,
             'stats' => $getStats
-            
         ]);
     }
 }

@@ -16,6 +16,10 @@ class HomeController extends AbstractController
      * 
      * @Route("/", name="home")
      * 
+     * @param MoviesRepository $moviesRepo
+     * @param SeriesRepository $seriesRepo
+     * @param HumorRepository $humorRepo
+     * 
      * @return Response
      */
     public function index(MoviesRepository $moviesRepo, SeriesRepository $seriesRepo, HumorRepository $humorRepo)

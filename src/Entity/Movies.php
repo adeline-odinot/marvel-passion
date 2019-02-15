@@ -24,14 +24,15 @@ class Movies
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\Length(min=10, max=255, minMessage="Votre titre doit être supérieur à 10 caractères.", maxMessage="Votre titre doit être inférieur à 255 caractères.")
+     * @Assert\NotBlank(message="Vous devez entrer le titre de l'article.")
+     * @Assert\Length(min=10, max=255, minMessage="Le titre doit avoir au minimum 10 caractères.", maxMessage="Le titre doit être inférieur à 255 caractères.")
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
-     * @Assert\Length(min=10, minMessage="Le contenu doit avoir au minimum 10 caractères.")
-     * @Assert\NotBlank(message="Le contenu de l'article doit être présent et avoir au minimum 10 caractères.")
+     * @Assert\NotBlank(message="Vous devez entrer le contenu de l'article.")
+     * @Assert\Length(min=40, minMessage="Le contenu doit avoir au minimum 40 caractères.")
      */
     private $content;
 
@@ -59,8 +60,8 @@ class Movies
 
     /**
      * @ORM\Column(type="text")
-     * @Assert\NotBlank(message="L'introduction de l'article doit être présent et avoir au minimum 20 caractères.")
-     * @Assert\Length(min=20, max=350, minMessage="Le contenu de l'introduction doit avoir au minimum 20 caractères.", maxMessage="Le contenu de l'introduction doit avoir au maximum 350 caractères.")
+     * @Assert\NotBlank(message="Vous devez entrer l'introduction de l'article.")
+     * @Assert\Length(min=20, max=350, minMessage="L'introduction doit avoir au minimum 20 caractères.", maxMessage="L'introduction doit avoir au maximum 350 caractères.")
      */
     private $introduction;
 
@@ -72,7 +73,6 @@ class Movies
     public function __construct()
     {
         $this->comments = new ArrayCollection();
-        $this->likables = new ArrayCollection();
         $this->shootings = new ArrayCollection();
     }
 

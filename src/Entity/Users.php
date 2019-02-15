@@ -32,30 +32,34 @@ class Users implements UserInterface
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Vous devez renseigner votre prénom.")
+     * @Assert\Length(min=2, max=255, minMessage="Votre prénom avoir au minimum 2 caractères.", maxMessage="Votre prénom doit avoir au maximum 255 caractères.")
      */
     private $firstName;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Vous devez renseigner votre nom de famille.")
+     * @Assert\Length(min=2, max=255, minMessage="Votre nom de famille doit avoir au minimum 2 caractères.", maxMessage="Votre nom de famille doit avoir au maximum 255 caractères.")
      */
     private $lastName;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Vous devez renseigner votre pseudo.")
-     * 
+     * @Assert\Length(min=2, max=255, minMessage="Votre pseudo doit avoir au minimum 2 caractères.", maxMessage="Votre pseudo doit avoir au maximum 255 caractères.")
      */
     private $pseudo;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(min=8, minMessage="Votre mot de passe doit avoir au minimum 8 caractères.")
      */
     private $hash;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\Email(message="Veuillez renseigner un e-mail valide.")
+     * @Assert\NotBlank(message="Vous devez renseigner votre adresse e-mail.")
+     * @Assert\Email(message="Veuillez renseigner une adresse e-mail valide.")
      */
     private $email;
 

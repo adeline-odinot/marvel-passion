@@ -7,13 +7,12 @@ use App\Form\MovieType;
 use App\Service\Upload;
 use App\Service\Paginator;
 use App\Repository\MoviesRepository;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AdminMoviesController extends AbstractController
@@ -26,9 +25,9 @@ class AdminMoviesController extends AbstractController
      * @param MoviesRepository $repo
      * @var $page
      * @param Paginator $paginator
+     * 
      * @return void
      */
-
     public function index(MoviesRepository $repo, $page = 1, Paginator $paginator)
     {
         $paginator->setEntityClass(Movies::class)
@@ -46,6 +45,7 @@ class AdminMoviesController extends AbstractController
      * 
      * @param Request $request
      * @param ObjectManager $manager
+     * @param Upload $upload
      * 
      * @return Response
      */
@@ -57,27 +57,48 @@ class AdminMoviesController extends AbstractController
 
         $form->handleRequest($request);
 
+        $valid = true;
+
         if($form->isSubmitted() && $form->isValid())
         {
-            if(!$movie->getId())
+            if (isset($request->files->get('movie')['image']))
             {
-                $movie->setUser($this->getUser());
-                $movie->setCreationDate(new \DateTime());
-
                 $fileName = $upload->upload($this->getParameter('movies_directory'), $request->files->get('movie')['image']);
 
-                $movie->setImage($fileName);
+                if (!$fileName)
+                {
+                    $valid = false;
+                    $form->get('image')->addError(new FormError("Le format d'image n'est pas accepté (jpg, jpeg, png)."));
+                }
+                else
+                {
+                    $movie->setImage($fileName);
+                }
             }
+            else
+            {
+                $valid = false;
+                $form->get('image')->addError(new FormError("Veuillez séléctionner une image."));
+            }
+            
+            if ($valid)
+            {
+                if(!$movie->getId())
+                {
+                    $movie->setUser($this->getUser());
+                    $movie->setCreationDate(new \DateTime());
+                }
 
-            $manager->persist($movie);
-            $manager->flush();
+                $manager->persist($movie);
+                $manager->flush();
 
-            $this->addFlash(
-                'success',
-                "L'article de film <strong>{$movie->getTitle()}</strong> a bien été enregistré !"
-            );
+                $this->addFlash(
+                    'success',
+                    "L'article de film <strong>{$movie->getTitle()}</strong> a bien été enregistré !"
+                );
 
-            return $this->redirectToRoute('admin_movies_index');
+                return $this->redirectToRoute('admin_movies_index');
+            }
         }
         
         return $this->render('admin/movies/createMovie.html.twig', [
@@ -86,13 +107,14 @@ class AdminMoviesController extends AbstractController
     }
 
     /**
-     * Permet de modifier un film
+     * Permet de modifier un article de film
      * 
      * @Route("/admin/movies/{id}/editMovie", name="edit_movie")
      * 
      * @param Movies $movie
      * @param Request $request
      * @param ObjectManager $manager
+     * @param Upload $upload
      * 
      * @return Response
      */
@@ -117,10 +139,7 @@ class AdminMoviesController extends AbstractController
                 if(!$fileName)
                 {
                     $valid = false;
-                    $this->addFlash(
-                        'danger',
-                        "Le format d'image n'est pas accepté (jpg, jpeg, png)."
-                    );
+                    $form->get('image')->addError(new FormError("Le format d'image n'est pas accepté (jpg, jpeg, png)."));
                 }
                 else
                 {
@@ -153,9 +172,10 @@ class AdminMoviesController extends AbstractController
      *
      * @Route("/admin/movies/{id}/deleteMovie", name="delete_movie")
      *
-     * @return Response
      * @param Movies $movie
      * @param ObjectManager $manager
+     * 
+     * @return Response
      */
     public function deleteMovie(Movies $movie, ObjectManager $manager)
     {

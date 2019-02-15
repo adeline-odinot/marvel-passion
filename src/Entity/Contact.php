@@ -9,8 +9,8 @@ class Contact
     /**
      * 
      * @var string|null
-     * @Assert\NotBlank()
-     * @Assert\Length(min=2, max=100, minMessage="Votre prénom doit être supérieur à 2 caractères.", maxMessage="Votre prénom doit être inférieur à 100 caractères.")
+     * @Assert\NotBlank(message="Vous devez entrer votre prénom.")
+     * @Assert\Length(min=2, max=100, minMessage="Votre prénom doit avoir au minimum 2 caractères.", maxMessage="Votre prénom doit avoir au maximum 100 caractères.")
      */
 
      private $firstname;
@@ -18,8 +18,8 @@ class Contact
     /**
      * 
      * @var string|null
-     * @Assert\NotBlank()
-     * @Assert\Length(min=2, max=100, minMessage="Votre nom doit être supérieur à 2 caractères.",  maxMessage="Votre nom doit être inférieur à 100 caractères.")
+     * @Assert\NotBlank(message="Vous devez entrer votre nom.")
+     * @Assert\Length(min=2, max=100, minMessage="Votre nom doit avoir au minimum 2 caractères.",  maxMessage="Votre nom doit avoir au maximum 100 caractères.")
      */
 
     private $lastname;
@@ -27,7 +27,7 @@ class Contact
     /**
      * 
      * @var string|null
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="Vous devez entrer votre adresse e-mail.")
      * @Assert\Email(message="Vous devez entrer une adresse e-mail valide.")
      */
 
@@ -36,8 +36,8 @@ class Contact
     /**
      * 
      * @var string|null
-     * @Assert\NotBlank()
-     * @Assert\Length(min=5, max=255, minMessage="Votre sujet doit être supérieur à 5 caractères.",  maxMessage="Votre sujet doit être inférieur à 255 caractères.")
+     * @Assert\NotBlank(message="Vous devez entrer le sujet du message.")
+     * @Assert\Length(min=5, max=255, minMessage="Le sujet du message doit avoir au minimum 5 caractères.",  maxMessage="Le sujet du message doit avoir au maximum 255 caractères.")
      */
 
     private $subject;
@@ -45,8 +45,8 @@ class Contact
     /**
      * 
      * @var string|null
-     * @Assert\NotBlank()
-     * @Assert\Length(min=10, minMessage="Votre message doit être supérieur à 2 caractères.")
+     * @Assert\NotBlank(message="Vous devez entrer le contenu du message.")
+     * @Assert\Length(min=10, minMessage="Votre message doit avoir au minimum 10 caractères.")
      */
 
     private $message;

@@ -43,6 +43,7 @@ class MoviesController extends AbstractController
      * @Route("/movies/show/{id}", name="show_movies")
      * 
      * @param MoviesRepository $repo
+     * @var $id
      * @param Request $request
      * @param ObjectManager $manager
      * 

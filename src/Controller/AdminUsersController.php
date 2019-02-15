@@ -12,7 +12,6 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class AdminUsersController extends AbstractController
 {
@@ -27,7 +26,6 @@ class AdminUsersController extends AbstractController
      * 
      * @return void
      */
-
     public function index(UsersRepository $repo, $page = 1, Paginator $paginator)
     {
         $paginator->setEntityClass(Users::class)
@@ -43,7 +41,11 @@ class AdminUsersController extends AbstractController
      * 
      * @Route("/admin/users/{id}/editRole", name="edit_role")
      * 
+     * @param Users $user
      * @param UsersRepository $repo
+     * @var $id
+     * @param Request $request
+     * @param ObjectManager $manager
      * 
      * @return Response
      */
@@ -78,7 +80,7 @@ class AdminUsersController extends AbstractController
 
             $this->addFlash(
                 'success',
-                "Le role de <strong>{$user->getPseudo()}</strong> a bien été modifié !"
+                "Le role de <strong>{$user->getPseudo()}</strong> a bien été ajouté !"
             );
 
             return $this->redirectToRoute('edit_role', ['id' => $user->getId()]);
@@ -136,8 +138,8 @@ class AdminUsersController extends AbstractController
         $manager->flush();
 
         $this->addFlash(
-        'success',
-        "L'utilisateur <strong>{$users->getPseudo()}</strong> a bien été supprimé !"
+            'success',
+            "L'utilisateur <strong>{$users->getPseudo()}</strong> a bien été supprimé !"
         );
 
         return $this->redirectToRoute("admin_users_index");
