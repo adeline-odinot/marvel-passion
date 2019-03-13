@@ -30,7 +30,7 @@ class ContactNotification
 
         $message = (new \Swift_Message('Marvel-Passion'))
             ->setFrom($contact->getEmail())
-            ->setTo('marvelpassion.contact@gmail.com')
+            ->setTo('formation@adeline-odinot.com')
             ->setReplyTo($contact->getEmail())
             ->setBody($this->template->render('contact/email.html.twig',
             [

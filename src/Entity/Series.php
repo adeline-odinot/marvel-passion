@@ -24,7 +24,7 @@ class Series
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Vous devez entrer le titre de l'article.")
-     * @Assert\Length(min=8, max=255, minMessage="Le titre doit avoir au minimum 8 caractères.", maxMessage="Le titre doit avoir au maximum 255 caractères.")
+     * @Assert\Length(min=4, max=255, minMessage="Le titre doit avoir au minimum 4 caractères.", maxMessage="Le titre doit avoir au maximum 255 caractères.")
      */
     private $title;
 

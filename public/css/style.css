@@ -223,7 +223,7 @@ img, iframe[src*=youtube]
 
 .w-100
 {
-    height: 350px !important;
+    height: 550px !important;
     background-size: cover;
 }
 
@@ -405,6 +405,7 @@ input:focus, textarea:focus, .custom-file-input:focus~.custom-file-label
 {
     color: white !important;    
     font-size:20px;
+    padding-right: 0px !important;
 }
 
 .clap-shooting

@@ -4,12 +4,19 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    locale: 'en'
+    locale: 'fr'
     avatar_directory: '%kernel.project_dir%/public/uploads/avatar'
     humor_directory: '%kernel.project_dir%/public/uploads/humor'
     movies_directory: '%kernel.project_dir%/public/uploads/movies'
     series_directory: '%kernel.project_dir%/public/uploads/series'
     shootings_directory: '%kernel.project_dir%/public/uploads/shootings'
+    mailer_transport: smtp
+    mailer_host: smtp.ionos.fr
+    mailer_port: 587
+    mailer_user: formation@adeline-odinot.com
+    mailer_password: qyh5cbet9xf813140
+    mailer_auth_mode: login
+    sender_name: Marvel-Passion
 
 services:
     # default configuration for services in *this* file

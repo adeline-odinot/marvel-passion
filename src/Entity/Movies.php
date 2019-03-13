@@ -25,7 +25,7 @@ class Movies
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Vous devez entrer le titre de l'article.")
-     * @Assert\Length(min=10, max=255, minMessage="Le titre doit avoir au minimum 10 caractères.", maxMessage="Le titre doit être inférieur à 255 caractères.")
+     * @Assert\Length(min=4, max=255, minMessage="Le titre doit avoir au minimum 4 caractères.", maxMessage="Le titre doit être inférieur à 255 caractères.")
      */
     private $title;
 

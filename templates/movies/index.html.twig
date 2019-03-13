@@ -2,6 +2,14 @@
 
 {% block title %} Films | Marvel-Passion {% endblock %}
 
+{% block metaDescription %}Marvel Passion - Découvrez les différents films de l'univers Marvel.{% endblock %}
+
+{% block ogTitle %}Films | Marvel-Passion{% endblock %}
+{% block ogDescription %}Marvel Passion - Découvrez les différents films de l'univers Marvel.{% endblock %}
+
+{% block twiDescription %}Marvel Passion - Découvrez les différents films de l'univers Marvel.{% endblock %}
+{% block twiTitle %}Films | Marvel-Passion{% endblock %}
+
 {% block body %}
     <section class="movies">
         <h1 class="text-center title mb-5">Films</h1>
@@ -20,8 +28,8 @@
                         <em>Publié le {{ movie.creationDate | date('d/m/Y') }} à {{ movie.creationDate | date('H:i') }} par {{ movie.user.pseudo }}</em>
                     </small>
                 </div>
-                <div class="col-md-6 d-flex flex-column align-items-center justify-content-center">
-                    <p class="text-center">
+                <div class="col-md-6 d-flex flex-column align-items-center justify-content-center text-center">
+                    <p>
                         {{ movie.introduction | raw }}
                     </p>
                     <a class="more" href="{{ showMovie }}">Lire la suite</a>
