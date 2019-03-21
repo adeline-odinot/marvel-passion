@@ -22,13 +22,12 @@ class AdminSeriesController extends AbstractController
      * 
      * @Route("/admin/series/{page}", name="admin_series_index", requirements={"page": "\d+"})
      *
-     * @param SeriesRepository $repo
      * @var $page
      * @param Paginator $paginator
      * 
-     * @return void
+     * @return Response
      */
-    public function index(SeriesRepository $repo, $page = 1, Paginator $paginator)
+    public function index($page = 1, Paginator $paginator)
     {
         $paginator->setEntityClass(Series::class)
                   ->setPage($page);
@@ -83,11 +82,9 @@ class AdminSeriesController extends AbstractController
             
             if ($valid)
             {
-                if(!$serie->getId())
-                {
-                    $serie->setUser($this->getUser());
-                    $serie->setCreationDate(new \DateTime());
-                }
+                $serie->setUser($this->getUser());
+                $serie->setCreationDate(new \DateTime());
+                
     
                 $manager->persist($serie);
                 $manager->flush();
@@ -128,10 +125,6 @@ class AdminSeriesController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid())
         {
-            if(!$serie->getId())
-            {
-                $serie->setCreationDate(new \DateTime());
-            }
             if(isset($request->files->get('serie')['image']))
             {
                 $fileName = $upload->upload($this->getParameter('series_directory'), $request->files->get('serie')['image'], $serie->getImage());

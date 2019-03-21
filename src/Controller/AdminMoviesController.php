@@ -22,19 +22,18 @@ class AdminMoviesController extends AbstractController
      * 
      * @Route("/admin/movies/{page}", name="admin_movies_index", requirements={"page": "\d+"})
      *
-     * @param MoviesRepository $repo
      * @var $page
      * @param Paginator $paginator
      * 
-     * @return void
+     * @return Response
      */
-    public function index(MoviesRepository $repo, $page = 1, Paginator $paginator)
+    public function index($page = 1, Paginator $paginator)
     {
         $paginator->setEntityClass(Movies::class)
                   ->setPage($page);
 
         return $this->render('admin/movies/index.html.twig', [
-        'paginator' => $paginator
+            'paginator' => $paginator
         ]);
     }
 
@@ -83,11 +82,9 @@ class AdminMoviesController extends AbstractController
             
             if ($valid)
             {
-                if(!$movie->getId())
-                {
-                    $movie->setUser($this->getUser());
-                    $movie->setCreationDate(new \DateTime());
-                }
+                $movie->setUser($this->getUser());
+                $movie->setCreationDate(new \DateTime());
+                
 
                 $manager->persist($movie);
                 $manager->flush();
@@ -128,10 +125,6 @@ class AdminMoviesController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid())
         {
-            if(!$movie->getId())
-            {
-                $movie->setCreationDate(new \DateTime());
-            }
             if (isset($request->files->get('movie')['image']))
             {
                 $fileName = $upload->upload($this->getParameter('movies_directory'), $request->files->get('movie')['image'], $movie->getImage());

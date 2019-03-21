@@ -110,7 +110,6 @@ class Users implements UserInterface
         $this->humors = new ArrayCollection();
         $this->movies = new ArrayCollection();
         $this->series = new ArrayCollection();
-        $this->likables = new ArrayCollection();
     }
 
     public function getId(): ?int

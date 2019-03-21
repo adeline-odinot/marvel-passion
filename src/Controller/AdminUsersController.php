@@ -20,13 +20,12 @@ class AdminUsersController extends AbstractController
      * 
      * @Route("/admin/users", name="admin_users_index")
      *
-     * @param UsersRepository $repo
      * @var $page
      * @param Paginator $paginator
      * 
-     * @return void
+     * @return Response
      */
-    public function index(UsersRepository $repo, $page = 1, Paginator $paginator)
+    public function index($page = 1, Paginator $paginator)
     {
         $paginator->setEntityClass(Users::class)
                   ->setPage($page);
@@ -73,7 +72,6 @@ class AdminUsersController extends AbstractController
             $role =  $this->getDoctrine()->getRepository(Role::class)->find($roleIdForm);
 
             $user->addUserRole($role);
-            
 
             $manager->persist($user);
             $manager->flush();
@@ -115,8 +113,8 @@ class AdminUsersController extends AbstractController
         $manager->flush();
 
         $this->addFlash(
-        'success',
-        "Le rôle '{$idRole->getTitle()}' de <strong>{$users->getPseudo()}</strong> a bien été supprimé !"
+            'success',
+            "Le rôle '{$idRole->getTitle()}' de <strong>{$users->getPseudo()}</strong> a bien été supprimé !"
         );
 
         return $this->redirectToRoute('edit_role', ['id' => $users->getId()]);

@@ -22,13 +22,12 @@ class AdminHumorController extends AbstractController
      * 
      * @Route("/admin/humor/{page}", name="admin_humor_index", requirements={"page": "\d+"})
      *
-     * @param HumorRepository $repo
      * @var $page
      * @param Paginator $paginator
      * 
-     * @return void
+     * @return Response
      */
-    public function index(HumorRepository $repo, $page = 1, Paginator $paginator)
+    public function index($page = 1, Paginator $paginator)
     {   
         $paginator->setEntityClass(Humor::class)
                   ->setPage($page);

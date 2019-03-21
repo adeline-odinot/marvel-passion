@@ -77,7 +77,7 @@ class UserAccountController extends AbstractController
         {
             if(isset($request->files->get('registration')['avatar']))
             {
-                $fileName = $upload->upload($this->getParameter('avatar_directory'), $request->files->get('registration')['avatar'], $user->getAvatar());
+                $fileName = $upload->upload($this->getParameter('avatar_directory'), $request->files->get('registration')['avatar']);
 
                 if(!$fileName)
                 {

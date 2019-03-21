@@ -20,13 +20,12 @@ class MoviesController extends AbstractController
      * 
      * @Route("/movies/{page}", name="movies", requirements={"page": "\d+"})
      * 
-     * @param MoviesRepository $repo
      * @var $page
      * @param Paginator $paginator
      * 
      * @return Response
      */
-    public function index(MoviesRepository $repo, $page = 1, Paginator $paginator)
+    public function index($page = 1, Paginator $paginator)
     {
         $paginator->setEntityClass(Movies::class)
                   ->setLimit(4)

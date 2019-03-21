@@ -24,7 +24,7 @@ security:
             form_login:
                 login_path: admin_account_login
                 check_path: admin_account_login
-                default_target_path: admin_humor_index
+                default_target_path: admin
 
             logout:
                 path: admin_account_logout

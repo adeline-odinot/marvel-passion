@@ -20,13 +20,12 @@ class HumorController extends AbstractController
      * 
      * @Route("/humor/{page}", name="humor", requirements={"page": "\d+"})
      * 
-     * @param HumorRepository $repo
      * @var $page
      * @param Paginator $paginator
      * 
      * @return Response
      */
-    public function index(HumorRepository $repo, $page = 1, Paginator $paginator)
+    public function index($page = 1, Paginator $paginator)
     {
         $paginator->setEntityClass(Humor::class)
                   ->setPage($page);

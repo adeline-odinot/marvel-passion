@@ -21,13 +21,12 @@ class AdminShootingsController extends AbstractController
      * 
      * @Route("/admin/shootings/{page}", name="admin_shootings_index", requirements={"page": "\d+"})
      *
-     * @param ShootingsRepository $repo
      * @var $page
      * @param Paginator $paginator
      * 
-     * @return void
+     * @return Response
      */
-    public function index(ShootingsRepository $repo, $page = 1, Paginator $paginator)
+    public function index($page = 1, Paginator $paginator)
     {
         $paginator->setEntityClass(Shootings::class)
                   ->setPage($page);
@@ -116,30 +115,39 @@ class AdminShootingsController extends AbstractController
      * 
      * @Route("/admin/shootings/{id}/editShooting", name="edit_shooting")
      * 
-     * @param Shootings $shooting
+     * @param Shootings $shootings
      * @param Request $request
      * @param ObjectManager $manager
      * @param Upload $upload
      * 
      * @return Response
      */
-    public function editShooting(Shootings $shooting, Request $request, ObjectManager $manager,  Upload $upload)
+    public function editShooting(Shootings $shootings, Request $request, ObjectManager $manager,  Upload $upload)
     {   
-        $form = $this->createForm(ShootingType::class, $shooting);
+        $form = $this->createForm(ShootingType::class, $shootings);
 
         $form->handleRequest($request);
 
         $valid = true;
-
+        
         if($form->isSubmitted() && $form->isValid())
         {
-            if(!$shooting->getId())
+            if ($request->get('shooting')['movie'] === '' && $request->get('shooting')['serie'] === '')
             {
-                $shooting->setCreationDate(new \DateTime());
+                $valid = false;
+                $form->get('movie')->addError(new FormError("Vous devez séléctionner une relation entre un film ou une série."));
+                $form->get('serie')->addError(new FormError("Vous devez séléctionner une relation entre un film ou une série."));
             }
+            elseif ($request->get('shooting')['movie'] !== '' && $request->get('shooting')['serie'] !== '')
+            {
+                $valid = false;
+                $form->get('movie')->addError(new FormError("Vous ne pouvez pas séléctionner une relation entre un film et une série à la fois."));
+                $form->get('serie')->addError(new FormError("Vous ne pouvez pas séléctionner une relation entre un film et une série à la fois."));
+            }
+
             if(isset($request->files->get('shooting')['image']))
             {
-                $fileName = $upload->upload($this->getParameter('shootings_directory'), $request->files->get('shooting')['image'], $shooting->getImage());
+                $fileName = $upload->upload($this->getParameter('shootings_directory'), $request->files->get('shooting')['image'], $shootings->getImage());
                 
                 if(!$fileName)
                 {
@@ -148,17 +156,17 @@ class AdminShootingsController extends AbstractController
                 }
                 else
                 {
-                    $shooting->setImage($fileName);
+                    $shootings->setImage($fileName);
                 }
             }       
             if($valid)
             {
-                $manager->persist($shooting);
+                $manager->persist($shootings);
                 $manager->flush();
     
                 $this->addFlash(
                     'success',
-                    "Les modifications du lieu de tournage <strong>{$shooting->getTitle()}</strong> ont bien été enregistrée !"
+                    "Les modifications du lieu de tournage <strong>{$shootings->getTitle()}</strong> ont bien été enregistrée !"
                 );
                 
                 return $this->redirectToRoute('admin_shootings_index');
@@ -167,7 +175,7 @@ class AdminShootingsController extends AbstractController
         
         return $this->render('admin/shootings/editShooting.html.twig', [
             'formShooting' => $form->createView(),
-            'shooting' => $shooting
+            'shooting' => $shootings
         ]);
     }
 

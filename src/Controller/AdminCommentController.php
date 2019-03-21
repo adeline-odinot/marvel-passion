@@ -18,13 +18,12 @@ class AdminCommentController extends AbstractController
      * 
      * @Route("/admin/comments/{page}", name="admin_comments_index", requirements={"page": "\d+"})
      *
-     * @param CommentsRepository $repo
      * @var $page
      * @param Paginator $paginator
      * 
-     * @return void
+     * @return Response
      */
-    public function index(CommentsRepository $repo, $page = 1, Paginator $paginator)
+    public function index($page = 1, Paginator $paginator)
     {
         $paginator->setEntityClass(Comments::class)
                   ->setPage($page);

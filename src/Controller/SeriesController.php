@@ -20,13 +20,12 @@ class SeriesController extends AbstractController
      * 
      * @Route("/series/{page}", name="series", requirements={"page": "\d+"})
      * 
-     * @param SeriesRepository $repo
      * @var $page
      * @param Paginator $paginator
      * 
      * @return Response
      */
-    public function index(SeriesRepository $repo, $page = 1, Paginator $paginator)
+    public function index($page = 1, Paginator $paginator)
     {
         $paginator->setEntityClass(Series::class)
                   ->setLimit(4)
