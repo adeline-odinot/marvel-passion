@@ -27,31 +27,31 @@ class Stats
 
     public function getShootingsCount()
     {
-        return $this->manager->createQuery('SELECT COUNT(s) FROM App\Entity\Shootings s')->getSingleScalarResult();
+        return $this->manager->createQuery('SELECT COUNT(s) FROM App\MarvelPassion\ShootingBundle\Entity\Shootings s')->getSingleScalarResult();
     }
 
     public function getMoviesCount()
     {
-        return $this->manager->createQuery('SELECT COUNT(m) FROM App\Entity\Movies m')->getSingleScalarResult();
+        return $this->manager->createQuery('SELECT COUNT(m) FROM App\MarvelPassion\ArticleBundle\Entity\Movies m')->getSingleScalarResult();
     }
 
     public function getSeriesCount()
     {
-        return $this->manager->createQuery('SELECT COUNT(s) FROM App\Entity\Series s')->getSingleScalarResult();
+        return $this->manager->createQuery('SELECT COUNT(s) FROM App\MarvelPassion\ArticleBundle\Entity\Series s')->getSingleScalarResult();
     }
 
     public function getHumorCount()
     {
-        return $this->manager->createQuery('SELECT COUNT(h) FROM App\Entity\Humor h')->getSingleScalarResult();
+        return $this->manager->createQuery('SELECT COUNT(h) FROM App\MarvelPassion\ArticleBundle\Entity\Humor h')->getSingleScalarResult();
     }
 
     public function getCommentsCount()
     {
-        return $this->manager->createQuery('SELECT COUNT(c) FROM App\Entity\Comments c')->getSingleScalarResult();
+        return $this->manager->createQuery('SELECT COUNT(c) FROM App\MarvelPassion\CommentBundle\Entity\Comments c')->getSingleScalarResult();
     }
 
     public function getUsersCount()
     {
-        return $this->manager->createQuery('SELECT COUNT(u) FROM App\Entity\Users u')->getSingleScalarResult();
+        return $this->manager->createQuery('SELECT COUNT(u) FROM App\MarvelPassion\UserBundle\Entity\Users u')->getSingleScalarResult();
     }
 }

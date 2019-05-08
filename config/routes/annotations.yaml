@@ -1,3 +1,32 @@
-controllers:
-    resource: ../../src/Controller/
+ArticleBundle:
+    resource: ../../src/MarvelPassion/ArticleBundle/Controller/
     type: annotation
+
+CommentBundle:
+    resource: ../../src/MarvelPassion/CommentBundle/Controller/
+    type: annotation
+
+ContactBundle:
+    resource: ../../src/MarvelPassion/ContactBundle/Controller/
+    type: annotation
+
+DashboardBundle:
+    resource: ../../src/MarvelPassion/DashboardBundle/Controller/
+    type: annotation
+
+HomeBundle:
+    resource: ../../src/MarvelPassion/HomeBundle/Controller/
+    type: annotation
+
+LegalNoticeBundle:
+    resource: ../../src/MarvelPassion/LegalNoticeBundle/Controller/
+    type: annotation
+
+ShootingBundle:
+    resource: ../../src/MarvelPassion/ShootingBundle/Controller/
+    type: annotation
+
+UserBundle:
+    resource: ../../src/MarvelPassion/UserBundle/Controller/
+    type: annotation
+

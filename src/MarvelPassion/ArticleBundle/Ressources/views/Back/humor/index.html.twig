@@ -1,0 +1,86 @@
+{% extends 'Templates/back/base.html.twig' %}
+
+{% block title %} Administration - Humour | Marvel-Passion{% endblock %}
+
+{% block body %}
+
+    <section>
+        <h1 class="text-center title mb-4">Gestion des articles d'humour</h1>
+
+        <div class="table-responsive">
+            <table class="table table-hover">
+
+                <thead class="text-center">
+                    <tr class="table-admin">
+                        <th>Id</th>
+                        <th>Titre</th>
+                        <th>Auteur</th>
+                        <th>Date de création</th>
+                        <th>Modifier</th>
+                        <th>Supprimer</th>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    {% for humor in paginator.data %}
+                    <tr id="{{ humor.id }}">
+                        <td>{{ humor.id }}</td>
+                        <td>{{ humor.title }}</td>
+                        <td>
+                            {% if humor.user.avatar is not null %}
+                                <img class="avatar avatar-mini" src="{{  asset('uploads/avatar/') ~ humor.user.avatar }}" alt="Avatar de {{ humor.user.pseudo }}">
+                            {% else %}
+                                <i class="avatar-design avatar-design-admin fas fa-user"></i>
+                            {% endif %}
+                            {{ humor.user.pseudo }}
+                        </td>
+                        <td>{{ humor.creationDate | date('d/m/Y') }} à {{ humor.creationDate | date('H:i') }}</td>
+                        <td>
+                            <a href="{{ path('edit_humor',{'id': humor.id}) }}">
+                                <i class="admin-icon-edit far fa-edit"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <i onclick="deleteHumor({{ humor.id }})" class="admin-icon-trash fas fa-trash"></i>
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+            
+        <a class="btn btn-admin ml-2" href="{{ path('create_humor')}}"><i class="fas fa-plus-circle"></i> Ajouter un article d'humour</a>
+       
+        {{ paginator.display() }}
+
+    </section>
+
+{% endblock %}
+
+{% block javascript %}
+
+<script>
+    function deleteHumor(id)
+    {
+        if (confirm("Êtes-vous sûre de vouloir supprimer l'article d'humour ?")) 
+        {
+            url = '{{ path('delete_humor', { 'id': 0}) }}';
+            url = url.replace("0", id);
+            $.ajax({ 
+                url: url,
+                type: 'delete', 
+                success: function(result) 
+                {
+                    $('#' + id).remove();
+                },
+                error: function(e){
+                    console.log(e.responseText);
+                }
+            });
+        }
+    }
+</script>
+
+{% endblock %}

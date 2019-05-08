@@ -1,0 +1,36 @@
+{% extends 'Templates/back/base.html.twig' %}
+
+{% block title %} Administration - Création d'un article de film | Marvel Passion {% endblock %}
+
+{% form_theme formMovie 'bootstrap_4_layout.html.twig' %}
+
+{% block body %}
+
+    <section class="d-flex flex-column align-items-center">
+
+        <h1 class="text-center title">Création d'un article de film</h1>
+
+        <div class="col-md-8 mt-4">
+            {{ form_start(formMovie) }}
+
+                {{ form_row(formMovie.title, {'attr': {'placeholder': 'Titre du film'}}) }}
+                {{ form_row(formMovie.introduction, {'attr': {'placeholder': 'Introduction du film'}}) }}
+                {{ form_row(formMovie.content, {'attr': {'placeholder': 'Contenu du film'}}) }}
+                {{ form_row(formMovie.image, {'attr': {'placeholder': 'Choisissez l\'image à la une du film'}}) }}
+
+                <button type="submit" class="mt-2 btn btn-form btn-form-design">Ajouter</button>
+
+            {{ form_end(formMovie) }}
+            
+        </div>    
+    </section>
+
+{% endblock %}
+
+{% block javascript %}
+
+    <script src="{{ asset('js/cutCaract.js') }}"></script>
+    <script>changeTextImg('#movie_image')</script>
+    
+{% endblock %}
+

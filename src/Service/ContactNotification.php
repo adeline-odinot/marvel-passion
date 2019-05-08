@@ -3,7 +3,7 @@
 namespace App\Service;
 
 use Twig\Environment;
-use App\Entity\Contact;
+use App\MarvelPassion\ContactBundle\Entity\Contact;
 
 
 class ContactNotification
@@ -25,14 +25,13 @@ class ContactNotification
         $this->template = $template;
     }
 
-    public function notify(Contact $contact)
+    public function notify(\App\MarvelPassion\ContactBundle\Entity\Contact $contact)
     {
-
         $message = (new \Swift_Message('Marvel-Passion'))
             ->setFrom($contact->getEmail())
             ->setTo('formation@adeline-odinot.com')
             ->setReplyTo($contact->getEmail())
-            ->setBody($this->template->render('contact/email.html.twig',
+            ->setBody($this->template->render('ContactBundle/Ressources/views/Front/email.html.twig',
             [
                 'contact' => $contact,
             ]), 'text/html'

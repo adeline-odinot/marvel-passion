@@ -1,0 +1,102 @@
+{% extends 'Templates/back/base.html.twig' %}
+
+{% block title %} Administration - Utilisateurs | Marvel-Passion{% endblock %}
+
+{% block body %}
+
+    <section>
+        <h1 class="text-center title mb-4">Gestion des utilisateurs</h1>
+        
+        <div class="table-responsive">
+            <table class="table table-hover">
+
+                <thead class="text-center">
+                    <tr class="table-admin">
+                        <th>Id</th>
+                        <th>Nom</th>
+                        <th>Prenom</th>
+                        <th>Avatar</th>
+                        <th>Pseudo</th>
+                        <th>Email</th>
+                        <th>Rôle</th>
+                        <th>Supprimer</th>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+
+                    {% for user in paginator.data %}
+
+                        {% set isAdmin = false %}
+                        {% set userRole = user.roles %}
+
+                    <tr id="{{ user.id }}">
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.lastname }}</td>
+                        <td>{{ user.firstname }}</td>
+                        <td>
+                            {% if user.avatar is not null %}
+                                <img class="avatar avatar-mini" src="{{  asset('uploads/avatar/') ~ user.avatar }}" alt="Avatar de {{ user.pseudo }}">
+                            {% else %}
+                                <i class="avatar-design avatar-design-admin fas fa-user"></i>
+                            {% endif %}
+                        </td>
+                        <td>{{ user.pseudo }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>
+                            <a href="{{ path('edit_role',{'id': user.id}) }}">
+                                <i class="fas fa-cog">
+                                {% for role in userRole %}
+                                    {% if role == "ROLE_ADMIN" %}
+                                        {% set isAdmin = true %}
+                                    {% endif %}
+                                {% endfor %}
+                                {% if isAdmin == true %}
+                                    Administrateur
+                                {% else %}
+                                    Utilisateur
+                                {% endif %}
+                                </i>
+                            </a>  
+                        </td>
+                        <td>
+                            <i onclick="deleteUser({{ user.id }})" class="admin-icon-trash fas fa-trash"></i>
+                        </td>
+                    </tr>
+                    
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+        </div>
+        
+        {{ paginator.display() }}
+
+    </section>
+
+{% endblock %}
+
+{% block javascript %}
+
+    <script>
+        function deleteUser(id)
+        {
+            if (confirm("Êtes-vous sûre de vouloir supprimer l'utilisateur?")) 
+            {
+                url = '{{ path('delete_user', { 'id': 0}) }}';
+                url = url.replace("0", id);
+                $.ajax({ 
+                    url: url,
+                    type: 'delete', 
+                    success: function(result) 
+                    {
+                        $('#' + id).remove();
+                    },
+                    error: function(e){
+                        console.log(e.responseText);
+                    }
+                });
+            }
+        }
+    </script>
+{% endblock %}

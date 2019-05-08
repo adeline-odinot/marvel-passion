@@ -1,0 +1,40 @@
+{% extends 'Templates/front/base.html.twig' %}
+
+{% block title %} Contact | Marvel Passion {% endblock %}
+
+{% block ogTitle %}Contact | Marvel Passion{% endblock %}
+{% block ogDescription %}Marvel Passion - N’hesitez pas à nous contacter si vous avez besoin de prendre contact avec nous, pour des conseils ou pour plus d’informations.{% endblock %}
+
+{% block metaDescription %}Marvel Passion - N’hesitez pas à nous contacter si vous avez besoin de prendre contact avec nous, pour des conseils ou pour plus d’informations.{% endblock %}
+
+{% block twiDescription %}Marvel Passion - N’hesitez pas à nous contacter si vous avez besoin de prendre contact avec nous, pour des conseils ou pour plus d’informations.{% endblock %}
+{% block twiTitle %}Contact | Marvel Passion{% endblock %}
+
+{% form_theme formContact 'bootstrap_4_layout.html.twig' %}
+
+{% block body %}
+
+    <section class="d-flex flex-column align-items-center">
+
+        <h1 class="text-center title mb-5">Contact</h1>
+        
+        <div class="col-md-8">
+            {{ form_start(formContact) }}
+
+            <div class="row">
+                <div class="col">{{ form_row(formContact.lastname, {'attr': {'placeholder': 'Votre nom'}}) }}</div>
+                <div class="col">{{ form_row(formContact.firstname, {'attr': {'placeholder': 'Votre prenom'}}) }}</div>
+            </div>
+                
+                {{ form_row(formContact.email, {'attr': {'placeholder': 'Votre adresse e-mail'}}) }}
+                {{ form_row(formContact.subject, {'attr': {'placeholder': 'Sujet du message'}}) }}
+                {{ form_row(formContact.message, {'attr': {'placeholder': 'Votre message'}}) }}
+                
+            <button type="submit" class="btn btn-form btn-form-design mt-2">Envoyer le message</button>
+
+            {{ form_end(formContact) }}
+            
+        </div>
+    </section>
+
+{% endblock %}

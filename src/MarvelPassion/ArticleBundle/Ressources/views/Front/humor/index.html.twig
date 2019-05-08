@@ -1,0 +1,30 @@
+{% extends 'Templates/front/base.html.twig' %}
+
+{% block title %} Humour | Marvel-Passion {% endblock %}
+
+{% block metaDescription %}Marvel Passion - Découvrez notre large gamme de meme d'humour de l'univers Marvel.{% endblock %}
+
+{% block ogTitle %}Humour | Marvel-Passion{% endblock %}
+{% block ogDescription %}Marvel Passion - Découvrez notre large gamme de meme d'humour de l'univers Marvel.{% endblock %}
+
+{% block twiDescription %}Marvel Passion - Découvrez notre large gamme de meme d'humour de l'univers Marvel.{% endblock %}
+{% block twiTitle %}Humour | Marvel-Passion{% endblock %}
+
+{% block body %}
+    <section>
+        <h1 class="text-center title mb-5">Humour</h1>
+        <div class="humor row  d-flex justify-content-center text-center">
+            {% for humor in paginator.data %}
+            <figure class="col-lg-3 col-md-12 content-humor">
+                <a class="humor" href="{{ path('show_humor',{'id': humor.id}) }}"><img class="img-humor img-fluid" src="{{ asset('uploads/humor/' ~ humor.image) }}" alt=">{{ humor.title }}"></a>
+                <figcaption>
+                    <p class="img_txt"><strong>{{ humor.title }}</strong><br></p>
+                </figcaption>
+            </figure>
+            {% endfor %}
+        </div>
+
+    {{ paginator.display() }}
+
+    </section> 
+{% endblock %}

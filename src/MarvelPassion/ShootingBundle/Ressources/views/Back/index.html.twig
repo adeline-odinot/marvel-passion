@@ -1,0 +1,90 @@
+{% extends 'Templates/back/base.html.twig' %}
+
+{% block title %} Administration - Tournages | Marvel-Passion{% endblock %}
+
+{% block body %}
+
+    <section>
+        <h1 class="text-center title mb-4">Gestion des tournages</h1>
+        
+        <div class="table-responsive">
+            <table class="table table-hover">
+
+                <thead class="text-center">
+                    <tr class="table-admin">
+                        <th>Id</th>
+                        <th>Titre</th>
+                        <th>Type</th>
+                        <th>Relation avec l'article</th>
+                        <th>Modifier</th>
+                        <th>Supprimer</th>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    {% for shooting in paginator.data %}
+                    <tr id="{{ shooting.id }}">
+                        <td>{{ shooting.id }}</td>
+                        <td>{{ shooting.title }}</td>
+                        <td>
+                            {% if shooting.movie == NULL %}
+                                Série
+                            {% else %}
+                                Film
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if shooting.movie == NULL %}
+                                {{ shooting.serie.title }}
+                            {% else %}
+                                {{ shooting.movie.title }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{{ path('edit_shooting',{'id': shooting.id}) }}">
+                                <i class="admin-icon-edit far fa-edit"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <i onclick="deleteShooting({{ shooting.id }})" class="admin-icon-trash fas fa-trash"></i>
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+        </div>
+        
+        <a class="btn btn-admin ml-2" href="{{ path('create_shooting')}}"><i class="fas fa-plus-circle"></i> Ajouter un lieu de tournage</a>
+        
+        {{ paginator.display() }}
+
+    </section>
+
+{% endblock %}
+
+{% block javascript %}
+
+    <script>
+        function deleteShooting(id)
+        {
+            if (confirm("Êtes-vous sûre de vouloir supprimer le lieu de tournage ?")) 
+            {
+                url = '{{ path('delete_shooting', { 'id': 0}) }}';
+                url = url.replace("0", id);
+                $.ajax({ 
+                    url: url,
+                    type: 'delete', 
+                    success: function(result) 
+                    {
+                        $('#' + id).remove();
+                    },
+                    error: function(e){
+                        console.log(e.responseText);
+                    }
+                });
+            }
+        }
+    </script>
+
+{% endblock %}

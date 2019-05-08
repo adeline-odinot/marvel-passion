@@ -1,0 +1,239 @@
+{% extends 'Templates/front/base.html.twig' %}
+
+{% block title %} Tournages | Marvel-Passion {% endblock %}
+
+{% block metaDescription %}Marvel Passion - Découvrez les différents lieux de tournage des films ou séries Marvel.{% endblock %}
+
+{% block ogTitle %}Tournages | Marvel-Passion{% endblock %}
+{% block ogDescription %}Marvel Passion - Découvrez les différents lieux de tournage des films ou séries Marvel.{% endblock %}
+
+{% block twiDescription %}Marvel Passion - Découvrez les différents lieux de tournage des films ou séries Marvel.{% endblock %}
+{% block twiTitle %}Tournages | Marvel-Passion{% endblock %}
+
+{% block stylesheets %}
+
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css' rel='stylesheet' />
+
+{% endblock %}
+
+{% block body %}
+
+<section>
+    <h1 class="title text-center mb-5">Tournages</h1>
+
+    <div id="map" class="mb-3"></div>
+    
+    <p class="informations-shooting subtitle-shooting text-center mt-5 p-2">
+        Veuillez sélectionner un lieu de tournage sur la carte pour afficher ses informations correspondante.
+    </p>
+
+    <div class="hide mt-5 text-center">
+
+        <div class="mt-3 mb-3">
+            <span class="font-weight-bold subtitle-shooting">Titre : </span>
+            <span id="title-shooting"></span>
+        </div>
+
+        <div class="mt-3 mb-3">
+            <span class="font-weight-bold subtitle-shooting">Adresse : </span>
+            <span id="address-shooting"></span>
+        </div>
+
+        <div class="mb-3">
+            <span class="font-weight-bold subtitle-shooting">Type : </span>
+            <span id="type"></span>
+        </div>
+        
+        <div class="mb-5">
+            <span class="font-weight-bold subtitle-shooting">Description : </span>
+            <span id="description-shooting"></span>
+        </div>
+
+        <p class="mb-3 subtitle font-weight-bold">Image du lieu de tournage</p>
+
+        <div class="mt-3 mb-3 ml-3 mr-3" id="img-shooting"></div>
+
+    </div>
+
+</section>
+
+{% endblock %}
+
+{% block javascript %}
+
+<script>
+
+    mapboxgl.accessToken = 'pk.eyJ1IjoibmFtaXN3YW4iLCJhIjoiY2pyejMxaHRhMGQ5cTQzbDl0amtlb2M3aCJ9.m70wpc1DNfHE2FeddLU9lQ';
+
+    var map = new mapboxgl.Map({
+
+        container: 'map',
+        zoom: 1,
+        style: 'mapbox://styles/mapbox/streets-v9',
+
+    });
+
+    var geojson = 
+    {
+        type: 'FeatureCollection',
+        features: 
+        [
+            {% for shooting in shootings %}
+
+            {
+                type: 'Feature',
+                geometry: 
+                {
+                    type: 'Point',
+                    coordinates: [{{ shooting.lng }} , {{ shooting.lat }}]
+                },
+                properties:
+                {
+                    id: {{ shooting.id }},
+                    title: "{{ shooting.title }}"
+                }
+            },
+
+            {% endfor %}
+        ]
+    };
+
+    geojson.features.forEach(function(marker) 
+    {
+        var el = document.createElement('div');
+        $(el).addClass('marker');
+
+        new mapboxgl.Marker(el)
+            .setLngLat(marker.geometry.coordinates)
+            .setPopup(new mapboxgl.Popup({offset: 25})
+                .setHTML('<h3 class="font-weight-bold subtitle-shooting">' + marker.properties.title + '</h3>'))
+            .addTo(map);
+
+        $(el).click(function ()
+            { 
+                getShooting(marker.properties.id);
+            }
+        );
+    });
+
+
+    map.on('load', function() 
+    {
+        map.addSource("geojson", 
+        {
+            type: "geojson",
+            data: geojson,
+            cluster: true,
+            clusterMaxZoom: 14,
+            clusterRadius: 50
+        });
+        
+        map.addLayer({
+            id: "clusters",
+            type: "circle",
+            source: "geojson",
+            filter: ["has", "point_count"],
+            paint: 
+            {
+                "circle-color": 
+                [
+                    "step",
+                    ["get", "point_count"],
+                    "#ff5a5a",
+                    100,
+                    "#f1f075",
+                    750,
+                    "#f28cb1"
+                ],
+                "circle-radius": 
+                [
+                    "step",
+                    ["get", "point_count"],
+                    20,
+                    100,
+                    30,
+                    750,
+                    40
+                ]
+            }
+        });
+        
+        map.addLayer({
+            id: "cluster-count",
+            type: "symbol",
+            source: "geojson",
+            filter: ["has", "point_count"],
+            layout: 
+            {
+                "text-field": "{point_count_abbreviated}",
+                "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
+                "text-size": 18,
+            },
+            paint:
+            {
+                "text-color": "#fff"
+            }
+
+        });
+    
+        map.addLayer({
+            id: "unclustered-point",
+            type: "circle",
+            source: "geojson",
+            filter: ["!", ["has", "point_count"]],
+            paint: 
+            {
+                "circle-color": "#ff5a5a",
+                "circle-radius": 10,
+                "circle-stroke-width": 1,
+                "circle-stroke-color": "#fff"
+            }
+        });
+        
+        map.on('click', 'clusters', function (e) 
+        {
+            var features = map.queryRenderedFeatures(e.point, { layers: ['clusters'] });
+            var clusterId = features[0].properties.cluster_id;
+            map.getSource('geojson').getClusterExpansionZoom(clusterId, function (err, zoom)
+            {
+                if (err)
+                return;
+            
+                map.easeTo({
+                    center: features[0].geometry.coordinates,
+                    zoom: zoom
+                });
+            });
+        });
+        
+        map.on('mouseenter', 'clusters', function () 
+        {
+            map.getCanvas().style.cursor = 'pointer';
+        });
+
+        map.on('mouseleave', 'clusters', function () 
+        {
+            map.getCanvas().style.cursor = '';
+        });
+    });
+
+    function getShooting(id)
+    {
+        $.ajax({
+            method: "GET",
+            url: "shootings/" + id,
+        }).done(function(data) 
+        {
+            $('#img-shooting').html('<img class="mb-3" src="{{ asset('uploads/shootings/') }}' +  data.image + '" alt="img">');
+            $('#type').text(data.type);
+            $('#title-shooting').text(data.title);
+            $('#description-shooting').html(data.description);
+            $('#address-shooting').text(data.address);
+            $('.hide').removeClass('hide');
+        });
+    }
+
+</script>
+
+{% endblock %}

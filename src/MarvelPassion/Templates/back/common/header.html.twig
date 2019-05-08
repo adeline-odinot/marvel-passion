@@ -1,0 +1,100 @@
+<header>
+    <!--Logo -->
+
+    <div class="text-center">
+        <a href="{{ path('home') }}"><img class="logo img-fluid" src="{{ asset('/images/logo.png') }}" alt="logo"></a>
+    </div>
+
+    <!--Navbar -->
+
+    <nav class="mb-1 navbar navbar-expand-lg navbar-dark bg-danger">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar"
+            aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link nav-design-admin" href="{{ path('admin') }}" alt="tableau de bord">
+                        <i class="fas fa-cogs"></i>
+                        Tableau de bord 
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-design-admin" href="{{ path('admin_movies_index') }}" alt="administration des films">
+                        <i class="fas fa-film"></i>
+                        Films
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-design-admin" href="{{ path('admin_series_index') }}" alt="administration des séries">
+                        <i class="fas fa-film"></i>
+                        Séries 
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-design-admin" href="{{ path('admin_shootings_index') }}" alt="administration des tournages">
+                        <i class="fas fa-video"></i>
+                        Tournages 
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-design-admin" href="{{ path('admin_humor_index') }}" alt="administration des humours">
+                        <i class="fas fa-grin-squint-tears"></i>
+                        Humour 
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-design-admin" href="{{ path('admin_comments_index') }}" alt="administration des commentaires">
+                        <i class="fas fa-comments"></i>
+                        Commentaires 
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-design-admin" href="{{ path('admin_users_index') }}" alt="administration des utilisateurs">
+                        <i class="fas fa-users"></i>
+                        Utilisateurs 
+                    </a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto nav-flex-icons d-flex align-items-center header-admin-toggle">
+                {% if app.user %}
+                    <li class="nav-item mr-2">
+                        <a class="nav-link nav-design-admin" href="{{ path('home') }}" target="_blank" alt="page d'accueil">
+                            <i class="far fa-eye"></i>
+                            Voir le site
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        {% if app.user.avatar is not null %}
+                            <img src="{{ asset('uploads/avatar/') ~ app.user.avatar }}" class="avatar avatar-micro" alt="Avatar de {{ app.user.pseudo }}">
+                            <a class="nav-toggle-admin nav-link nav-design-admin dropdown-toggle" data-toggle="dropdown" id="accountDropdown" href="#">
+                                {{ app.user.pseudo }}
+                            </a>
+                        {% else %}
+                            <i class="avatar-header avatar-design fas fa-user"></i>
+                            <a class="nav-toggle-admin nav-design nav-link dropdown-toggle" data-toggle="dropdown" id="accountDropdown" href="#">
+                                {{ app.user.pseudo }}
+                            </a>
+                        {% endif %}
+
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="accountDropdown">
+                            <a href="{{ path('admin_account_logout') }}" class="dropdown-item">Se deconnecter</a>
+                        </div>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Message flash -->
+
+    {% for label, messages in app.flashes %}
+        <div class="d-flex justify-content-center align-content-center alert alert-{{ label }}">
+            {% for message in messages %}
+                <p class="flashes">{{ message | raw }}</p>
+            {% endfor %}
+        </div>
+    {% endfor %}
+    
+</header>

@@ -71,7 +71,7 @@ class Paginator
      */
     public function display()
     {
-        $this->twig->display('common/paginator.html.twig',
+        $this->twig->display('ArticleBundle/Ressources/views/Common/paginator.html.twig',
         [
             'page' => $this->cPage,
             'pages' => $this->getPages(),

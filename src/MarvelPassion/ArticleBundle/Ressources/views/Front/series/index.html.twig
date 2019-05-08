@@ -1,0 +1,63 @@
+{% extends 'Templates/front/base.html.twig' %}
+
+{% block title %} Séries | Marvel-Passion {% endblock %}
+
+{% block metaDescription %}Marvel Passion - Découvrez les différentes séries de l'univers Marvel.{% endblock %}
+
+{% block ogTitle %}Séries | Marvel-Passion{% endblock %}
+{% block ogDescription %}Marvel Passion - Découvrez les différentes séries de l'univers Marvel.{% endblock %}
+
+{% block twiDescription %}Marvel Passion - Découvrez les différentes séries de l'univers Marvel.{% endblock %}
+{% block twiTitle %}Séries | Marvel-Passion{% endblock %}
+
+{% block body %}
+    <section class="series">
+    <h1 class="text-center title mb-5">Séries</h1>
+        {% for serie in paginator.data %}
+
+        {% set showSerie = path('show_series',{'id': serie.id}) %}
+
+        <article class="content-series d-flex justify-content-center row">
+            <div class="col-md-4 text-center">
+                <a href="{{ showSerie }}">
+                    <h2 class="subtitle">{{ serie.title }}</h2>
+                    <img class="img-series img-fluid mb-3" src="{{ asset('uploads/series/' ~ serie.image) }}" alt="{{ serie.title }}">
+                </a>
+                <small class="date">
+                    <em>Publié le {{ serie.creationDate | date('d/m/Y') }} à {{ serie.creationDate | date('H:i') }} <br /> par <a class="author-article" href="{{ path('show_user',{'pseudo': serie.user.pseudo}) }}">{{ serie.user.pseudo }}</a></em>
+                </small>
+            </div>
+            <div class="col-md-6 d-flex flex-column align-items-center justify-content-center text-center">
+                <p>
+                    {{ serie.introduction | raw }}
+                </p>
+                <a class="more" href="{{ showSerie }}">Lire la suite</a>
+            </div>
+
+            {% set roleAdmin = serie.user.roles == 'ROLE_ADMIN' %}
+            
+            {% if roleAdmin %}
+                <div class="mt-5">                        
+                    <a href="{{ path('edit_serie',{'id': serie.id}) }}">
+                        <i class="admin-icon-edit far fa-edit"></i>
+                        Modifier
+                    </a>
+                
+                    <a class="ml-3" href="{{ path('delete_serie',{'id': serie.id}) }}">
+                        <i class="admin-icon-trash fas fa-trash"></i>
+                        Supprimer
+                    </a>
+                </div>
+            {% endif %}
+            
+                    
+            
+            
+
+        </article>
+        <div class="border-bottom"></div>
+        {% endfor %}
+
+        {{ paginator.display() }}
+    </section>     
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'Templates/back/base.html.twig' %}
+
+{% block title %} Administration - Modification de l'article d'humour : {{ humor.title }} | Marvel Passion {% endblock %}
+
+{% form_theme formHumor 'bootstrap_4_layout.html.twig' %}
+
+{% block body %}
+
+    <section class="d-flex flex-column align-items-center">
+
+        <h1 class="text-center title">Modification de l'article d'humour : </h1>
+        <h2 class="humor-title mt-3 mb-3 subtitle">{{ humor.title }}</h2>
+
+        <div class="col-md-8 text-center">
+            <img src="{{ asset('uploads/humor/')  ~ humor.image }}" alt="{{ humor.title }}">
+        </div>
+        
+        <div class="col-md-8 mt-4">
+            {{ form_start(formHumor) }}
+
+                {{ form_row(formHumor.title, {'attr': {'placeholder': 'Titre du meme d\'humour'}}) }}
+
+                {{ form_row(formHumor.image, {'attr': {'placeholder': 'Choisissez l\'image d\'humour'}}) }}
+
+                <button type="submit" class="mt-2 btn btn-form btn-form-design">Modifier</button>
+
+            {{ form_end(formHumor) }}
+            
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block javascript %}
+
+    <script src="{{ asset('js/cutCaract.js') }}"></script>
+    <script>changeTextImg('#humor_image')</script>
+
+{% endblock %}

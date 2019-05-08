@@ -13,8 +13,8 @@ parameters:
     mailer_transport: smtp
     mailer_host: smtp.ionos.fr
     mailer_port: 587
-    mailer_user: formation@adeline-odinot.com
-    mailer_password: qyh5cbet9xf813140
+    mailer_user: confidentiel
+    mailer_password: confidentiel
     mailer_auth_mode: login
     sender_name: Marvel-Passion
 
@@ -32,8 +32,36 @@ services:
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
-    App\Controller\:
-        resource: '../src/Controller'
+    App\MarvelPassion\ArticleBundle\Controller\:
+        resource: '../src/MarvelPassion/ArticleBundle/Controller'
+        tags: ['controller.service_arguments']
+
+    App\MarvelPassion\CommentBundle\Controller\:
+        resource: '../src/MarvelPassion/CommentBundle/Controller'
+        tags: ['controller.service_arguments']
+
+    App\MarvelPassion\ContactBundle\Controller\:
+        resource: '../src/MarvelPassion/ContactBundle/Controller'
+        tags: ['controller.service_arguments']
+
+    App\MarvelPassion\DashboardBundle\Controller\:
+        resource: '../src/MarvelPassion/DashboardBundle/Controller'
+        tags: ['controller.service_arguments']
+
+    App\MarvelPassion\HomeBundle\Controller\:
+        resource: '../src/MarvelPassion/HomeBundle/Controller'
+        tags: ['controller.service_arguments']
+
+    App\MarvelPassion\LegalNoticeBundle\Controller\:
+        resource: '../src/MarvelPassion/LegalNoticeBundle/Controller'
+        tags: ['controller.service_arguments']
+    
+    App\MarvelPassion\ShootingBundle\Controller\:
+        resource: '../src/MarvelPassion/ShootingBundle/Controller'
+        tags: ['controller.service_arguments']
+
+    App\MarvelPassion\UserBundle\Controller\:
+        resource: '../src/MarvelPassion/UserBundle/Controller'
         tags: ['controller.service_arguments']
 
     # add more service definitions when explicit configuration is needed

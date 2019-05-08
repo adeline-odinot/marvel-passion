@@ -140,10 +140,10 @@ img, iframe[src*=youtube]
     background-color: #544d7c !important;
 }
 
-.nav-design
+.nav-design, .dropdown-toggle
 {
     color: white !important;    
-    font-size:25px;
+    font-size: 25px;
 }
 
 .nav-design:hover
@@ -186,6 +186,17 @@ img, iframe[src*=youtube]
 {
     color:#ad5164;
     display: block;
+}
+
+.author-article
+{
+    color:#8676ff !important;
+}
+
+.author-article:hover
+{
+    color:#7163d8 !important;
+    text-decoration: underline !important;
 }
 
 .more
@@ -377,7 +388,7 @@ input:focus, textarea:focus, .custom-file-input:focus~.custom-file-label
 
 .user-comment:hover
 {
-    color: #c585e2;
+    color: #7163d8;
 }
 
 .label-comment
@@ -396,6 +407,17 @@ input:focus, textarea:focus, .custom-file-input:focus~.custom-file-label
     color: red;
 }
 
+.avatar-design-comment
+{
+    height: 31px !important;
+    width: 48px !important;
+}
+
+.avatar-design-comment::before
+{
+    font-size: 18px;
+    padding:14px !important;
+}
 
 /* ----- DEBUT ADMIN ----- */
 
@@ -411,6 +433,11 @@ input:focus, textarea:focus, .custom-file-input:focus~.custom-file-label
 .clap-shooting
 {
     font-size: 20px;
+}
+
+.nav-toggle-admin
+{
+    display:inline;
 }
 
 /* Dashboard Admin */
@@ -466,6 +493,15 @@ input:focus, textarea:focus, .custom-file-input:focus~.custom-file-label
 .card-body
 {
     color: white !important;
+}
+
+/* Avatar Admin */
+
+
+.avatar-design-admin::before
+{
+    font-size: 1rem !important;
+    padding: 15px !important;
 }
 
 /* Content Admin */
@@ -525,6 +561,11 @@ input:focus, textarea:focus, .custom-file-input:focus~.custom-file-label
 .table-design-dasboard
 {
     border-color: #721c24 !important;
+}
+
+.table-design-dasboard
+{
+    border-spacing: 5px !important;
 }
 
 /* Form Admin */
@@ -719,6 +760,21 @@ input:focus, textarea:focus, .custom-file-input:focus~.custom-file-label
     height: 35px;
 }
 
+.avatar-design:before
+{
+    border: 2px solid white;
+    padding: 10px;
+    border-radius: 50%;
+    background-color: #7d75f9;
+    color: white;
+}
+
+.avatar-design-profil:before
+{
+    font-size: 1.5rem;
+    padding: 15px !important;
+}
+
 .profil-title
 {
     color: #484893;
@@ -815,6 +871,30 @@ input:focus, textarea:focus, .custom-file-input:focus~.custom-file-label
         display: flex;
     }
 
+}
+
+@media (max-width: 991px)
+{
+    .nav-item-toggle
+    {
+        display: block !important;
+    }
+
+    .nav-link-toggle
+    {
+        display: inline-block;
+        margin-bottom: 5px;
+    }
+
+    .header-admin-toggle
+    {
+        display: block !important;
+    }
+
+    .header-admin-toggle .dropdown-menu
+    {
+        margin-top: 10px;
+    }
 }
 
 @media (max-width: 520px)

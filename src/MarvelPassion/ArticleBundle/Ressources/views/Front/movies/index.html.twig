@@ -1,0 +1,43 @@
+{% extends 'Templates/front/base.html.twig' %}
+
+{% block title %} Films | Marvel-Passion {% endblock %}
+
+{% block metaDescription %}Marvel Passion - Découvrez les différents films de l'univers Marvel.{% endblock %}
+
+{% block ogTitle %}Films | Marvel-Passion{% endblock %}
+{% block ogDescription %}Marvel Passion - Découvrez les différents films de l'univers Marvel.{% endblock %}
+
+{% block twiDescription %}Marvel Passion - Découvrez les différents films de l'univers Marvel.{% endblock %}
+{% block twiTitle %}Films | Marvel-Passion{% endblock %}
+
+{% block body %}
+    <section class="movies">
+        <h1 class="text-center title mb-5">Films</h1>
+        {% for movie in paginator.data %}
+
+            {% set showMovie = path('show_movies',{'id': movie.id}) %}
+            
+
+            <article class="content-movies d-flex justify-content-center row">
+                <div class="col-md-4 text-center">
+                    <a href="{{ showMovie }}">
+                        <h2 class="subtitle">{{ movie.title }}</h2>
+                        <img class="img-movies img-fluid mb-3" src="{{ asset('uploads/movies/' ~ movie.image) }}" alt="{{ movie.title }}">
+                    </a>
+                    <small class="date">
+                        <em>Publié le {{ movie.creationDate | date('d/m/Y') }} à {{ movie.creationDate | date('H:i') }} <br /> par <a class="author-article" href="{{ path('show_user',{'pseudo': movie.user.pseudo}) }}">{{ movie.user.pseudo }}</a></em>
+                    </small>
+                </div>
+                <div class="col-md-6 d-flex flex-column align-items-center justify-content-center text-center">
+                    <p>
+                        {{ movie.introduction | raw }}
+                    </p>
+                    <a class="more" href="{{ showMovie }}">Lire la suite</a>
+                </div>                
+            </article>
+            <div class="border-bottom"></div>
+        {% endfor %}
+
+        {{ paginator.display() }}
+    </section>     
+{% endblock %}

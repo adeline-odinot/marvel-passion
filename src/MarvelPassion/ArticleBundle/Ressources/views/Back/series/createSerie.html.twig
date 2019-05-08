@@ -1,0 +1,35 @@
+{% extends 'Templates/back/base.html.twig' %}
+
+{% block title %} Administration - Création d'un article de série | Marvel Passion {% endblock %}
+
+{% form_theme formSerie 'bootstrap_4_layout.html.twig' %}
+
+{% block body %}
+
+    <section class="d-flex flex-column align-items-center">
+
+        <h1 class="text-center title">Création d'un article de série</h1>
+
+        <div class="col-md-8 mt-4">
+            {{ form_start(formSerie) }}
+
+                {{ form_row(formSerie.title, {'attr': {'placeholder': 'Titre de la série'}}) }}
+                {{ form_row(formSerie.introduction, {'attr': {'placeholder': 'Introduction de la série'}}) }}
+                {{ form_row(formSerie.content, {'attr': {'placeholder': 'Contenu de la série'}}) }}
+                {{ form_row(formSerie.image, {'attr': {'placeholder': 'Choisissez l\'image à la une de la série'}}) }}
+
+                <button type="submit" class="mt-2 btn btn-form btn-form-design">Ajouter</button>
+
+            {{ form_end(formSerie) }}
+            
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block javascript %}
+
+    <script src="{{ asset('js/cutCaract.js') }}"></script>
+    <script>changeTextImg('#serie_image')</script>
+
+{% endblock %}

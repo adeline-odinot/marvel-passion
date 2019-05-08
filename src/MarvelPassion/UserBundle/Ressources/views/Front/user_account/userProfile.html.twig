@@ -1,0 +1,55 @@
+{% extends 'Templates/front/base.html.twig' %}
+
+{% block title %}Modification du profil | Marvel-Passion{% endblock %}
+
+{% block body %}
+
+<section class="d-flex flex-column align-items-center">
+
+        <h1 class="text-center title mb-5">Modification du profil</h1>
+        
+        <div class="col-md-8">
+            {{ form_start(formProfile) }}
+
+            <div class="row">
+                <div class="col-md-4">
+                    {{ form_row(formProfile.firstName, {'attr': {'placeholder': 'Votre prenom'}}) }}
+                </div>
+                <div class="col-md-4">
+                    {{ form_row(formProfile.lastName, {'attr': {'placeholder': 'Votre nom'}}) }}
+                </div>
+                <div class="col-md-4">
+                    {{ form_row(formProfile.pseudo, {'attr': {'placeholder': 'Votre pseudo'}}) }}
+                </div>
+            </div>
+
+                {{ form_row(formProfile.email, {'attr': {'placeholder': 'Votre adresse e-mail'}}) }}
+
+                    <div class="d-flex flex-column align-items-center mb-2">
+                        <p class="title-update-profil-avatar"> Votre image de profil actuel </p>
+                        {% if app.user.avatar is not null %}
+                            <img class="avatar avatar-large" src="{{ asset('uploads/avatar/')  ~ app.user.avatar }}" alt="{{ app.user.pseudo }}">
+                        {% else %}
+                            <i class="mt-2 mb-2 avatar-design avatar-design-profil fas fa-user"></i>
+                        {% endif %}
+                    </div>
+
+
+                {{ form_row(formProfile.avatar, {'attr': {'placeholder': 'Choisissez votre image de profil'}}) }}
+
+                {{ form_row(formProfile.description, {'attr': {'placeholder': 'Une description vous refletant (facultatif)'}}) }}
+
+                <button type="submit" class="btn btn-form mt-2 btn-form-design">Modifier le profil</button>
+
+            {{ form_end(formProfile) }}
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block javascript %}
+
+    <script src="{{ asset('js/cutCaract.js') }}"></script>
+    <script>changeTextImg('#account_avatar')</script>
+
+{% endblock %}

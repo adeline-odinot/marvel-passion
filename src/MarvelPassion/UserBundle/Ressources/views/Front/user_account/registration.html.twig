@@ -1,0 +1,56 @@
+{% extends 'Templates/front/base.html.twig' %}
+
+{% block title %} Inscription | Marvel Passion {% endblock %}
+
+{% block metaDescription %}Marvel Passion - Inscrivez-vous pour accéder à toutes les fonctionnalités du blog.{% endblock %}
+
+{% block ogTitle %}Inscription | Marvel Passion{% endblock %}
+{% block ogDescription %}Marvel Passion - Inscrivez-vous pour accéder à toutes les fonctionnalités du blog.{% endblock %}
+
+{% block twiDescription %}Marvel Passion - Inscrivez-vous pour accéder à toutes les fonctionnalités du blog.{% endblock %}
+{% block twiTitle %}Inscription | Marvel Passion{% endblock %}
+
+{% form_theme formRegister 'bootstrap_4_layout.html.twig' %}
+
+{% block body %}
+
+    <section class="d-flex flex-column align-items-center">
+
+        <h1 class="text-center title mb-5">Inscription</h1>
+        
+        <div class="col-md-8">
+            {{ form_start(formRegister) }}
+
+            <div class="row">
+                <div class="col-md-4">
+                    {{ form_row(formRegister.lastName, {'attr': {'placeholder': 'Votre nom'}}) }}
+                </div>
+                <div class="col-md-4">
+                    {{ form_row(formRegister.firstName, {'attr': {'placeholder': 'Votre prenom'}}) }}
+                </div>
+                <div class="col-md-4">
+                    {{ form_row(formRegister.pseudo, {'attr': {'placeholder': 'Votre pseudo'}}) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    {{ form_row(formRegister.hash, {'attr': {'placeholder': 'Votre mot de passe'}}) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(formRegister.passwordConfirm, {'attr': {'placeholder': 'Confirmez votre mot de passe'}}) }}
+                </div>
+            </div>
+            
+            {{ form_row(formRegister.email, {'attr': {'placeholder': 'Votre adresse e-mail'}}) }}
+
+            
+            <button type="submit" class="btn btn-form mt-3 btn-form-design">S'inscrire</button>
+
+            {{ form_end(formRegister) }}
+            
+        </div>
+
+
+    </section>
+
+{% endblock %}
