@@ -56,32 +56,13 @@ class AdminMoviesController extends AbstractController
 
         $form->handleRequest($request);
 
-        $valid = true;
-
         if($form->isSubmitted() && $form->isValid())
         {
-            if (isset($request->files->get('movie')['image']))
-            {
-                $fileName = $upload->upload($this->getParameter('movies_directory'), $request->files->get('movie')['image']);
+            $fileName = $upload->upload($this->getParameter('movies_directory'), $request->files->get('movie')['image'], $form->get('image'));
 
-                if (!$fileName)
-                {
-                    $valid = false;
-                    $form->get('image')->addError(new FormError("Le format d'image n'est pas accepté (jpg, jpeg, png)."));
-                }
-                else
-                {
-                    $movie->setImage($fileName);
-                }
-            }
-            else
+            if ($fileName)
             {
-                $valid = false;
-                $form->get('image')->addError(new FormError("Veuillez séléctionner une image."));
-            }
-            
-            if ($valid)
-            {
+                $movie->setImage($fileName);
                 $movie->setUser($this->getUser());
                 $movie->setCreationDate(new \DateTime());
                 
@@ -95,6 +76,10 @@ class AdminMoviesController extends AbstractController
                 );
 
                 return $this->redirectToRoute('admin_movies_index');
+            }
+            else
+            {
+                $form->get('image')->addError(new FormError("Veuillez séléctionner une image."));
             }
         }
         
@@ -121,37 +106,24 @@ class AdminMoviesController extends AbstractController
 
         $form->handleRequest($request);
 
-        $valid = true;
-
         if($form->isSubmitted() && $form->isValid())
         {
-            if (isset($request->files->get('movie')['image']))
+            $fileName = $upload->upload($this->getParameter('movies_directory'), $request->files->get('movie')['image'], $form->get('image'), $movie->getImage());
+ 
+            if($fileName)
             {
-                $fileName = $upload->upload($this->getParameter('movies_directory'), $request->files->get('movie')['image'], $movie->getImage());
-
-                if(!$fileName)
-                {
-                    $valid = false;
-                    $form->get('image')->addError(new FormError("Le format d'image n'est pas accepté (jpg, jpeg, png)."));
-                }
-                else
-                {
-                    $movie->setImage($fileName);
-                }
-            }
-            if($valid)
-            {
-                $manager->persist($movie);
-                $manager->flush();
-    
-                $this->addFlash(
-                    'success',
-                    "Les modifications de l'article de film <strong>{$movie->getTitle()}</strong> ont bien été enregistrées !"
-                );
-    
-                return $this->redirectToRoute('admin_movies_index');
+                $movie->setImage($fileName);
             }
 
+            $manager->persist($movie);
+            $manager->flush();
+
+            $this->addFlash(
+                'success',
+                "Les modifications de l'article de film <strong>{$movie->getTitle()}</strong> ont bien été enregistrées !"
+            );
+
+            return $this->redirectToRoute('admin_movies_index');
         }
         
         return $this->render('ArticleBundle/Ressources/views/Back/movies/editMovie.html.twig', [

@@ -72,28 +72,12 @@ class AdminShootingsController extends AbstractController
                 $form->get('serie')->addError(new FormError("Vous ne pouvez pas séléctionner une relation entre un film et une série à la fois."));
             }
 
-            if (isset($request->files->get('shooting')['image']))
-            {
-                $fileName = $upload->upload($this->getParameter('shootings_directory'), $request->files->get('shooting')['image']);
+            $fileName = $upload->upload($this->getParameter('shootings_directory'), $request->files->get('shooting')['image'], $form->get('image'));
 
-                if (!$fileName)
-                {
-                    $valid = false;
-                    $form->get('image')->addError(new FormError("Le format d'image n'est pas accepté (jpg, jpeg, png)."));
-                }
-                else
-                {
-                    $shooting->setImage($fileName);
-                }
-            }
-            else
+            if ($fileName && $valid)
             {
-                $valid = false;
-                $form->get('image')->addError(new FormError("Veuillez séléctionner une image."));
-            }
-            
-            if ($valid)
-            {
+                $shooting->setImage($fileName);
+
                 $manager->persist($shooting);
                 $manager->flush();
     
@@ -103,6 +87,13 @@ class AdminShootingsController extends AbstractController
                 );
     
                 return $this->redirectToRoute('admin_shootings_index');
+            }
+            else
+            {
+                if(!$fileName)
+                {
+                    $form->get('image')->addError(new FormError("Veuillez séléctionner une image."));
+                }
             }
         }
         return $this->render('ShootingBundle/Ressources/views/Back/createShooting.html.twig', [
@@ -145,22 +136,15 @@ class AdminShootingsController extends AbstractController
                 $form->get('serie')->addError(new FormError("Vous ne pouvez pas séléctionner une relation entre un film et une série à la fois."));
             }
 
-            if(isset($request->files->get('shooting')['image']))
+            $fileName = $upload->upload($this->getParameter('shootings_directory'), $request->files->get('shooting')['image'], $form->get('image'), $shootings->getImage());
+  
+            if($valid)
             {
-                $fileName = $upload->upload($this->getParameter('shootings_directory'), $request->files->get('shooting')['image'], $shootings->getImage());
-                
-                if(!$fileName)
-                {
-                    $valid = false;
-                    $form->get('image')->addError(new FormError("Le format d'image n'est pas accepté (jpg, jpeg, png)."));
-                }
-                else
+                if($fileName)
                 {
                     $shootings->setImage($fileName);
                 }
-            }       
-            if($valid)
-            {
+
                 $manager->persist($shootings);
                 $manager->flush();
     
@@ -168,7 +152,7 @@ class AdminShootingsController extends AbstractController
                     'success',
                     "Les modifications du lieu de tournage <strong>{$shootings->getTitle()}</strong> ont bien été enregistrée !"
                 );
-                
+
                 return $this->redirectToRoute('admin_shootings_index');
             }
         }

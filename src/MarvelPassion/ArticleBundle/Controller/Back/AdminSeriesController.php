@@ -56,32 +56,13 @@ class AdminSeriesController extends AbstractController
 
         $form->handleRequest($request);
 
-        $valid = true;
-
         if($form->isSubmitted() && $form->isValid())
         {
-            if (isset($request->files->get('serie')['image']))
-            {
-                $fileName = $upload->upload($this->getParameter('series_directory'), $request->files->get('serie')['image']);
+            $fileName = $upload->upload($this->getParameter('series_directory'), $request->files->get('serie')['image'], $form->get('image'));
             
-                if (!$fileName)
-                {
-                    $valid = false;
-                    $form->get('image')->addError(new FormError("Le format d'image n'est pas accepté (jpg, jpeg, png)."));
-                }
-                else
-                {
-                    $serie->setImage($fileName);
-                }
-            }
-            else
+            if ($fileName)
             {
-                $valid = false;
-                $form->get('image')->addError(new FormError("Veuillez séléctionner une image."));
-            }
-            
-            if ($valid)
-            {
+                $serie->setImage($fileName);
                 $serie->setUser($this->getUser());
                 $serie->setCreationDate(new \DateTime());
                 
@@ -95,6 +76,10 @@ class AdminSeriesController extends AbstractController
                 );
 
                 return $this->redirectToRoute('admin_series_index');
+            }
+            else
+            {
+                $form->get('image')->addError(new FormError("Veuillez séléctionner une image."));
             }
         }
         
@@ -121,37 +106,24 @@ class AdminSeriesController extends AbstractController
 
         $form->handleRequest($request);
 
-        $valid = true;
-
         if($form->isSubmitted() && $form->isValid())
         {
-            if(isset($request->files->get('serie')['image']))
-            {
-                $fileName = $upload->upload($this->getParameter('series_directory'), $request->files->get('serie')['image'], $serie->getImage());
+            $fileName = $upload->upload($this->getParameter('series_directory'), $request->files->get('serie')['image'], $form->get('image') ,$serie->getImage());
                 
-                if(!$fileName)
-                {
-                    $valid = false;
-                    $form->get('image')->addError(new FormError("Le format d'image n'est pas accepté (jpg, jpeg, png)."));
-                }
-                else
-                {
-                    $serie->setImage($fileName);
-                }
+            if($fileName)
+            {
+                $serie->setImage($fileName);
             }
 
-            if($valid)
-            {
-                $manager->persist($serie);
-                $manager->flush();
-    
-                $this->addFlash(
-                    'success',
-                    "Les modifications de l'article de la série <strong>{$serie->getTitle()}</strong> ont bien été enregistrée !"
-                );
-                
-                return $this->redirectToRoute('admin_series_index');
-            }
+            $manager->persist($serie);
+            $manager->flush();
+
+            $this->addFlash(
+                'success',
+                "Les modifications de l'article de la série <strong>{$serie->getTitle()}</strong> ont bien été enregistrée !"
+            );
+            
+            return $this->redirectToRoute('admin_series_index'); 
         }
         
         return $this->render('ArticleBundle/Ressources/views/Back/series/editSerie.html.twig', [
