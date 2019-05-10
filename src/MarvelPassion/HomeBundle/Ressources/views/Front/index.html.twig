@@ -59,13 +59,14 @@
                 <div class="row">
 
                         {% for lastHumor in humor %}
-                            <article class="col content-humor">
-                                <div>
-                                    <a class="humor" href="{{ path('show_humor',{'id': lastHumor.id}) }}">
-                                        <img class="img-humor img-fluid" src="{{ asset('uploads/humor/' ~ lastHumor.image) }}" alt="{{ lastHumor.title }}">
-                                    </a>
-                                </div>
-                            </article>
+                            <figure class="col content-humor">
+                                <a class="humor" href="{{ path('show_humor',{'id': lastHumor.id}) }}">
+                                    <img class="img-humor img-fluid" src="{{ asset('uploads/humor/' ~ lastHumor.image) }}" alt="{{ lastHumor.title }}">
+                                </a>
+                                <figcaption>
+                                    <p class="img_txt text-center"><strong>{{ lastHumor.title }}</strong><br></p>
+                                </figcaption>
+                            </figure>
                         {% endfor %}
                 </div>
             </div>

@@ -8,13 +8,13 @@
         <h1 class="text-center title mb-4">Gestion des articles d'humour</h1>
 
         <div class="table-responsive">
-            <table class="table table-hover">
+            <table class="table table-hover align-middle">
 
                 <thead class="text-center">
                     <tr class="table-admin">
                         <th>Id</th>
-                        <th>Titre</th>
                         <th>Auteur</th>
+                        <th>Titre</th>
                         <th>Date de création</th>
                         <th>Modifier</th>
                         <th>Supprimer</th>
@@ -24,15 +24,15 @@
                     {% for humor in paginator.data %}
                     <tr id="{{ humor.id }}">
                         <td>{{ humor.id }}</td>
-                        <td>{{ humor.title }}</td>
-                        <td>
+                        <td class="d-flex flex-column align-items-center">
                             {% if humor.user.avatar is not null %}
-                                <img class="avatar avatar-mini" src="{{  asset('uploads/avatar/') ~ humor.user.avatar }}" alt="Avatar de {{ humor.user.pseudo }}">
+                                <img class="mb-3 mt-2 avatar avatar-mini" src="{{  asset('uploads/avatar/') ~ humor.user.avatar }}" alt="Avatar de {{ humor.user.pseudo }}">
                             {% else %}
-                                <i class="avatar-design avatar-design-admin fas fa-user"></i>
+                                <i class="mb-3 mt-2 avatar-design avatar-design-admin fas fa-user"></i>
                             {% endif %}
                             {{ humor.user.pseudo }}
                         </td>
+                        <td>{{ humor.title }}</td>
                         <td>{{ humor.creationDate | date('d/m/Y') }} à {{ humor.creationDate | date('H:i') }}</td>
                         <td>
                             <a href="{{ path('edit_humor',{'id': humor.id}) }}">

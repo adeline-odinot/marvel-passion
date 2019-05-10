@@ -57,9 +57,9 @@
                     </a>
                 </li>
             </ul>
-            <ul class="navbar-nav ml-auto nav-flex-icons d-flex align-items-center header-admin-toggle">
+            <ul class="navbar-nav ml-auto nav-flex-icons">
                 {% if app.user %}
-                    <li class="nav-item mr-2">
+                    <li class="nav-item mr-2 d-flex align-items-center">
                         <a class="nav-link nav-design-admin" href="{{ path('home') }}" target="_blank" alt="page d'accueil">
                             <i class="far fa-eye"></i>
                             Voir le site
@@ -67,13 +67,15 @@
                     </li>
                     <li class="nav-item dropdown">
                         {% if app.user.avatar is not null %}
-                            <img src="{{ asset('uploads/avatar/') ~ app.user.avatar }}" class="avatar avatar-micro" alt="Avatar de {{ app.user.pseudo }}">
-                            <a class="nav-toggle-admin nav-link nav-design-admin dropdown-toggle" data-toggle="dropdown" id="accountDropdown" href="#">
+                           
+                            <a class="nav-link nav-design-admin dropdown-toggle" data-toggle="dropdown" id="accountDropdown" href="#">
+                             <img src="{{ asset('uploads/avatar/') ~ app.user.avatar }}" class="avatar avatar-mini" alt="Avatar de {{ app.user.pseudo }}">
                                 {{ app.user.pseudo }}
                             </a>
                         {% else %}
-                            <i class="avatar-header avatar-design fas fa-user"></i>
-                            <a class="nav-toggle-admin nav-design nav-link dropdown-toggle" data-toggle="dropdown" id="accountDropdown" href="#">
+                        
+                            <a class="nav-link  nav-design-admin dropdown-toggle" data-toggle="dropdown" id="accountDropdown" href="#">
+                                <i class="avatar-header avatar-design fas fa-user"></i>
                                 {{ app.user.pseudo }}
                             </a>
                         {% endif %}

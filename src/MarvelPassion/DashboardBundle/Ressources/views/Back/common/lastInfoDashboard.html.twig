@@ -16,18 +16,15 @@
                 </tr>
             </thead>
             <tbody class="text-center">
-                <tr>
-                    <td></td>
-                </tr>
                 {% for info in infos %}
                     {% if infos == movies or infos == series or infos == humor %}
                         <tr>
                             <td>{{ info.title }}</td>
-                            <td>
+                            <td class="d-flex flex-column align-items-center">
                                 {% if info.user.avatar is not null %}
-                                    <img class="avatar avatar-mini" src="{{ asset('uploads/avatar/') ~ info.user.avatar }}" alt="Avatar de {{ info.user.pseudo }}">
+                                    <img class="mb-3 mt-2 avatar avatar-mini" src="{{ asset('uploads/avatar/') ~ info.user.avatar }}" alt="Avatar de {{ info.user.pseudo }}">
                                 {% else %}
-                                    <i class="avatar-design avatar-design-admin fas fa-user"></i>
+                                    <i class="mb-3 mt-2 avatar-design avatar-design-admin fas fa-user"></i>
                                 {% endif %}
                                 {{ info.user.pseudo }}
                             </td>
@@ -39,11 +36,11 @@
                         </tr>
                     {% elseif infos == comments %}
                         <tr>
-                            <td>
+                            <td class="d-flex flex-column align-items-center">
                                 {% if info.user.avatar is not null %}
-                                <img class="avatar avatar-mini" src="{{ asset('uploads/avatar/') ~ info.user.avatar }}" alt="Avatar de {{ info.user.pseudo }}">
+                                <img class="mb-3 mt-2 avatar avatar-mini" src="{{ asset('uploads/avatar/') ~ info.user.avatar }}" alt="Avatar de {{ info.user.pseudo }}">
                                 {% else %}
-                                    <i class="avatar-design avatar-design-admin fas fa-user"></i>
+                                    <i class="mb-3 mt-2 avatar-design avatar-design-admin fas fa-user"></i>
                                 {% endif %}
                                 {{ info.user.pseudo }}
                             </td>

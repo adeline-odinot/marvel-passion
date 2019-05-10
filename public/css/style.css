@@ -1,6 +1,5 @@
 /* --- Animation --- */
 
-
 @keyframes animationHumorBack {
 	0% {
 		opacity: 1;
@@ -435,10 +434,7 @@ input:focus, textarea:focus, .custom-file-input:focus~.custom-file-label
     font-size: 20px;
 }
 
-.nav-toggle-admin
-{
-    display:inline;
-}
+
 
 /* Dashboard Admin */
 
@@ -495,13 +491,18 @@ input:focus, textarea:focus, .custom-file-input:focus~.custom-file-label
     color: white !important;
 }
 
+.table-design-dasboard tr
+{
+    border-bottom: 2px solid #ff9d9d;
+}
+
 /* Avatar Admin */
 
 
 .avatar-design-admin::before
 {
     font-size: 1rem !important;
-    padding: 15px !important;
+    padding: 13px !important;
 }
 
 /* Content Admin */
@@ -545,11 +546,6 @@ input:focus, textarea:focus, .custom-file-input:focus~.custom-file-label
     background-color: #ff5a5a;
     border-color: #ff5a5a;
     color: white !important;
-}
-
-.table thead .design-table-dasboard th 
-{
-    vertical-align: middle;
 }
 
 .table thead .design-table-dasboard th 
@@ -871,30 +867,6 @@ input:focus, textarea:focus, .custom-file-input:focus~.custom-file-label
         display: flex;
     }
 
-}
-
-@media (max-width: 991px)
-{
-    .nav-item-toggle
-    {
-        display: block !important;
-    }
-
-    .nav-link-toggle
-    {
-        display: inline-block;
-        margin-bottom: 5px;
-    }
-
-    .header-admin-toggle
-    {
-        display: block !important;
-    }
-
-    .header-admin-toggle .dropdown-menu
-    {
-        margin-top: 10px;
-    }
 }
 
 @media (max-width: 520px)

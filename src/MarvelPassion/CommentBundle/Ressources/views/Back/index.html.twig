@@ -9,7 +9,7 @@
         <h1 class="text-center title mb-4">Gestion des commentaires</h1>
 
         <div class="table-responsive">
-            <table class="table table-hover">
+            <table class="table table-hover align-middle">
 
                 <thead>
                     <tr class="text-center table-admin">
@@ -31,11 +31,11 @@
                     <tr id="{{ comment.id }}" class="text-center">
                         <td>{{ comment.id }}</td>
                         <td>{{ comment.creationDate | date('d/m/Y') }} à {{ comment.creationDate | date('H:i') }}</td>
-                        <td>
+                        <td class="d-flex flex-column align-items-center">
                             {% if comment.user.avatar is not null %}
-                                <img class="avatar avatar-mini" src="{{  asset('uploads/avatar/') ~ comment.user.avatar }}" alt="Avatar de {{ comment.user.pseudo }}">
+                                <img class="mb-3 mt-2 avatar avatar-mini" src="{{  asset('uploads/avatar/') ~ comment.user.avatar }}" alt="Avatar de {{ comment.user.pseudo }}">
                             {% else %}
-                                <i class="avatar-design avatar-design-admin fas fa-user"></i>
+                                <i class="mb-3 mt-2 avatar-design avatar-design-admin fas fa-user"></i>
                             {% endif %}
                             {{ comment.user.pseudo }}
                         </td>
